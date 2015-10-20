@@ -17,6 +17,6 @@ export class VerificationSummaryService {
       });
   }
 
-  getSummaryDetail(id) {
+  getSummaryDetail() {
   }
 }
