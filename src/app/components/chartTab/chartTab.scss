@@ -1,5 +1,5 @@
 .chart-tabs-container {
-  padding-top: 48px;
+  padding-bottom: 48px;
 
   .chart-tabs {
     position: fixed;
@@ -40,9 +40,14 @@
 }
 
 chart-tab {
-  width: calc(75% + 16px);
+  width: calc(75% + 16px) !important;
   overflow: scroll;
   height: calc(100vh - 64px);
+
+  .chart-tab-footer {
+    margin-bottom: 0px;
+    background: #424242;
+  }
 }
 
 .chart-tab-active {
