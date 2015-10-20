@@ -1,3 +1,15 @@
 .summary-table {
   width: 100%;
+  background: #34343e;
+
+  tr {
+    color: #fafafa;
+    &:hover {
+      color: #34343e;
+    }
+  }
+
+  th {
+    color: #fafafa;
+  }
 }
