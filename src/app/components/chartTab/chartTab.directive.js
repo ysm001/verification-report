@@ -53,6 +53,8 @@ class ChartTabController {
   scrollTo(id) {
     this.$location.hash(id);
     this.$anchorScroll();
+    var offset = angular.element('.chart-tabs-container')[0].offsetHeight;
+    angular.element('chart-tab')[0].scrollTop -= offset;
   }
 
   setActiveTab(id) {
