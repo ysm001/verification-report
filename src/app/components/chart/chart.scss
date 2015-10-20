@@ -14,5 +14,21 @@
 .detail-button {
   padding-left: 0px;
   padding-right: 0px;
-  background: transparent;
+  border: solid 1px #e0e0e0;
+
+  &:hover {
+    background: #e0e0e0;
+  }
+
+  .mdl-button {
+    color:rgb(0,150,136) !important;
+
+    &:focus:not(:active) {
+      background: transparent !important;
+    }
+
+    &:hover {
+      background: transparent;
+    }
+  }
 }
