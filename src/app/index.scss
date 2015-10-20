@@ -48,6 +48,19 @@ main {
   padding: 20px;
   background: #fafafa;
 }
+
+.mdl-layout__content, .mdl-grid {
+  padding: 0px;
+}
+
+.mdl-layout__header {
+  background: #34343e;
+}
+
+.mdl-cell {
+  margin: 0px;
+}
+
 .acme-card-wide {
   &.mdl-card {
     width: 100%;

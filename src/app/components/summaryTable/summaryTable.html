@@ -1,0 +1,20 @@
+<table class="summary-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <!--
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Material</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  -->
+  <tbody>
+    <tr ng-repeat="summary in summaryTable.summaries">
+      <td class="mdl-data-table__cell--non-numeric">{{summary.targetFirst}} vs {{summary.targetSecond}}</td>
+      <td>
+        <div class="result-label" ng-class="{'result-label-ng': !summary.isPassed}">
+          {{summary.isPassed ? 'OK' : 'NG'}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
