@@ -11,8 +11,9 @@ import { NavbarDirective } from '../app/components/navbar/navbar.directive';
 import { MalarkeyDirective } from '../app/components/malarkey/malarkey.directive';
 import { SummaryTableDirective } from '../app/components/summaryTable/summaryTable.directive';
 import { ChartTabDirective } from '../app/components/chartTab/chartTab.directive';
+import { ChartDirective } from '../app/components/chart/chart.directive';
 
-angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr'])
+angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'ng-fusioncharts'])
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)
@@ -25,4 +26,5 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective)
   .directive('summaryTable', SummaryTableDirective)
-  .directive('chartTab', ChartTabDirective);
+  .directive('chartTab', ChartTabDirective)
+  .directive('chart', ChartDirective);
