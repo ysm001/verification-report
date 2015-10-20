@@ -1,11 +1,22 @@
 .summary-table {
   width: 100%;
   background: #34343e;
+  cursor: pointer;
+  border-right: none;
 
-  tr {
+  .summary-record {
     color: #fafafa;
+    border-right: solid 1px grey;
+    outline: none;
+
     &:hover {
       color: #34343e;
+    }
+
+    &-active {
+      color: #34343e;
+      background: white;
+      border-right: solid 1px white;
     }
   }
 

@@ -9,7 +9,7 @@ export function SummaryTableDirective() {
     },
     controller: SummaryTableController,
     controllerAs: 'summaryTable',
-    bindToController: true
+    bindToController: true,
   };
 
   return directive;
@@ -21,6 +21,7 @@ class SummaryTableController {
 
     this.$log = $log;
     this.summaries = [];
+    this.activeRecord = 0;
 
     this.activate(verificationSummary);
   }
@@ -37,5 +38,14 @@ class SummaryTableController {
 
       return this.summaries;
     });
+  }
+
+  getClass(index) {
+    return this.activeRecord == index ? 'summary-record-active' : '';
+  }
+
+  onClick(index) {
+    console.log(index);
+    this.activeRecord = index;
   }
 }
