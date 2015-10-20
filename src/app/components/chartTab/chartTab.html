@@ -1,21 +1,13 @@
-<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-  <div class="mdl-tabs__tab-bar">
-    <a href="#network" class="mdl-tabs__tab is-active">Network</a>
-    <a href="#io" class="mdl-tabs__tab">I/O</a>
-    <a href="#memory" class="mdl-tabs__tab">Memory</a>
-    <a href="#task" class="mdl-tabs__tab">Task</a>
-  </div>
-
-  <div class="mdl-tabs__panel is-active" id="network">
-    <chart></chart>
-  </div>
-  <div class="mdl-tabs__panel" id="io">
-    <chart></chart>
-  </div>
-  <div class="mdl-tabs__panel" id="memory">
-    <chart></chart>
-  </div>
-  <div class="mdl-tabs__panel" id="task">
-    <chart></chart>
+<div class="chart-tabs-container">
+  <div class="chart-tabs">
+    <a id="network-tab" href="#" class="chart-tab mdl-button mdl-js-button mdl-button--primary" ng-click="chartTab.scrollTo('network')" ng-class="chartTab.getClass('network')">Network</a>
+    <a id="io-tab" href="#" class="chart-tab mdl-button mdl-js-button mdl-button--primary" ng-click="chartTab.scrollTo('io')" ng-class="chartTab.getClass('io')">I/O</a>
+    <a id="memory-tab" href="#" class="chart-tab mdl-button mdl-js-button mdl-button--primary" ng-click="chartTab.scrollTo('memory')" ng-class="chartTab.getClass('memory')">Memory</a>
+    <a id="task-tab" href="#" class="chart-tab mdl-button mdl-js-button mdl-button--primary" ng-click="chartTab.scrollTo('task')" ng-class="chartTab.getClass('task')">Task</a>
   </div>
 </div>
+
+<chart id="network"></chart>
+<chart id="io"></chart>
+<chart id="memory"></chart>
+<chart id="task"></chart>

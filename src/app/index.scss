@@ -49,16 +49,7 @@ main {
   background: #fafafa;
 }
 
-.chart-container {
-  width: calc(75% + 16px);
-}
-
 .table-container {
-  overflow: scroll;
-  height: calc(100vh - 64px);
-}
-
-.chart-container {
   overflow: scroll;
   height: calc(100vh - 64px);
 }
