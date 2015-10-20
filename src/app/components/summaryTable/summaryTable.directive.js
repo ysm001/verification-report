@@ -8,7 +8,7 @@ export function SummaryTableDirective() {
         creationDate: '='
     },
     controller: SummaryTableController,
-    controllerAs: 'vm',
+    controllerAs: 'summaryTable',
     bindToController: true
   };
 
@@ -16,10 +16,26 @@ export function SummaryTableDirective() {
 }
 
 class SummaryTableController {
-  constructor (moment) {
+  constructor ($scope, $log, verificationSummary) {
     'ngInject';
 
-    // "this.creation" is avaible by directive option "bindToController: true"
-    // this.relativeDate = moment(this.creationDate).fromNow();
+    this.$log = $log;
+    this.summaries = [];
+
+    this.activate(verificationSummary);
+  }
+
+  activate(verificationSummary) {
+    return this.getSummaries(verificationSummary).then(() => {
+      this.$log.info('Activated Summaries View');
+    });
+  }
+
+  getSummaries(verificationSummary) {
+    return verificationSummary.getSummaries().then((data) => {
+      this.summaries = data;
+
+      return this.summaries;
+    });
   }
 }
