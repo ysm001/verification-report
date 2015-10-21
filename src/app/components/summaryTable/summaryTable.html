@@ -1,17 +1,15 @@
-<!--
-<div class='table-header'></div>
--->
-
-<table class="summary-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
-  <tbody>
-    <tr id="{{summary._id}}" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
-      ng-class="summaryTable.getClass($index)" ng-click="summaryTable.onClick($index)">
-      <td class="mdl-data-table__cell--non-numeric">{{summary.targetFirst}} vs {{summary.targetSecond}}</td>
-      <td>
-        <div class="result-label" ng-class="{'result-label-ng': !summary.isPassed}">
-          {{summary.isPassed ? 'OK' : 'NG'}}
-        </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<aside class="table-container">
+  <table class="summary-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <tbody>
+      <tr id="{{summary._id}}" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
+                                                                             ng-class="summaryTable.getClass($index)" ng-click="summaryTable.onClick($index)">
+        <td class="mdl-data-table__cell--non-numeric">{{summary.targetFirst}} vs {{summary.targetSecond}}</td>
+        <td>
+          <div class="result-label" ng-class="{'result-label-ng': !summary.isPassed}">
+            {{summary.isPassed ? 'OK' : 'NG'}}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</aside>

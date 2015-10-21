@@ -70,3 +70,10 @@
     background-color: #ff4081;
   }
 }
+
+.table-container {
+  overflow: scroll;
+  height: calc(100vh - 64px);
+}
+
+
