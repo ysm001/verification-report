@@ -45,7 +45,6 @@ class SummaryTableController {
   }
 
   onClick(index) {
-    console.log(index);
     this.activeRecord = index;
   }
 }
