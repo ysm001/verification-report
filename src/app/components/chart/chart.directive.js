@@ -20,7 +20,7 @@ class ChartController {
     'ngInject';
 
     this.$log = $log;
-    this.type = 'column2d'
+    this.type = 'mscolumn2d'
     this.dataSource = 'data/details/network1.json';
     this.dataFormat = 'jsonurl';
 
