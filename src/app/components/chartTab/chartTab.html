@@ -1,0 +1,21 @@
+<div class="chart-tabs-container">
+  <div class="chart-tabs">
+    <a ng-repeat="category in chartTab.categories"
+       id="{{category.id}}-tab"
+       href="#"
+       class="chart-tab mdl-button mdl-js-button mdl-button--primary"
+       ng-click="chartTab.scrollTo($index)"
+       ng-class="chartTab.getClass($index)">{{category.name}}</a>
+  </div>
+</div>
+
+<div class="chart-container">
+  <chart ng-repeat="category in chartTab.categories"
+  id="{{category.id}}"
+  dataSource="data/details/{{category.id}}.json"></chart>
+</div>
+
+<div class="chart-tab-footer chart-card mdl-card mdl-shadow--2dp">
+  <div class="mdl-card__actions mdl-card--border">
+  </div>
+</div>

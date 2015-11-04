@@ -1,0 +1,58 @@
+.chart-tabs-container {
+  padding-bottom: 48px;
+
+  .chart-tabs {
+    position: fixed;
+    top: 64px;
+    right: 0px;
+    width: calc(75% + 16px);
+    height: 48px;
+    background: white;
+    z-index: 2;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+
+    .chart-tab {
+      height: 100%;
+      line-height: 48px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.54);
+      margin-left: 10px;
+      margin-right: 10px;
+      border-radius: 0px;
+
+      &:hover {
+        background: white;
+        color: rgb(0,150,136);
+      }
+
+      &:focus:not(:active) {
+        background: white;
+      }
+    }
+
+    .chart-tab-active {
+      color: rgba(0,0,0,.87);
+    }
+  }
+}
+
+chart-tab {
+  width: calc(75% + 16px) !important;
+  overflow: scroll;
+  height: calc(100vh - 64px);
+
+  .chart-tab-footer {
+    height: 250px;
+    margin-bottom: 0px;
+    background: #424242;
+  }
+}
+
+.chart-tab-active {
+  color: rgb(0,150,136) !important;
+  box-shadow: 0px -3px 0px rgb(0,150,136) inset;
+}
