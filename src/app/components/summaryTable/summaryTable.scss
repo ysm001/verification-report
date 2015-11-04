@@ -1,11 +1,33 @@
+.table-header {
+  background: #252530;
+  margin-bottom: 48px;
+  width: calc(25% - 32px);
+  height: 48px;
+  border-bottom: solid 1px grey;
+
+  position: absolute;
+  top: 64px;
+  left: 0px;
+  z-index: 2;
+}
+
 .summary-table {
   width: 100%;
   background: #34343e;
+  cursor: pointer;
 
-  tr {
+  .summary-record {
     color: #fafafa;
+    border-right: solid 1px grey;
+    outline: none;
+
     &:hover {
-      color: #34343e;
+      color: grey;
+    }
+
+    &-active {
+      color: #252530;
+      background: #b5b5b5;
     }
   }
 
@@ -23,7 +45,7 @@
     transform: translateY(-50%);
 
     color: white;
-    background-color: rgba(158,158,158, 0.20);
+    background-color: #4A4A52;
     height: 36px;
     min-width: 64px;
     padding: 0 8px;
@@ -48,3 +70,10 @@
     background-color: #ff4081;
   }
 }
+
+.table-container {
+  overflow: scroll;
+  height: calc(100vh - 64px);
+}
+
+

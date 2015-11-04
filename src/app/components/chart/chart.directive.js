@@ -9,8 +9,13 @@ export function ChartDirective() {
     },
     controller: ChartController,
     controllerAs: 'chart',
-    bindToController: true
+    bindToController: true,
+    link: postLink
   };
+
+  function postLink(scope, element, attrs, controller) {
+    controller.setDataSource(attrs.datasource);
+  }
 
   return directive;
 }
@@ -20,8 +25,8 @@ class ChartController {
     'ngInject';
 
     this.$log = $log;
-    this.type = 'column2d'
-    this.dataSource = 'data/details/network1.json';
+    this.type = 'mscolumn2d'
+    this.dataSource = 'data/details/chart-network.json';
     this.dataFormat = 'jsonurl';
 
     this.activate();
@@ -29,5 +34,9 @@ class ChartController {
 
   activate() {
     this.$log.info('Activated NetworkChart View');
+  }
+
+  setDataSource(dataSource) {
+    this.dataSource = dataSource;
   }
 }

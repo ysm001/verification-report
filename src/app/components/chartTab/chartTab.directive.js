@@ -16,12 +16,12 @@ export function ChartTabDirective() {
   function postLink(scope, element, attrs, ctrl) {
     element.bind('scroll', function() {
       scope.$apply(function() {
-        ctrl.setActiveTab((getActiveTarget(element) || {}).id);
+        ctrl.setActiveTabById((getActiveTab(element) || {}).id);
       });
     });
   }
 
-  function getActiveTarget(element) {
+  function getActiveTab(element) {
     var raw = element[0];
     var header = angular.element('.chart-tabs-container')[0];
     var offset = header.offsetTop + header.offsetHeight;
@@ -35,33 +35,47 @@ export function ChartTabDirective() {
 }
 
 class ChartTabController {
-  constructor ($scope, $log, $location, $anchorScroll) {
+  constructor ($scope, $log, $location, $anchorScroll, verificationSummary) {
     'ngInject';
 
     this.$log = $log;
     this.$location = $location;
     this.$anchorScroll = $anchorScroll;
-    this.activeTab = angular.element('chart')[0].id;
+    this.activeTab = 0;
 
-    this.activate();
+    this.categories = [];
+    this.activate(verificationSummary);
   }
 
-  activate() {
+  activate(verificationSummary) {
+    return verificationSummary.getCategories().then((data) => {
       this.$log.info('Activated ChartTab View');
+
+      this.categories = data;
+
+      return this.summaries;
+    });
   }
 
-  scrollTo(id) {
+  scrollTo(index) {
+    var id = this.categories[index].id;
+
     this.$location.hash(id);
     this.$anchorScroll();
+
     var offset = angular.element('.chart-tabs-container')[0].offsetHeight;
     angular.element('chart-tab')[0].scrollTop -= offset;
   }
 
-  setActiveTab(id) {
-    this.activeTab = id;
+  setActiveTab(index) {
+    this.activeTab = index;
   }
 
-  getClass(id) {
-    return this.activeTab == id ? 'chart-tab-active' : '';
+  setActiveTabById(id) {
+    this.setActiveTab(this.categories.findIndex(function(category) {return category.id == id;}));
+  }
+
+  getClass(index) {
+    return this.activeTab == index ? 'chart-tab-active' : '';
   }
 }
