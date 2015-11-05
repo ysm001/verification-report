@@ -21,7 +21,7 @@ export function ChartDirective() {
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON) {
+  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -29,8 +29,9 @@ class ChartController {
     this.$timeout = $timeout;
     this.type = 'mscolumn2d';
     this.dataFormat = 'json';
-    this.dataSources = [''];
+    this.dataSources = [];
     this.fioJSON = fioJSON;
+    this.kernbenchJSON = kernbenchJSON;
 
     this.activate();
 
@@ -42,10 +43,25 @@ class ChartController {
   }
 
   setCategory(category) {
-    const self = this;
     this.category = category;
 
-    this.fioJSON.getFushionFormatJSONs().then((res) => {
+    this.loadDataSource(this.category);
+  }
+
+  getJSONService(category) {
+    if (category == 'io') {
+      return this.fioJSON;
+    } else if (category == 'memory') {
+      return this.kernbenchJSON;
+    } else {
+      return this.fioJSON;
+    }
+  }
+
+  loadDataSource(category) {
+    const self = this;
+
+    this.getJSONService(category).getFushionFormatJSONs().then((res) => {
       self.$timeout(() => {
         self.dataSources = res;
         self.$scope.$apply();

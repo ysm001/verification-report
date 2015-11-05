@@ -1,4 +1,4 @@
-export class FioJSONService {
+export class KernbenchJSONService {
   constructor ($log, $resource, $q) {
     'ngInject';
 
@@ -8,7 +8,7 @@ export class FioJSONService {
   }
 
   getJSON() {
-    return this.$resource('/data/details/io.json').get();
+    return this.$resource('/data/details/memory.json').get();
   }
 
   getFushionFormatJSONs() {
@@ -29,15 +29,15 @@ export class FioJSONService {
   getFushionFormatJSON(operation, rawJson, style) {
     const self = this;
 
-    const nested_throughputs = rawJson.map(function(val) {return val.throughputs});
+    const nested_throughputs = rawJson;
     const throughputs = Array.prototype.concat.apply([], nested_throughputs);
 
     const dataSet = self.makeDataset(throughputs);
     const categories = self.makeCategories(throughputs);
 
     style.caption = operation;
-    style.xAxisName = '';
-    style.yAxisName = 'Throughput (MB/s)';
+    style.xAxisName = 'Number of Threads';
+    style.yAxisName = 'Average Compile Time (s)';
 
     return {
       chart: style,
@@ -52,7 +52,7 @@ export class FioJSONService {
 
   makeCategories(throughputs) {
     return [{
-      category: throughputs.map(function(t) {return {label: t.block_size + 'K'}})
+      category: throughputs.map(function(t) {return {label: t.thread_num.toString() }})
     }]
   }
 
