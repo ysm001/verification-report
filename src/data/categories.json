@@ -1,18 +1,18 @@
 [
   {
-    "id": "chart-network",
+    "id": "network",
     "name": "Network"
   },
   {
-    "id": "chart-io",
+    "id": "io",
     "name": "I/O"
   },
   {
-    "id": "chart-memory",
+    "id": "memory",
     "name": "Memory"
   },
   {
-    "id": "chart-task",
+    "id": "task",
     "name": "Task"
   }
 ]

@@ -11,8 +11,8 @@
 
 <div class="chart-container">
   <chart ng-repeat="category in chartTab.categories"
-  id="{{category.id}}"
-  dataSource="data/details/{{category.id}}.json"></chart>
+  id="chart-{{category.id}}"
+  category="{{category.id}}"></chart>
 </div>
 
 <div class="chart-tab-footer chart-card mdl-card mdl-shadow--2dp">

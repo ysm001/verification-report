@@ -14,29 +14,42 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setDataSource(attrs.datasource);
+    controller.setCategory(attrs.category);
   }
 
   return directive;
 }
 
 class ChartController {
-  constructor ($scope, $log) {
+  constructor ($scope, $log, $timeout, $attrs, fioJSON) {
     'ngInject';
 
     this.$log = $log;
-    this.type = 'mscolumn2d'
-    this.dataSource = 'data/details/chart-network.json';
-    this.dataFormat = 'jsonurl';
+    this.$scope = $scope;
+    this.$timeout = $timeout;
+    this.type = 'mscolumn2d';
+    this.dataFormat = 'json';
+    this.dataSource = '{"a": "a"}';
+    this.fioJSON = fioJSON;
 
     this.activate();
+
+    const self = this;
   }
 
   activate() {
-    this.$log.info('Activated NetworkChart View');
+    this.$log.info('Activated ' + this.category + ' Chart View');
   }
 
-  setDataSource(dataSource) {
-    this.dataSource = dataSource;
+  setCategory(category) {
+    const self = this;
+    this.category = category;
+
+    this.fioJSON.getFushionFormatJSONs().then((res) => {
+      self.$timeout(() => {
+        self.dataSource = res[0];
+        self.$scope.$apply();
+      }, 0);
+    });
   }
 }

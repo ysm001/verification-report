@@ -12,6 +12,7 @@ import { MalarkeyDirective } from '../app/components/malarkey/malarkey.directive
 import { SummaryTableDirective } from '../app/components/summaryTable/summaryTable.directive';
 import { ChartTabDirective } from '../app/components/chartTab/chartTab.directive';
 import { ChartDirective } from '../app/components/chart/chart.directive';
+import { FioJSONService } from '../app/components/chart/services/fioJSON.service';
 
 angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'ng-fusioncharts'])
   .constant('malarkey', malarkey)
@@ -22,6 +23,7 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .service('githubContributor', GithubContributorService)
   .service('verificationSummary', VerificationSummaryService)
   .service('webDevTec', WebDevTecService)
+  .service('fioJSON', FioJSONService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective)
