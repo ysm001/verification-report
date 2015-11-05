@@ -54,7 +54,7 @@ class ChartController {
     } else if (category == 'memory') {
       return this.kernbenchJSON;
     } else {
-      return this.fioJSON;
+      return this.kernbenchJSON;
     }
   }
 

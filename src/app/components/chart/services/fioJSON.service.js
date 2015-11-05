@@ -36,7 +36,7 @@ export class FioJSONService {
     const categories = self.makeCategories(throughputs);
 
     style.caption = operation;
-    style.xAxisName = '';
+    style.xAxisName = 'Block Size (KB)';
     style.yAxisName = 'Throughput (MB/s)';
 
     return {
@@ -52,7 +52,7 @@ export class FioJSONService {
 
   makeCategories(throughputs) {
     return [{
-      category: throughputs.map(function(t) {return {label: t.block_size + 'K'}})
+      category: throughputs.map(function(t) {return {label: t.block_size.toString()}})
     }]
   }
 
