@@ -29,7 +29,7 @@ class ChartController {
     this.$timeout = $timeout;
     this.type = 'mscolumn2d';
     this.dataFormat = 'json';
-    this.dataSource = '{"a": "a"}';
+    this.dataSources = [''];
     this.fioJSON = fioJSON;
 
     this.activate();
@@ -47,7 +47,7 @@ class ChartController {
 
     this.fioJSON.getFushionFormatJSONs().then((res) => {
       self.$timeout(() => {
-        self.dataSource = res[0];
+        self.dataSources = res;
         self.$scope.$apply();
       }, 0);
     });

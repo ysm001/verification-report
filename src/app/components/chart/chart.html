@@ -1,12 +1,15 @@
 <div class="chart-card mdl-card mdl-shadow--2dp">
-  <div fusioncharts
-     class="chart"
-     width="600" 
-     height="400"
-     type={{chart.type}}
-     dataformat={{chart.dataFormat}}
-     datasource="{{chart.dataSource}}"
-     >
+
+  <div ng-repeat="dataSource in chart.dataSources">
+    <div fusioncharts
+       class="chart"
+       width="600" 
+       height="400"
+       type={{chart.type}}
+       dataformat={{chart.dataFormat}}
+       datasource="{{dataSource}}"
+       >
+    </div>
   </div>
 
   <div class="mdl-card__actions mdl-card--border">
