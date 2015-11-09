@@ -29,12 +29,12 @@ export class LmbenchJSONService {
   getFushionFormatJSON(operation, rawJson, style) {
     const self = this;
 
-    const dataSet = self.makeDataset(rawJson);
-    const categories = self.makeCategories(rawJson);
+    const dataSet = self.makeDataset(operation, rawJson);
+    const categories = self.makeCategories(operation, rawJson);
 
     style.caption = operation;
     style.xAxisName = '';
-    style.yAxisName = '';
+    style.yAxisName = this.getYAxisName(operation);
 
     return {
       chart: style,
@@ -43,20 +43,32 @@ export class LmbenchJSONService {
     };
   }
 
-  makeDataset(rawJson) {
-    return [this.makeSeries(rawJson, 'ON'), this.makeSeries(rawJson, 'ON/ON'), this.makeSeries(rawJson, 'OFF/ON')]
+  getYAxisName(operation) {
+    if (operation == 'process') {
+      return 'Processing Time (μs)';
+    } else {
+      return 'Latency (μs)'
+    }
   }
 
-  makeCategories(rawJson) {
+  getKeys(operation, rawJson) {
+    return operation != 'context_switch' ? Object.keys(rawJson) :  ['2p/0K', '2p/16K', '2p/64K', '8p/16K', '8p/64K', '16p/16K', '16p/64K'];
+  }
+
+  makeDataset(operation, rawJson) {
+    return [this.makeSeries(operation, rawJson, 'ON'), this.makeSeries(operation, rawJson, 'ON/ON'), this.makeSeries(operation, rawJson, 'OFF/ON')]
+  }
+
+  makeCategories(operation, rawJson) {
     return [{
-      category: Object.keys(rawJson).map(function(k) {return {label: k }})
+      category: this.getKeys(operation, rawJson).map(function(k) {return {label: k }})
     }]
   }
 
-  makeSeries(rawJson, key) {
+  makeSeries(operation, rawJson, key) {
     return  {
       seriesname: key,
-      data: Object.keys(rawJson).map(function(k) {return {value: rawJson[k][key]}})
+      data: this.getKeys(operation, rawJson).map(function(k) {return {value: rawJson[k][key]}})
     }
   }
 }
