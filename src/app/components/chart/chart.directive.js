@@ -22,7 +22,7 @@ export function ChartDirective() {
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON) {
+  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -33,6 +33,7 @@ class ChartController {
     this.dataSources = [];
     this.fioJSON = fioJSON;
     this.kernbenchJSON = kernbenchJSON;
+    this.lmbenchJSON = lmbenchJSON;
 
     this.activate();
 
@@ -58,6 +59,8 @@ class ChartController {
       return this.fioJSON;
     } else if (category == 'memory') {
       return this.kernbenchJSON;
+    } else if (category == 'task') {
+      return this.lmbenchJSON;
     } else {
       return this.kernbenchJSON;
     }
