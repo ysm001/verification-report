@@ -15,6 +15,7 @@ export function ChartDirective() {
 
   function postLink(scope, element, attrs, controller) {
     controller.setCategory(attrs.category);
+    controller.setTitle(attrs.title);
   }
 
   return directive;
@@ -46,6 +47,10 @@ class ChartController {
     this.category = category;
 
     this.loadDataSource(this.category);
+  }
+
+  setTitle(title) {
+    this.title = title;
   }
 
   getJSONService(category) {
