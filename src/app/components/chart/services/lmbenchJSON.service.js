@@ -18,7 +18,7 @@ export class LmbenchJSONService {
     const rawJsonPromise = self.getJSON().$promise;
 
     return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
-      const rawJsons = values[1].toJSON();
+      const rawJsons = this.formatData(values[1].toJSON());
 
       return Object.keys(rawJsons).map((key) => {
         return self.getFushionFormatJSON(key, rawJsons[key], values[0].toJSON());
@@ -43,12 +43,32 @@ export class LmbenchJSONService {
     };
   }
 
+  formatData(rawJsons) {
+    return Object.keys(rawJsons).reduce(function(result, key) {
+      if (key != 'memory') {
+        result[key] = rawJsons[key];
+        return result;
+      }
+
+      result.memory_mmap = {mmap: rawJsons.memory.mmap};
+      result.memory = {
+        protection_fault: rawJsons.memory.protection_fault,
+        page_fault: rawJsons.memory.page_fault
+      };
+
+      return result;
+    }, {});
+  }
+
   getYAxisName(operation) {
     if (operation == 'process') {
       return 'Processing Time (μs)';
     } else {
       return 'Latency (μs)'
     }
+  }
+
+  getValue(operation, value) {
   }
 
   getKeys(operation, rawJson) {
