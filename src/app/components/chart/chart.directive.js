@@ -69,11 +69,11 @@ class ChartController {
   loadDataSource(category) {
     const self = this;
 
-    this.getJSONService(category).getFushionFormatJSONs().then((res) => {
-      self.$timeout(() => {
-        self.dataSources = res;
-        self.$scope.$apply();
-      }, 0);
-    });
+    // this.getJSONService(category).getFushionFormatJSONs().then((res) => {
+    //   self.$timeout(() => {
+    //     self.dataSources = res;
+    //     self.$scope.$apply();
+    //   }, 0);
+    // });
   }
 }

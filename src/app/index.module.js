@@ -12,9 +12,11 @@ import { MalarkeyDirective } from '../app/components/malarkey/malarkey.directive
 import { SummaryTableDirective } from '../app/components/summaryTable/summaryTable.directive';
 import { ChartTabDirective } from '../app/components/chartTab/chartTab.directive';
 import { ChartDirective } from '../app/components/chart/chart.directive';
+import { DetailTableDirective } from '../app/components/detailTable/detailTable.directive';
 import { FioJSONService } from '../app/components/chart/services/fioJSON.service';
 import { KernbenchJSONService } from '../app/components/chart/services/kernbenchJSON.service';
 import { LmbenchJSONService } from '../app/components/chart/services/LmbenchJSON.service';
+import { KernbenchTableJSONService } from '../app/components/detailTable/services/kernbenchTableJSON.service';
 
 angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'ng-fusioncharts'])
   .constant('malarkey', malarkey)
@@ -28,9 +30,11 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .service('fioJSON', FioJSONService)
   .service('kernbenchJSON', KernbenchJSONService)
   .service('lmbenchJSON', LmbenchJSONService)
+  .service('kernbenchTableJSON', KernbenchTableJSONService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective)
   .directive('summaryTable', SummaryTableDirective)
   .directive('chartTab', ChartTabDirective)
-  .directive('chart', ChartDirective);
+  .directive('chart', ChartDirective)
+  .directive('detailTable', DetailTableDirective);
