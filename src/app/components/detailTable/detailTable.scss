@@ -1,6 +1,8 @@
 .detail-table {
   margin-right : auto;
   margin-left : auto;
+  width: 90%;
+  margin-bottom: 20px;
 }
 
 .detail-table-title {
@@ -14,4 +16,9 @@
 
 .detail-table-header {
   text-align: center !important;
+  background-color: #fafafa;
+}
+
+.detail-table-col, .detail-table-header {
+  border-right: 1px solid rgba(0,0,0,.12);
 }
