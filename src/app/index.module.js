@@ -13,6 +13,7 @@ import { SummaryTableDirective } from '../app/components/summaryTable/summaryTab
 import { ChartTabDirective } from '../app/components/chartTab/chartTab.directive';
 import { ChartDirective } from '../app/components/chart/chart.directive';
 import { DetailTableDirective } from '../app/components/detailTable/detailTable.directive';
+import { DetailDirective } from '../app/components/detail/detail.directive';
 import { FioJSONService } from '../app/components/chart/services/fioJSON.service';
 import { KernbenchJSONService } from '../app/components/chart/services/kernbenchJSON.service';
 import { LmbenchJSONService } from '../app/components/chart/services/LmbenchJSON.service';
@@ -37,4 +38,5 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .directive('summaryTable', SummaryTableDirective)
   .directive('chartTab', ChartTabDirective)
   .directive('chart', ChartDirective)
-  .directive('detailTable', DetailTableDirective);
+  .directive('detailTable', DetailTableDirective)
+  .directive('detail', DetailDirective);

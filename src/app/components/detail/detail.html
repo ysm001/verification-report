@@ -1,0 +1,9 @@
+<a class="detail-button mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+  <button class="mdl-button mdl-js-button mdl-button--primary" ng-click="detail.onClicked()">
+    Detail
+    <i class="fa" ng-class="{'fa-chevron-down': !detail.isOpen(), 'fa-chevron-up': detail.isOpen()}"></i>
+  </button>
+</a>
+<div class="detail-container" ng-class="{'detail-container-open': detail.isOpen()}">
+  <detail-table></detail-table>
+</div>

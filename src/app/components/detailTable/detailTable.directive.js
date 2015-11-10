@@ -34,22 +34,6 @@ class DetailTableController {
       this.records = table.records;
     });
 
-    // this.title = 'Kernbench';
-
-    // this.headers = [
-    //   {text: 'a'},
-    //   {text: 'b'},
-    //   {text: 'c'},
-    //   {text: 'd'}
-    // ];
-
-    // this.records = [
-    // {cols: [{text: 10}, {text: 20}, {text: 30}, {text: 40}]},
-    // {cols: [{text: 10}, {text: 20}, {text: 30}, {text: 40}]},
-    // {cols: [{text: 10}, {text: 20}, {text: 30}, {text: 40}]},
-    // {cols: [{text: 10}, {text: 20}, {text: 30}, {text: 40}]}
-    // ];
-
     this.activate();
 
     const self = this;
