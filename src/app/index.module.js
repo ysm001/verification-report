@@ -17,7 +17,7 @@ import { DetailDirective } from '../app/components/detail/detail.directive';
 import { FioJSONService } from '../app/components/chart/services/fioJSON.service';
 import { KernbenchJSONService } from '../app/components/chart/services/kernbenchJSON.service';
 import { LmbenchJSONService } from '../app/components/chart/services/LmbenchJSON.service';
-import { KernbenchTableJSONService } from '../app/components/detailTable/services/kernbenchTableJSON.service';
+import { KernbenchTableJSONService } from '../app/components/detail/services/kernbenchTableJSON.service';
 
 angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'ng-fusioncharts'])
   .constant('malarkey', malarkey)

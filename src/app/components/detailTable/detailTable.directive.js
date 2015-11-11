@@ -14,32 +14,29 @@ export function DetailTableDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
+    controller.setTableData(attrs.title, JSON.parse(attrs.headers), JSON.parse(attrs.records));
   }
 
   return directive;
 }
 
 class DetailTableController {
-  constructor ($scope, $log, $timeout, $attrs, kernbenchTableJSON) {
+  constructor ($scope, $log, $timeout, $attrs) {
     'ngInject';
 
     this.$log = $log;
     this.$scope = $scope;
 
-    kernbenchTableJSON.getTableJSONs().then((tables) => {
-      const table = tables[0];
-      console.log(table);
-      this.title = table.title;
-      this.headers = table.headers;
-      this.records = table.records;
-    });
-
     this.activate();
-
-    const self = this;
   }
 
   activate() {
     this.$log.info('Activated detailTable View');
+  }
+
+  setTableData(title, headers, records) {
+    this.title = title;
+    this.headers = headers;
+    this.records = records;
   }
 }

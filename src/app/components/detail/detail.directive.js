@@ -20,16 +20,22 @@ export function DetailDirective() {
 }
 
 class DetailController {
-  constructor ($scope, $log, $timeout, $attrs) {
+  constructor ($scope, $log, $timeout, $attrs, kernbenchTableJSON) {
     'ngInject';
 
     this.$log = $log;
     this.$scope = $scope;
     this.opened = false;
+    this.kernbenchTableJSON = kernbenchTableJSON;
+
+    this.activate();
   }
 
   activate() {
-    this.$log.info('Activated detail View');
+    this.kernbenchTableJSON.getTableJSONs().then((tables) => {
+      this.$log.info('Activated detail View');
+      this.tables = tables;
+    });
   }
 
   onClicked() {

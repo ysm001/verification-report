@@ -5,5 +5,5 @@
   </button>
 </a>
 <div class="detail-container" ng-class="{'detail-container-open': detail.isOpen()}">
-  <detail-table></detail-table>
+  <detail-table ng-repeat="table in detail.tables" title="{{table.title}}" headers="{{table.headers}}" records="{{table.records}}"></detail-table>
 </div>
