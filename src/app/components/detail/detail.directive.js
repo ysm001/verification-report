@@ -20,19 +20,20 @@ export function DetailDirective() {
 }
 
 class DetailController {
-  constructor ($scope, $log, $timeout, $attrs, kernbenchTableJSON) {
+  constructor ($scope, $log, $timeout, $attrs, kernbenchTableJSON, fioTableJSON) {
     'ngInject';
 
     this.$log = $log;
     this.$scope = $scope;
     this.opened = false;
     this.kernbenchTableJSON = kernbenchTableJSON;
+    this.fioTableJSON = fioTableJSON;
 
     this.activate();
   }
 
   activate() {
-    this.kernbenchTableJSON.getTableJSONs().then((tables) => {
+    this.fioTableJSON.getTableJSONs().then((tables) => {
       this.$log.info('Activated detail View');
       this.tables = tables;
     });

@@ -17,8 +17,19 @@
 .detail-table-header {
   text-align: center !important;
   background-color: #fafafa;
+  border-top: 1px solid rgba(0,0,0,.12);
 }
 
 .detail-table-col, .detail-table-header {
   border-right: 1px solid rgba(0,0,0,.12);
+}
+
+.detail-table-col {
+  padding-top: 0px !important;
+  vertical-align: middle !important;
+
+  &-warn {
+    background-color: #5F7D8C;
+    color: white;
+  }
 }

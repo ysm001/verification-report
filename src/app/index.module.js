@@ -18,6 +18,7 @@ import { FioJSONService } from '../app/components/chart/services/fioJSON.service
 import { KernbenchJSONService } from '../app/components/chart/services/kernbenchJSON.service';
 import { LmbenchJSONService } from '../app/components/chart/services/LmbenchJSON.service';
 import { KernbenchTableJSONService } from '../app/components/detail/services/kernbenchTableJSON.service';
+import { FioTableJSONService } from '../app/components/detail/services/fioTableJSON.service';
 
 angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'ng-fusioncharts'])
   .constant('malarkey', malarkey)
@@ -32,6 +33,7 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .service('kernbenchJSON', KernbenchJSONService)
   .service('lmbenchJSON', LmbenchJSONService)
   .service('kernbenchTableJSON', KernbenchTableJSONService)
+  .service('fioTableJSON', FioTableJSONService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective)

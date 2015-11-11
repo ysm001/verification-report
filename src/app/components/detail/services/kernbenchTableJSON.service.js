@@ -27,7 +27,7 @@ export class KernbenchTableJSONService {
 
   makeHeaders(rawJson) {
     const sample = rawJson[0];
-    return Object.keys(sample).map((t) => { return {text: t} } );
+    return [Object.keys(sample).map((t) => { return {text: t} } )];
   }
 
   makeRecords(rawJson) {
