@@ -45,14 +45,17 @@ export class LmbenchJSONService {
 
   formatData(rawJsons) {
     return Object.keys(rawJsons).reduce((result, key) => {
-      const target = 'File & VM system';
-      if (key != target) {
-        result[key] = rawJsons[key];
+      if (this.isIgnored(key)) {
         return result;
+      } else if (key == 'File & VM system') {
+        const formattedData = this.formatFileVMSystemData(rawJsons, key, key);
+        Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
+      } else if (key == 'Processor, Processes') {
+        const formattedData = this.formatProcessorData(rawJsons, key, key);
+        Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
+      } else {
+        result[key] = rawJsons[key];
       }
-
-      const formattedData = this.formatFileVMSystemData(rawJsons, target, key);
-      Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
 
       return result;
     }, {});
@@ -61,10 +64,24 @@ export class LmbenchJSONService {
   formatFileVMSystemData(rawJsons, target, key) {
     const result = {};
     const mmapLatency = 'Mmap Latency';
+    const protectionFault = 'Prot Fault';
+    const pageFault = 'Page Fault';
+    const fdSelect = '100fd selct';
 
-    result[`${target} 1/2`] = {mmapLatency: rawJsons[target][mmapLatency]};
-    result[`${target} 2/2`] = rawJsons[target];
-    delete result[`${target} 2/2`][mmapLatency];
+    result[`${target} 1/3`] = rawJsons[target];
+    result[`${target} 2/3`] = {
+      mmapLatency: rawJsons[target][mmapLatency]
+    };
+    result[`${target} 3/3`] = {
+      protectionFault: rawJsons[target][protectionFault],
+      pageFault: rawJsons[target][pageFault],
+     fdSelect: rawJsons[target][fdSelect],
+    };
+
+    delete result[`${target} 1/3`][mmapLatency];
+    delete result[`${target} 1/3`][protectionFault];
+    delete result[`${target} 1/3`][pageFault];
+    delete result[`${target} 1/3`][fdSelect];
 
     return result;
   }
@@ -86,7 +103,14 @@ export class LmbenchJSONService {
     delete result[`${target} 2/2`][exec];
     delete result[`${target} 2/2`][shell];
 
+    console.log(result);
+
     return result;
+  }
+
+  isIgnored(title) {
+    const ignoredList = ['*Remote* Communication', 'Basic double operations', 'Basic float operations', 'Basic uint64 operations', 'Basic integer operations', 'Basic system parameters'];
+    return ignoredList.indexOf(title) >= 0;
   }
 
   getYAxisName(operation) {
