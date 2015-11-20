@@ -1,11 +1,15 @@
 .chart {
   text-align: center;
   margin: 20px;
+  width: 600px;
+  float: left;
 }
 
 .chart-card {
   width: 100%;
   margin-bottom: 5px;
+  overflow: scroll;
+
   .mdl-card__actions {
     text-align: center;
   }
@@ -18,6 +22,11 @@
     padding: 10px;
     color: #424242;
     background-color: #fafafa;
+  }
+
+  .chart-card-body {
+    width: 1280px;
+    min-width: 1280px;
   }
 
   .chart-card-title-bottom-line {
