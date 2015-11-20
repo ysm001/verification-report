@@ -67,6 +67,6 @@ class DetailController {
 
   setCategory(category) {
     this.category = category;
-    this.loadDataSource(category);
+    this.loadDataSource(this.category);
   }
 }

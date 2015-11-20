@@ -27,7 +27,7 @@ export class LmbenchTableJSONService {
 
   makeHeaders(rawJson) {
     const sample = rawJson[Object.keys(rawJson)[0]];
-    const indexes = Array.apply(null, {length: sample.length}).map(Number.call, Number)
+    const indexes = Array.apply(null, {length: sample.values.length}).map(Number.call, Number)
     const old_indexes = indexes.map((i) => { return `old ${i + 1}` } );
     const new_indexes = indexes.map((i) => { return `new ${i + 1}` } );
 
@@ -44,13 +44,10 @@ export class LmbenchTableJSONService {
 
     return Object.keys(rawJson).map((k) => { 
       const cols = rawJson[k];
-      const old_average = round(cols.reduce((prev, current) => {return prev + parseFloat(current.old)}, 0) / cols.length, 3);
-      const new_average = round(cols.reduce((prev, current) => {return prev + parseFloat(current.new)}, 0) / cols.length, 3);
-      const ratio = round((new_average - old_average) * 100 / new_average, 3);
-      const old_cols = cols.map((col) => {return {text: round(col.old, 3)}})
-      const new_cols = cols.map((col) => {return {text: round(col.new, 3)}})
+      const old_cols = cols.values.map((col) => {return {text: round(col.old, 3)}})
+      const new_cols = cols.values.map((col) => {return {text: round(col.new, 3)}})
 
-      return { cols: [{text: k}, {text: old_average}].concat(old_cols).concat([{text: new_average}]).concat(new_cols).concat([{text: ratio}]) }
+      return { cols: [{text: k}, {text: round(cols.averages.old, 3)}].concat(old_cols).concat([{text: round(cols.averages.new, 3)}]).concat(new_cols).concat([{text: round(cols.ratio, 3)}]) }
     });
   }
 }

@@ -67,11 +67,11 @@ class ChartController {
   }
 
   loadDataSource(category) {
-    // this.getJSONService(category).getFushionFormatJSONs().then((res) => {
-    //   this.$timeout(() => {
-    //     this.dataSources = res;
-    //     this.$scope.$apply();
-    //   }, 0);
-    // });
+    this.getJSONService(category).getFushionFormatJSONs().then((res) => {
+      this.$timeout(() => {
+        this.dataSources = res;
+        this.$scope.$apply();
+      }, 0);
+    });
   }
 }
