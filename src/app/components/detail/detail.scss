@@ -1,0 +1,35 @@
+.detail-button {
+  padding-left: 0px;
+  padding-right: 0px;
+  border: solid 1px #e0e0e0;
+  width: 100px;
+
+  &:hover {
+    background: #e0e0e0;
+  }
+
+  .mdl-button {
+    color:rgb(0,150,136) !important;
+
+    &:focus:not(:active) {
+      background: transparent !important;
+    }
+
+    &:hover {
+      background: transparent;
+    }
+  }
+}
+
+.detail-container {
+  transition-property: max-height;
+  transition-duration: 0.5s;
+  height: auto;
+  max-height: 0px;
+  overflow: hidden;
+
+  &-open {
+    max-height: 5096px;
+    overflow: scroll;
+  }
+}

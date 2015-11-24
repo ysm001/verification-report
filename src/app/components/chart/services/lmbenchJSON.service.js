@@ -44,20 +44,73 @@ export class LmbenchJSONService {
   }
 
   formatData(rawJsons) {
-    return Object.keys(rawJsons).reduce(function(result, key) {
-      if (key != 'memory') {
-        result[key] = rawJsons[key];
+    return Object.keys(rawJsons).reduce((result, key) => {
+      if (this.isIgnored(key)) {
         return result;
+      } else if (key == 'File & VM system') {
+        const formattedData = this.formatFileVMSystemData(rawJsons, key, key);
+        Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
+      } else if (key == 'Processor, Processes') {
+        const formattedData = this.formatProcessorData(rawJsons, key, key);
+        Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
+      } else {
+        result[key] = rawJsons[key];
       }
-
-      result.memory_mmap = {mmap: rawJsons.memory.mmap};
-      result.memory = {
-        protection_fault: rawJsons.memory.protection_fault,
-        page_fault: rawJsons.memory.page_fault
-      };
 
       return result;
     }, {});
+  }
+
+  formatFileVMSystemData(rawJsons, target, key) {
+    const result = {};
+    const mmapLatency = 'Mmap Latency';
+    const protectionFault = 'Prot Fault';
+    const pageFault = 'Page Fault';
+    const fdSelect = '100fd selct';
+
+    result[`${target} 1/3`] = rawJsons[target];
+    result[`${target} 2/3`] = {
+      mmapLatency: rawJsons[target][mmapLatency]
+    };
+    result[`${target} 3/3`] = {
+      protectionFault: rawJsons[target][protectionFault],
+      pageFault: rawJsons[target][pageFault],
+     fdSelect: rawJsons[target][fdSelect],
+    };
+
+    delete result[`${target} 1/3`][mmapLatency];
+    delete result[`${target} 1/3`][protectionFault];
+    delete result[`${target} 1/3`][pageFault];
+    delete result[`${target} 1/3`][fdSelect];
+
+    return result;
+  }
+
+  formatProcessorData(rawJsons, target, key) {
+    const result = {};
+    const fork = 'fork proc';
+    const exec = 'exec proc';
+    const shell = 'sh proc';
+
+    result[`${target} 1/2`] = {
+      fork: rawJsons[target][fork],
+      exec: rawJsons[target][exec],
+      shell: rawJsons[target][shell]
+    };
+
+    result[`${target} 2/2`] = rawJsons[target];
+    delete result[`${target} 2/2`][fork];
+    delete result[`${target} 2/2`][exec];
+    delete result[`${target} 2/2`][shell];
+
+    console.log(result);
+
+    return result;
+  }
+
+  isIgnored(title) {
+    const ignoredList = ['*Remote* Communication', 'Basic double operations', 'Basic float operations', 'Basic uint64 operations', 'Basic integer operations', 'Basic system parameters'];
+    return ignoredList.indexOf(title) >= 0;
   }
 
   getYAxisName(operation) {
@@ -76,7 +129,7 @@ export class LmbenchJSONService {
   }
 
   makeDataset(operation, rawJson) {
-    return [this.makeSeries(operation, rawJson, 'ON'), this.makeSeries(operation, rawJson, 'ON/ON'), this.makeSeries(operation, rawJson, 'OFF/ON')]
+    return [this.makeSeries(operation, rawJson, 'old'), this.makeSeries(operation, rawJson, 'new')];
   }
 
   makeCategories(operation, rawJson) {
@@ -88,7 +141,7 @@ export class LmbenchJSONService {
   makeSeries(operation, rawJson, key) {
     return  {
       seriesname: key,
-      data: this.getKeys(operation, rawJson).map(function(k) {return {value: rawJson[k][key]}})
+      data: this.getKeys(operation, rawJson).map(function(k) {return {value: rawJson[k]['averages'][key]}})
     }
   }
 }

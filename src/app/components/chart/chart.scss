@@ -1,11 +1,14 @@
 .chart {
   text-align: center;
   margin: 20px;
+  width: 600px;
+  float: left;
 }
 
 .chart-card {
   width: 100%;
   margin-bottom: 5px;
+
   .mdl-card__actions {
     text-align: center;
   }
@@ -20,29 +23,17 @@
     background-color: #fafafa;
   }
 
+  .chart-card-body-container {
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .chart-card-body {
+    width: 1280px;
+    min-width: 1280px;
+  }
+
   .chart-card-title-bottom-line {
     margin: 0px;
-  }
-}
-
-.detail-button {
-  padding-left: 0px;
-  padding-right: 0px;
-  border: solid 1px #e0e0e0;
-
-  &:hover {
-    background: #e0e0e0;
-  }
-
-  .mdl-button {
-    color:rgb(0,150,136) !important;
-
-    &:focus:not(:active) {
-      background: transparent !important;
-    }
-
-    &:hover {
-      background: transparent;
-    }
   }
 }
