@@ -15,6 +15,7 @@ import { ChartDirective } from '../app/components/chart/chart.directive';
 import { DetailTableDirective } from '../app/components/detailTable/detailTable.directive';
 import { DetailDirective } from '../app/components/detail/detail.directive';
 import { FioJSONService } from '../app/components/chart/services/fioJSON.service';
+import { NetperfJSONService } from '../app/components/chart/services/netperfJSON.service';
 import { KernbenchJSONService } from '../app/components/chart/services/kernbenchJSON.service';
 import { LmbenchJSONService } from '../app/components/chart/services/LmbenchJSON.service';
 import { KernbenchTableJSONService } from '../app/components/detail/services/kernbenchTableJSON.service';
@@ -36,6 +37,7 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .service('kernbenchTableJSON', KernbenchTableJSONService)
   .service('fioTableJSON', FioTableJSONService)
   .service('lmbenchTableJSON', LmbenchTableJSONService)
+  .service('netperfJSON', NetperfJSONService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective)
