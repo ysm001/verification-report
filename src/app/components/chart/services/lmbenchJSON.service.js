@@ -1,30 +1,10 @@
-export class LmbenchJSONService {
+import { ChartJSONService } from './chartJSON.service';
+
+export class LmbenchJSONService extends ChartJSONService {
   constructor ($log, $resource, $q) {
     'ngInject';
 
-    this.$log = $log;
-    this.$resource = $resource;
-    this.$q = $q;
-  }
-
-  getJSON() {
-    return this.$resource('/data/details/task.json').get();
-  }
-
-  getFushionFormatJSONs() {
-    return new LmbenchRatioJSONService(this.$log, this.$resource, this.$q).getFushionFormatJSONs();
-    const self = this;
-
-    const stylePromise = this.$resource('/data/templates/style.json').get().$promise;
-    const rawJsonPromise = self.getJSON().$promise;
-
-    return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
-      const rawJsons = this.formatData(values[1].toJSON());
-
-      return Object.keys(rawJsons).map((key) => {
-        return self.getFushionFormatJSON(key, rawJsons[key], values[0].toJSON());
-      });
-    })
+    super($log, $resource, $q, 'task');
   }
 
   getFushionFormatJSON(operation, rawJson, style) {
@@ -45,7 +25,7 @@ export class LmbenchJSONService {
     };
   }
 
-  formatData(rawJsons) {
+  formatJSONs(rawJsons) {
     return Object.keys(rawJsons).reduce((result, key) => {
       if (this.isIgnored(key)) {
         return result;

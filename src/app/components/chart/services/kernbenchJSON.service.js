@@ -1,57 +1,33 @@
-export class KernbenchJSONService {
+import { ChartJSONService } from './chartJSON.service';
+
+export class KernbenchJSONService extends ChartJSONService {
   constructor ($log, $resource, $q) {
     'ngInject';
 
-    this.$log = $log;
-    this.$resource = $resource;
-    this.$q = $q;
+    super($log, $resource, $q, 'memory');
   }
 
-  getJSON() {
-    return this.$resource('/data/details/memory.json').get();
+  formatJson(rawJson) {
+    return Array.prototype.concat.apply([], nested_throughputs);
   }
 
-  getFushionFormatJSONs() {
-    const self = this;
-
-    const stylePromise = this.$resource('/data/templates/style.json').get().$promise;
-    const rawJsonPromise = self.getJSON().$promise;
-
-    return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
-      const rawJsons = values[1].toJSON();
-
-      return Object.keys(rawJsons).map((key) => {
-        return self.getFushionFormatJSON(key, rawJsons[key], values[0].toJSON());
-      });
-    })
-  }
-
-  getFushionFormatJSON(operation, rawJson, style) {
-    const self = this;
-
-    const nested_throughputs = rawJson;
-    const throughputs = Array.prototype.concat.apply([], nested_throughputs);
-
-    const dataSet = self.makeDataset(throughputs);
-    const categories = self.makeCategories(throughputs);
-
-    style.caption = operation;
-    style.xAxisName = 'Number of Threads';
-    style.yAxisName = 'Average Compile Time (s)';
-
+  getStyle(operation) {
     return {
-      type: 'mscolumn2d',
-      chart: style,
-      categories: categories,
-      dataset: dataSet
+      caption: operation,
+      xAxisName: 'Number of Threads',
+      yAxisName: 'Average Compile Time (s)'
     };
   }
 
-  makeDataset(throughputs) {
+  getType(operation) {
+    return 'mscolumn2d';
+  }
+
+  makeDataset(operation, throughputs) {
     return [this.makeSeries(throughputs, 'old'), this.makeSeries(throughputs, 'new')]
   }
 
-  makeCategories(throughputs) {
+  makeCategories(operation, throughputs) {
     return [{
       category: throughputs.map(function(t) {return {label: t.thread_num.toString() }})
     }]
