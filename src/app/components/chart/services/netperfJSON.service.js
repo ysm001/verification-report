@@ -29,38 +29,100 @@ export class NetperfJSONService {
   getFushionFormatJSON(operation, rawJson, style) {
     const self = this;
 
-    const nested_throughputs = rawJson;
-    const throughputs = Array.prototype.concat.apply([], nested_throughputs);
-
-    const dataSet = self.makeDataset(throughputs);
-    const categories = self.makeCategories(throughputs);
+    const dataSet = self.makeDataset(operation, rawJson);
+    const categories = self.makeCategories(operation, rawJson);
+    console.log(dataSet);
 
     style.caption = operation;
-    style.xAxisName = 'Number of Threads';
-    style.yAxisName = 'Average Compile Time (s)';
+    style.xAxisName = '';
+    style.showValues = 0;
 
     return {
-      type: 'mscolumn2d',
+      type: 'msstackedcolumn2d',
       chart: style,
-      categories: categories,
-      dataset: dataSet
+      dataset: dataSet,
+      categories: categories
     };
   }
 
-  makeDataset(throughputs) {
-    return [this.makeSeries(throughputs, 'old'), this.makeSeries(throughputs, 'new')]
+  getItems() {
+    return [
+      '%gnice',
+      '%guest',
+      '%iowait',
+      '%irq',
+      '%nice',
+      '%soft',
+      '%steal',
+      '%sys',
+      '%usr'
+    ];
   }
 
-  makeCategories(throughputs) {
+  // makeDataset(operation, rawJson) {
+  //   if (rawJson == null) return;
+
+  //   return [{dataset: this.makeSeries(rawJson, 'old')}];
+  // }
+
+  // makeCategories(operation, rawJson) {
+  //   if (rawJson == null || !('old' in rawJson.each)) return;
+
+  //   return [{
+  //     category: Object.keys(rawJson.each.old['TCP_RR']).map(function(k) {return {label: k }})
+  //   }];
+  // }
+
+  // makeSeries(rawJson, key) {
+  //   if (!(key in rawJson.each)) {
+  //     return [];
+  //   }
+
+  //   const items = this.getItems();
+  //   const all = rawJson.each[key];
+
+  //   return this.getItems().map((item) => {
+  //     const data = Object.keys(all).map((k) => {
+  //       const values = all[k];
+
+  //       if (values == null) return [];
+  //       return Object.keys(values).map((v) => {return {value: values[v]}});
+  //     });
+
+  //     return {
+  //       seriesname: item,
+  //       data: data
+  //     }
+  //   });
+  // }
+
+  makeDataset(operation, rawJson) {
+    if (rawJson == null) return;
+
+    return [{dataset: this.makeSeries(rawJson, 'old')}, {dataset: this.makeSeries(rawJson, 'new')}];
+  }
+
+  makeCategories(operation, rawJson) {
+    if (rawJson == null) return;
+
     return [{
-      category: throughputs.map(function(t) {return {label: t.thread_num.toString() }})
-    }]
+      category: Object.keys(rawJson.all).map(function(k) {return {label: k }})
+    }];
   }
 
-  makeSeries(throughputs, key) {
-    return  {
-      seriesname: key,
-      data: throughputs.map(function(t) {return {value: t[key]}})
-    }
+  makeSeries(rawJson, key) {
+    const items = this.getItems();
+
+    const all = rawJson.all;
+    return this.getItems().map((item) => {
+      const data = Object.keys(all).map((k) => {
+        return (key in all[k]) ? {value: all[k][key][item]} : {value: 0};
+      });
+
+      return {
+        seriesname: item,
+        data: data
+      }
+    });
   }
 }

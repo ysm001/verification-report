@@ -3,7 +3,7 @@
   "xAxisName": "xAxis",
   "yAxisName": "yAxis",
   "plotFillAlpha": "100",
-  "paletteColors": "#09A274,#3465AA,#7c378a",
+  "paletteColors": "#09A274,#3465AA,#7c378a,#E91C63,#FF5622,#FF9800,#8BC34A,#4BAF4F,#03A9F4",
   "baseFontColor": "#333333",
   "baseFont": "Helvetica Neue,Arial",
   "captionFontSize": "14",

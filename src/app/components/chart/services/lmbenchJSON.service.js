@@ -105,8 +105,6 @@ export class LmbenchJSONService {
     delete result[`${target} 2/2`][exec];
     delete result[`${target} 2/2`][shell];
 
-    console.log(result);
-
     return result;
   }
 
@@ -178,7 +176,6 @@ class LmbenchRatioJSONService {
     const self = this;
 
     const data = self.makeDataset(operation, rawJson);
-    console.log(data);
 
     style.caption = operation;
     style.xAxisName = '';
