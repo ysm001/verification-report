@@ -40,6 +40,7 @@ export class FioJSONService {
     style.yAxisName = 'Throughput (MB/s)';
 
     return {
+      type: 'mscolumn2d',
       chart: style,
       categories: categories,
       dataset: dataSet

@@ -40,6 +40,7 @@ export class KernbenchJSONService {
     style.yAxisName = 'Average Compile Time (s)';
 
     return {
+      type: 'mscolumn2d',
       chart: style,
       categories: categories,
       dataset: dataSet
