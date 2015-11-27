@@ -22,7 +22,7 @@ export function ChartDirective() {
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, netperfJSON) {
+  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -34,6 +34,7 @@ class ChartController {
     this.fioJSON = fioJSON;
     this.kernbenchJSON = kernbenchJSON;
     this.lmbenchJSON = lmbenchJSON;
+    this.lmbenchLineJSON = lmbenchLineJSON;
     this.netperfJSON = netperfJSON;
 
     this.activate();
@@ -55,25 +56,30 @@ class ChartController {
     this.title = title;
   }
 
-  getJSONService(category) {
+  getJSONServices(category) {
     if (category == 'io') {
-      return this.fioJSON;
+      return [this.fioJSON];
     } else if (category == 'memory') {
-      return this.kernbenchJSON;
+      return [this.kernbenchJSON];
     } else if (category == 'task') {
-      return this.lmbenchJSON;
+      return [this.lmbenchJSON, this.lmbenchLineJSON];
     } else if (category == 'network') {
-      return this.netperfJSON;
+      return [this.netperfJSON];
     } else {
       console.log('unknown category');
     }
   }
 
+  makeDataSource(jsonServices) {
+    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()}));
+  }
+
   loadDataSource(category) {
-    this.getJSONService(category).getFushionFormatJSONs().then((res) => {
+    this.makeDataSource(this.getJSONServices(category)).then((results) => {
+      const dataSource = Array.prototype.concat.apply([], results);;
       this.$timeout(() => {
         if (this.category != 'task') return;
-        this.dataSources = res;
+        this.dataSources = dataSource;
         this.$scope.$apply();
       }, 0);
     });

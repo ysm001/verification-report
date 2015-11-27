@@ -17,7 +17,8 @@ import { DetailDirective } from '../app/components/detail/detail.directive';
 import { FioJSONService } from '../app/components/chart/services/fioJSON.service';
 import { NetperfJSONService } from '../app/components/chart/services/netperfJSON.service';
 import { KernbenchJSONService } from '../app/components/chart/services/kernbenchJSON.service';
-import { LmbenchJSONService } from '../app/components/chart/services/LmbenchJSON.service';
+import { LmbenchJSONService } from '../app/components/chart/services/lmbench/lmbenchJSON.service';
+import { LmbenchLineJSONService } from '../app/components/chart/services/lmbench/lmbenchLineJSON.service';
 import { KernbenchTableJSONService } from '../app/components/detail/services/kernbenchTableJSON.service';
 import { FioTableJSONService } from '../app/components/detail/services/fioTableJSON.service';
 import { LmbenchTableJSONService } from '../app/components/detail/services/LmbenchTableJSON.service';
@@ -34,6 +35,7 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .service('fioJSON', FioJSONService)
   .service('kernbenchJSON', KernbenchJSONService)
   .service('lmbenchJSON', LmbenchJSONService)
+  .service('lmbenchLineJSON', LmbenchLineJSONService)
   .service('kernbenchTableJSON', KernbenchTableJSONService)
   .service('fioTableJSON', FioTableJSONService)
   .service('lmbenchTableJSON', LmbenchTableJSONService)
