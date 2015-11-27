@@ -16,14 +16,18 @@ export class LmbenchJSONService extends ChartJSONService {
   }
 
   formatJSONs(rawJsons) {
+    const formatFuncs = {
+      'File & VM system': this.formatFileVMSystemData.bind(this),
+      'Processor, Processes': this.formatProcessorData.bind(this)
+    };
+
     return Object.keys(rawJsons).reduce((result, key) => {
       if (this.isIgnored(key)) {
         return result;
-      } else if (key == 'File & VM system') {
-        const formattedData = this.formatFileVMSystemData(rawJsons, key, key);
-        Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
-      } else if (key == 'Processor, Processes') {
-        const formattedData = this.formatProcessorData(rawJsons, key, key);
+      }
+      
+      if (key in formatFuncs) {
+        const formattedData = formatFuncs[key](rawJsons, key, key);
         Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
       } else {
         result[key] = rawJsons[key];
