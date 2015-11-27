@@ -34,7 +34,7 @@ export class ChartJSONService {
 
       return Object.keys(rawJsons).map((key) => {
         return self.getFushionFormatJSON(key, rawJsons[key], values[0].toJSON());
-      });
+      }).filter((e) => {return e != undefined && e != null});
     })
   }
 
@@ -44,6 +44,10 @@ export class ChartJSONService {
 
     const dataSet = this.makeDataset(operation, formattedJSON);
     const categories = this.makeCategories(operation, formattedJSON);
+
+    if (dataSet == null) {
+      return null;
+    }
 
     return this.getFushionFormatJSONResult(this.getType(operation), style, categories, dataSet);
   }

@@ -34,7 +34,9 @@ export class NetperfJSONService extends ChartJSONService {
   }
 
   makeDataset(operation, rawJson) {
-    if (rawJson == null) return;
+    if (rawJson == null || Object.keys(rawJson.all).length == 0) {
+      return null;
+    }
 
     return [{dataset: this.makeSeries(rawJson, 'old')}, {dataset: this.makeSeries(rawJson, 'new')}];
   }

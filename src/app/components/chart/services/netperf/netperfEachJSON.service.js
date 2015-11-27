@@ -2,7 +2,9 @@ import { NetperfJSONService } from './netperfJSON.service.js';
 
 export class NetperfEachJSONService extends NetperfJSONService {
   makeDataset(operation, rawJson) {
-    if (rawJson == null) return;
+    if (rawJson == null || Object.keys(rawJson.each).length == 0) {
+      return null;
+    }
 
     return [{dataset: this.makeSeries(rawJson, 'old')}];
   }
