@@ -78,7 +78,7 @@ class ChartController {
     this.makeDataSource(this.getJSONServices(category)).then((results) => {
       const dataSource = Array.prototype.concat.apply([], results);;
       this.$timeout(() => {
-        if (this.category != 'memory') return;
+        if (this.category != 'network') return;
         this.dataSources = dataSource;
         this.$scope.$apply();
       }, 0);

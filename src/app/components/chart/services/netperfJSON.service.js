@@ -1,46 +1,21 @@
-export class NetperfJSONService {
+import { ChartJSONService } from './chartJSON.service';
+
+export class NetperfJSONService extends ChartJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    this.$log = $log;
-    this.$resource = $resource;
-    this.$q = $q;
+    super($log, $resource, $q, verification, 'network');
   }
 
-  getJSON() {
-    return this.$resource('/data/details/network.json').get();
+  getType(operation) {
+    return 'msstackedcolumn2d';
   }
 
-  getFushionFormatJSONs() {
-    const self = this;
-
-    const stylePromise = this.$resource('/data/templates/style.json').get().$promise;
-    const rawJsonPromise = self.getJSON().$promise;
-
-    return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
-      const rawJsons = values[1].toJSON();
-
-      return Object.keys(rawJsons).map((key) => {
-        return self.getFushionFormatJSON(key, rawJsons[key], values[0].toJSON());
-      });
-    })
-  }
-
-  getFushionFormatJSON(operation, rawJson, style) {
-    const self = this;
-
-    const dataSet = self.makeDataset(operation, rawJson);
-    const categories = self.makeCategories(operation, rawJson);
-
-    style.caption = operation;
-    style.xAxisName = '';
-    style.showValues = 0;
-
+  getStyle(operation) {
     return {
-      type: 'msstackedcolumn2d',
-      chart: style,
-      dataset: dataSet,
-      categories: categories
+      caption: operation,
+      xAxisName: '',
+      showValues: 0
     };
   }
 
