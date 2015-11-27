@@ -30,6 +30,7 @@ class DetailController {
     this.kernbenchTableJSON = kernbenchTableJSON;
     this.lmbenchTableJSON = lmbenchTableJSON;
     this.fioTableJSON = fioTableJSON;
+    this.tables = null;
 
     this.activate();
   }
@@ -59,6 +60,10 @@ class DetailController {
 
   onClicked() {
     this.opened = !this.opened;
+
+    if (this.tables == null) {
+      this.loadDataSource(this.category);
+    }
   }
 
   isOpen() {
@@ -67,6 +72,5 @@ class DetailController {
 
   setCategory(category) {
     this.category = category;
-    this.loadDataSource(this.category);
   }
 }

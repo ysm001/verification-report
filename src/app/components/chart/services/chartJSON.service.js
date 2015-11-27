@@ -1,13 +1,14 @@
 export class ChartJSONService {
-  constructor ($log, $resource, $q, type) {
+  constructor ($log, $resource, $q, verification, type) {
     this.$log = $log;
     this.$resource = $resource;
     this.$q = $q;
+    this.verification = verification;
     this.type = type;
   }
 
   getJSON(type) {
-    return this.$resource(`/data/details/${this.type}.json`).get();
+    return this.verification.getDetail(this.type);
   }
 
   getStyleTemplate() {

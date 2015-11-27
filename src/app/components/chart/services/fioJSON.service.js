@@ -1,10 +1,10 @@
 import { ChartJSONService } from './chartJSON.service';
 
 export class FioJSONService extends ChartJSONService {
-  constructor ($log, $resource, $q) {
+  constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, 'io');
+    super($log, $resource, $q, verification, 'io');
   }
 
   getStyle(operation) {

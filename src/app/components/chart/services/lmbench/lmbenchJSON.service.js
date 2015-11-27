@@ -1,10 +1,10 @@
 import { ChartJSONService } from '../chartJSON.service';
 
 export class LmbenchJSONService extends ChartJSONService {
-  constructor ($log, $resource, $q) {
+  constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, 'task');
+    super($log, $resource, $q, verification, 'task');
   }
 
   getStyle(operation) {

@@ -1,5 +1,5 @@
 export class NetperfJSONService {
-  constructor ($log, $resource, $q) {
+  constructor ($log, $resource, $q, verification) {
     'ngInject';
 
     this.$log = $log;
@@ -31,7 +31,6 @@ export class NetperfJSONService {
 
     const dataSet = self.makeDataset(operation, rawJson);
     const categories = self.makeCategories(operation, rawJson);
-    console.log(dataSet);
 
     style.caption = operation;
     style.xAxisName = '';
