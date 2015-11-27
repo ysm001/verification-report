@@ -8,7 +8,7 @@ export class KernbenchJSONService extends ChartJSONService {
   }
 
   formatJson(rawJson) {
-    return Array.prototype.concat.apply([], nested_throughputs);
+    return Array.prototype.concat.apply([], rawJson);
   }
 
   getStyle(operation) {

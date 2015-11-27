@@ -22,7 +22,7 @@ export function ChartDirective() {
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON) {
+  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON, netperfEachJSON, netperfTimeJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -36,6 +36,8 @@ class ChartController {
     this.lmbenchJSON = lmbenchJSON;
     this.lmbenchLineJSON = lmbenchLineJSON;
     this.netperfJSON = netperfJSON;
+    this.netperfEachJSON = netperfEachJSON;
+    this.netperfTimeJSON = netperfTimeJSON;
 
     this.activate();
 
@@ -64,7 +66,7 @@ class ChartController {
     } else if (category == 'task') {
       return [this.lmbenchJSON, this.lmbenchLineJSON];
     } else if (category == 'network') {
-      return [this.netperfJSON];
+      return [this.netperfTimeJSON, this.netperfJSON, this.netperfEachJSON];
     } else {
       console.log('unknown category');
     }
