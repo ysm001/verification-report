@@ -86,24 +86,20 @@ export class LmbenchJSONService extends ChartJSONService {
     return operation == 'process' ? 'Processing Time (μs)' : 'Latency (μs)';
   }
 
-  getKeys(operation, rawJson) {
-    return operation != 'context_switch' ? Object.keys(rawJson) :  ['2p/0K', '2p/16K', '2p/64K', '8p/16K', '8p/64K', '16p/16K', '16p/64K'];
-  }
-
   makeDataset(operation, rawJson) {
     return [this.makeSeries(operation, rawJson, 'old'), this.makeSeries(operation, rawJson, 'new')];
   }
 
   makeCategories(operation, rawJson) {
     return [{
-      category: this.getKeys(operation, rawJson).map(function(k) {return {label: k }})
+      category: Object.keys(rawJson).map(function(k) {return {label: k }})
     }]
   }
 
   makeSeries(operation, rawJson, key) {
     return  {
       seriesname: key,
-      data: this.getKeys(operation, rawJson).map(function(k) {return {value: rawJson[k]['averages'][key]}})
+      data: Object.keys(rawJson).map(function(k) {return {value: rawJson[k]['averages'][key]}})
     }
   }
 }
