@@ -14,8 +14,8 @@ export class NetperfTimeJSONService extends ChartJSONService {
   getStyle(operation) {
     return {
       caption: operation,
-      xAxisName: 'Number of Threads',
-      yAxisName: 'Average Compile Time (s)'
+      yAxisName: 'Throughput (Mbps)',
+      formatNumberScale: 0
     };
   }
 
