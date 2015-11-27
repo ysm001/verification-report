@@ -7,21 +7,11 @@ export class LmbenchJSONService extends ChartJSONService {
     super($log, $resource, $q, 'task');
   }
 
-  getFushionFormatJSON(operation, rawJson, style) {
-    const self = this;
-
-    const dataSet = self.makeDataset(operation, rawJson);
-    const categories = self.makeCategories(operation, rawJson);
-
-    style.caption = operation;
-    style.xAxisName = '';
-    style.yAxisName = this.getYAxisName(operation);
-
+  getStyle(operation) {
     return {
-      type: 'mscolumn2d',
-      chart: style,
-      categories: categories,
-      dataset: dataSet
+      caption: operation,
+      xAxisName: '',
+      yAxisName: this.getYAxisName(operation)
     };
   }
 
@@ -43,65 +33,53 @@ export class LmbenchJSONService extends ChartJSONService {
     }, {});
   }
 
+  splitData(rawJsons, target, key, groups) {
+    const result = {}
+    const size = groups.length + 1;
+
+    const firstKey = `${target} 1/${size}`;
+    result[firstKey] = rawJsons[target];
+
+    groups.forEach((group, i) => {
+      const key = `${target} ${i + 2}/${size}`;
+      result[key] = {};
+      group.forEach((item) => {
+        result[key][item] = rawJsons[target][item];
+      });
+    });
+
+    Array.prototype.concat.apply([], groups).forEach((item) => {
+      delete result[firstKey][item];
+    });
+
+    return result
+  }
+
   formatFileVMSystemData(rawJsons, target, key) {
-    const result = {};
-    const mmapLatency = 'Mmap Latency';
-    const protectionFault = 'Prot Fault';
-    const pageFault = 'Page Fault';
-    const fdSelect = '100fd selct';
-
-    result[`${target} 1/3`] = rawJsons[target];
-    result[`${target} 2/3`] = {
-      mmapLatency: rawJsons[target][mmapLatency]
-    };
-    result[`${target} 3/3`] = {
-      protectionFault: rawJsons[target][protectionFault],
-      pageFault: rawJsons[target][pageFault],
-     fdSelect: rawJsons[target][fdSelect],
-    };
-
-    delete result[`${target} 1/3`][mmapLatency];
-    delete result[`${target} 1/3`][protectionFault];
-    delete result[`${target} 1/3`][pageFault];
-    delete result[`${target} 1/3`][fdSelect];
-
-    return result;
+    const groups = [['Mmap Latency'], ['Prot Fault', 'Page Fault', '100fd selct']];
+    return this.splitData(rawJsons, target, key, groups);
   }
 
   formatProcessorData(rawJsons, target, key) {
-    const result = {};
-    const fork = 'fork proc';
-    const exec = 'exec proc';
-    const shell = 'sh proc';
-
-    result[`${target} 1/2`] = {
-      fork: rawJsons[target][fork],
-      exec: rawJsons[target][exec],
-      shell: rawJsons[target][shell]
-    };
-
-    result[`${target} 2/2`] = rawJsons[target];
-    delete result[`${target} 2/2`][fork];
-    delete result[`${target} 2/2`][exec];
-    delete result[`${target} 2/2`][shell];
-
-    return result;
+    const groups = [['fork proc', 'exec proc', 'sh proc']];
+    return this.splitData(rawJsons, target, key, groups);
   }
 
   isIgnored(title) {
-    const ignoredList = ['*Remote* Communication', 'Basic double operations', 'Basic float operations', 'Basic uint64 operations', 'Basic integer operations', 'Basic system parameters'];
+    const ignoredList = [
+      '*Remote* Communication',
+      'Basic double operations',
+      'Basic float operations',
+      'Basic uint64 operations',
+      'Basic integer operations',
+      'Basic system parameters'
+    ];
+
     return ignoredList.indexOf(title) >= 0;
   }
 
   getYAxisName(operation) {
-    if (operation == 'process') {
-      return 'Processing Time (μs)';
-    } else {
-      return 'Latency (μs)'
-    }
-  }
-
-  getValue(operation, value) {
+    return operation == 'process' ? 'Processing Time (μs)' : 'Latency (μs)';
   }
 
   getKeys(operation, rawJson) {
@@ -175,7 +153,15 @@ class LmbenchRatioJSONService {
   }
 
   isIgnored(title) {
-    const ignoredList = ['*Remote* Communication', 'Basic double operations', 'Basic float operations', 'Basic uint64 operations', 'Basic integer operations', 'Basic system parameters'];
+    const ignoredList = [
+      '*Remote* Communication',
+      'Basic double operations',
+      'Basic float operations',
+      'Basic uint64 operations',
+      'Basic integer operations',
+      'Basic system parameters'
+    ];
+
     return ignoredList.indexOf(title) >= 0;
   }
 
