@@ -72,6 +72,7 @@ class ChartController {
   loadDataSource(category) {
     this.getJSONService(category).getFushionFormatJSONs().then((res) => {
       this.$timeout(() => {
+        if (this.category != 'task') return;
         this.dataSources = res;
         this.$scope.$apply();
       }, 0);

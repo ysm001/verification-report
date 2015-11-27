@@ -38,15 +38,19 @@ export class ChartJSONService {
   }
 
   getFushionFormatJSON(operation, rawJson, styleTemplate) {
-    const style = this.applyStyle(styleTemplate, this.getStyle(operation));
+    const style = this.applyStyle(styleTemplate, this.getStyle(operation, rawJson));
     const formattedJSON = this.formatJSON(operation, rawJson);
 
     const dataSet = this.makeDataset(operation, formattedJSON);
     const categories = this.makeCategories(operation, formattedJSON);
 
+    return this.getFushionFormatJSONResult(this.getType(operation), style, categories, dataSet);
+  }
+
+  getFushionFormatJSONResult(type, chart, categories, dataSet) {
     return {
-      type: this.getType(operation),
-      chart: style,
+      type: type,
+      chart: chart,
       categories: categories,
       dataset: dataSet
     };
