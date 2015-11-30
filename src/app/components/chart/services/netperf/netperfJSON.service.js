@@ -60,9 +60,10 @@ export class NetperfJSONService extends ChartJSONService {
 
   makeCategories(operation, rawJson) {
     if (rawJson == null) return;
+    const versions = ['old', 'new'];
 
     return [{
-      category: Object.keys(rawJson).map(function(k) {return {label: k }})
+      category: Object.keys(rawJson).map((k) => {return {label: k};})
     }];
   }
 

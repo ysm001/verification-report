@@ -1,44 +1,29 @@
 import { NetperfJSONService } from './netperfJSON.service.js';
 
 export class NetperfEachJSONService extends NetperfJSONService {
-  makeDataset(operation, rawJson) {
-    return null;
-    if (rawJson == null || Object.keys(rawJson.each).length == 0) {
-      return null;
-    }
-
-    return [{dataset: this.makeSeries(rawJson, 'old')}];
+  getTarget() {
+    return 'each';
   }
 
-  makeCategories(operation, rawJson) {
-    return null;
-    if (rawJson == null || !('old' in rawJson.each)) return;
+  formatJSONs(rawJsons) {
+    const targetName = this.getTarget();
 
-    return [{
-      category: Object.keys(rawJson.each.old['TCP_RR']).map(function(k) {return {label: k }})
-    }];
-  }
+    const res = Object.keys(rawJsons)
+      .filter((sender_receiver) => {return rawJsons[sender_receiver] != null && rawJsons[sender_receiver][targetName] != null})
+      .reduce((formattedJSON, sender_receiver) => {
+        const target = rawJsons[sender_receiver][targetName];
+        Object.keys(target).forEach((version) => {
+          Object.keys(target[version])
+            .filter((item) => {return target[version][item] != null;})
+            .forEach((item) => {
+              formattedJSON[`${item} [${sender_receiver} ${version}]`] = target[version][item];
+            });
+        });
 
-  makeSeries(rawJson, key) {
-    if (!(key in rawJson.each)) {
-      return [];
-    }
+        return formattedJSON;
+      }, {});
 
-    const items = this.getItems();
-    const all = rawJson.each[key];
-
-    return this.getItems().map((item) => {
-      const data = Object.keys(all).map((k) => {
-        const values = all[k];
-
-        if (values == null) return [];
-        return Object.keys(values).map((v) => {return {value: values[v]}});
-      });
-
-      return {
-        seriesname: item,
-        data: data
-      }
-    });
+    console.log(res);
+    return res;
   }
 }
