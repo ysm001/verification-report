@@ -7,6 +7,10 @@ export class NetperfTimeJSONService extends ChartJSONService {
     super($log, $resource, $q, verification, 'network-time');
   }
 
+  formatJSONs(rawJsons) {
+    return rawJsons;
+  }
+
   formatJson(rawJson) {
     return Array.prototype.concat.apply([], rawJson);
   }

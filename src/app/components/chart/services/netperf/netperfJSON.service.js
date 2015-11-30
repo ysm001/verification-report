@@ -33,11 +33,28 @@ export class NetperfJSONService extends ChartJSONService {
     ];
   }
 
-  makeDataset(operation, rawJson) {
-    if (rawJson == null || Object.keys(rawJson.all).length == 0) {
-      return null;
-    }
+  formatJSONs(rawJsons) {
+    const targetName = this.getTarget();
 
+    return Object.keys(rawJsons)
+      .filter((sender_receiver) => {return rawJsons[sender_receiver] != null && rawJsons[sender_receiver][targetName] != null})
+      .reduce((formattedJSON, sender_receiver) => {
+        const target = rawJsons[sender_receiver][targetName];
+        Object.keys(target)
+          .filter((item) => {return target[item] != null;})
+          .forEach((item) => {
+            formattedJSON[`${item} [${sender_receiver}]`] = target[item];
+          });
+
+        return formattedJSON;
+      }, {});
+  }
+
+  getTarget() {
+    return 'all';
+  }
+
+  makeDataset(operation, rawJson) {
     return [{dataset: this.makeSeries(rawJson, 'old')}, {dataset: this.makeSeries(rawJson, 'new')}];
   }
 
@@ -45,17 +62,16 @@ export class NetperfJSONService extends ChartJSONService {
     if (rawJson == null) return;
 
     return [{
-      category: Object.keys(rawJson.all).map(function(k) {return {label: k }})
+      category: Object.keys(rawJson).map(function(k) {return {label: k }})
     }];
   }
 
   makeSeries(rawJson, key) {
     const items = this.getItems();
 
-    const all = rawJson.all;
     return this.getItems().map((item) => {
-      const data = Object.keys(all).map((k) => {
-        return (key in all[k]) ? {value: all[k][key][item]} : {value: 0};
+      const data = Object.keys(rawJson).map((k) => {
+        return (key in rawJson[k]) ? {value: rawJson[k][key][item]} : {value: 0};
       });
 
       return {

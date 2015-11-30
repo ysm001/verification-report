@@ -2,6 +2,7 @@ import { NetperfJSONService } from './netperfJSON.service.js';
 
 export class NetperfEachJSONService extends NetperfJSONService {
   makeDataset(operation, rawJson) {
+    return null;
     if (rawJson == null || Object.keys(rawJson.each).length == 0) {
       return null;
     }
@@ -10,6 +11,7 @@ export class NetperfEachJSONService extends NetperfJSONService {
   }
 
   makeCategories(operation, rawJson) {
+    return null;
     if (rawJson == null || !('old' in rawJson.each)) return;
 
     return [{

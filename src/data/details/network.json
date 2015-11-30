@@ -4,7 +4,7 @@
         "all": {
             "RR CPU Usage": {
                 "TCP_RR": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -15,7 +15,7 @@
                         "%sys": 17.661, 
                         "%usr": 3.8326666667
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -31,7 +31,7 @@
             }, 
             "Stream CPU Usage": {
                 "TCP_STREAM": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -42,7 +42,7 @@
                         "%sys": 46.6996666667, 
                         "%usr": 2.257
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -55,7 +55,7 @@
                     }
                 }, 
                 "UDP_STREAM_1472": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -66,7 +66,7 @@
                         "%sys": 45.565, 
                         "%usr": 5.1033333333
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -79,7 +79,7 @@
                     }
                 }, 
                 "UDP_STREAM_18": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -90,7 +90,7 @@
                         "%sys": 45.565, 
                         "%usr": 5.1033333333
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -103,7 +103,7 @@
                     }
                 }, 
                 "UDP_STREAM_210": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -114,7 +114,7 @@
                         "%sys": 45.565, 
                         "%usr": 5.1033333333
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -127,7 +127,7 @@
                     }
                 }, 
                 "UDP_STREAM_466": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -138,7 +138,7 @@
                         "%sys": 45.565, 
                         "%usr": 5.1033333333
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -151,7 +151,7 @@
                     }
                 }, 
                 "UDP_STREAM_82": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -162,7 +162,7 @@
                         "%sys": 45.565, 
                         "%usr": 5.1033333333
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -175,7 +175,7 @@
                     }
                 }, 
                 "UDP_STREAM_978": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -186,7 +186,7 @@
                         "%sys": 45.565, 
                         "%usr": 5.1033333333
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0, 
                         "%guest": 0, 
                         "%iowait": 0, 
@@ -201,7 +201,7 @@
             }
         }, 
         "each": {
-            "RHEL6.6": {
+            "old": {
                 "RR CPU Usage": {
                     "TCP_RR": {
                         "cpu0": {
@@ -1642,7 +1642,7 @@
         "all": {
             "RR CPU Usage": {
                 "TCP_RR": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1653,7 +1653,7 @@
                         "%sys": 16.457, 
                         "%usr": 5.4423333333
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1669,7 +1669,7 @@
             }, 
             "Stream CPU Usage": {
                 "TCP_STREAM": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1680,7 +1680,7 @@
                         "%sys": 29.2033333333, 
                         "%usr": 1.27
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1693,7 +1693,7 @@
                     }
                 }, 
                 "UDP_STREAM_1472": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1704,7 +1704,7 @@
                         "%sys": 81.255, 
                         "%usr": 6.3476666667
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1717,7 +1717,7 @@
                     }
                 }, 
                 "UDP_STREAM_18": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1728,7 +1728,7 @@
                         "%sys": 81.255, 
                         "%usr": 6.3476666667
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1741,7 +1741,7 @@
                     }
                 }, 
                 "UDP_STREAM_210": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1752,7 +1752,7 @@
                         "%sys": 81.255, 
                         "%usr": 6.3476666667
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1765,7 +1765,7 @@
                     }
                 }, 
                 "UDP_STREAM_466": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1776,7 +1776,7 @@
                         "%sys": 81.255, 
                         "%usr": 6.3476666667
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1789,7 +1789,7 @@
                     }
                 }, 
                 "UDP_STREAM_82": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1800,7 +1800,7 @@
                         "%sys": 81.255, 
                         "%usr": 6.3476666667
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1813,7 +1813,7 @@
                     }
                 }, 
                 "UDP_STREAM_978": {
-                    "RHEL6.6": {
+                    "old": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1824,7 +1824,7 @@
                         "%sys": 81.255, 
                         "%usr": 6.3476666667
                     }, 
-                    "RHEL6.7": {
+                    "new": {
                         "%gnice": 0.0, 
                         "%guest": 0.0, 
                         "%iowait": 0.0, 
@@ -1839,7 +1839,7 @@
             }
         }, 
         "each": {
-            "RHEL6.6": {
+            "old": {
                 "RR CPU Usage": {
                     "TCP_RR": {
                         "cpu0": {
@@ -3270,7 +3270,7 @@
                     }
                 }
             }, 
-            "RHEL6.7": {
+            "new": {
                 "RR CPU Usage": {
                     "TCP_RR": {
                         "cpu0": {
