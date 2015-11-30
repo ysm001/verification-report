@@ -8,7 +8,7 @@ export class NetperfEachJSONService extends NetperfJSONService {
   formatJSONs(rawJsons) {
     const targetName = this.getTarget();
 
-    const res = Object.keys(rawJsons)
+    return Object.keys(rawJsons)
       .filter((sender_receiver) => {return rawJsons[sender_receiver] != null && rawJsons[sender_receiver][targetName] != null})
       .reduce((formattedJSON, sender_receiver) => {
         const target = rawJsons[sender_receiver][targetName];
@@ -22,8 +22,11 @@ export class NetperfEachJSONService extends NetperfJSONService {
 
         return formattedJSON;
       }, {});
+  }
 
-    console.log(res);
-    return res;
+  makeDataset(operation, rawJson) {
+    const coreNum = 16;
+    const categories = Array.from(Array(coreNum).keys()).map((i) => {return `cpu${i}`});
+    return categories.map((c) => {return {dataset: this.makeSeries(rawJson, c)};});
   }
 }
