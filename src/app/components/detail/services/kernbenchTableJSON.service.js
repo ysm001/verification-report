@@ -1,18 +1,19 @@
 export class KernbenchTableJSONService {
-  constructor ($log, $resource, $q) {
+  constructor ($log, $resource, $q, verification) {
     'ngInject';
 
     this.$log = $log;
     this.$resource = $resource;
     this.$q = $q;
+    this.verification = verification;
   }
 
   getJSON() {
-    return this.$resource('/data/details/memory.json').get();
+    return this.verification.getDetail('memory');
   }
 
   getTableJSONs() {
-    return this.getJSON().$promise.then((response) => {
+    return this.getJSON().then((response) => {
       const rawJsons = response.toJSON();
 
       return Object.keys(rawJsons).map((key) => {
