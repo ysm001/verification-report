@@ -1,3 +1,5 @@
 {
-  "directory": "bower_components"
+  "directory": "bower_components",
+  "proxy" : "http://proxy.rdh.ecl.ntt.co.jp:20066",
+  "https-proxy" : "http://proxy.rdh.ecl.ntt.co.jp:20066"
 }

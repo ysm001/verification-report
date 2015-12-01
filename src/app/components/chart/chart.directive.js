@@ -14,89 +14,53 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setCategory(attrs.category);
-    controller.setTitle(attrs.title);
+    controller.setRenderTarget(JSON.parse(attrs.datasource));
   }
 
   return directive;
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON, netperfEachJSON, netperfTimeJSON) {
+  constructor ($scope, $log, $timeout, $attrs) {
     'ngInject';
 
-    this.$log = $log;
     this.$scope = $scope;
+    this.$log = $log;
     this.$timeout = $timeout;
-    this.type = 'mscolumn2d';
-    this.dataFormat = 'json';
-    this.dataSources = [];
-    this.fioJSON = fioJSON;
-    this.kernbenchJSON = kernbenchJSON;
-    this.lmbenchJSON = lmbenchJSON;
-    this.lmbenchLineJSON = lmbenchLineJSON;
-    this.netperfJSON = netperfJSON;
-    this.netperfEachJSON = netperfEachJSON;
-    this.netperfTimeJSON = netperfTimeJSON;
+    this.visible = false;
 
-    this.renderTargets = [];
+    this.dataFormat = 'json';
+    this.renderTarget = null;
+    this.dataSource = {"chart": {}};
 
     this.events = {
       renderComplete: this.renderComplete.bind(this)
     };
 
     this.activate();
-
-    const self = this;
   }
 
   activate() {
-    this.$log.info('Activated ' + this.category + ' Chart View');
+    this.$log.info('Activated Chart View');
   }
 
-  setCategory(category) {
-    this.category = category;
+  render(inview) {
+    if (!inview) return;
 
-    this.loadDataSource(this.category);
-  }
-
-  setTitle(title) {
-    this.title = title;
-  }
-
-  getJSONServices(category) {
-    if (category == 'io') {
-      return [this.fioJSON];
-    } else if (category == 'memory') {
-      return [this.kernbenchJSON];
-    } else if (category == 'task') {
-      return [this.lmbenchJSON, this.lmbenchLineJSON];
-    } else if (category == 'network') {
-      return [this.netperfTimeJSON, this.netperfJSON, this.netperfEachJSON];
-    } else {
-      console.log('unknown category');
-    }
+    this.$timeout(() => {
+      this.dataSource = this.renderTarget;
+    }, 0);
   }
 
   renderComplete() {
-    if (this.renderTargets.length > 0) {
-      this.renderOne();
-    }
+    this.show();
   }
 
-  renderOne() {
-    this.dataSources.push(this.renderTargets.shift());
+  setRenderTarget(dataSource) {
+    this.renderTarget = dataSource;
   }
 
-  makeDataSource(jsonServices) {
-    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()}));
-  }
-
-  loadDataSource(category) {
-    this.makeDataSource(this.getJSONServices(category)).then((results) => {
-      // this.dataSources = Array.prototype.concat.apply([], results);
-      this.renderTargets = Array.prototype.concat.apply([], results);
-      this.renderOne();
-    });
+  show() {
+    this.visible = true;
   }
 }
