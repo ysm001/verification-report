@@ -63,6 +63,8 @@ class ChartController {
   }
 
   show() {
-    this.visible = true;
+    this.$timeout(() => {
+      this.visible = true;
+    }, 0);
   }
 }
