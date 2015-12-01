@@ -32,6 +32,7 @@ class ChartController {
     this.dataFormat = 'json';
     this.renderTarget = null;
     this.dataSource = {"chart": {}};
+    this.rendering = false;
 
     this.events = {
       renderComplete: this.renderComplete.bind(this)
@@ -44,9 +45,10 @@ class ChartController {
     this.$log.info('Activated Chart View');
   }
 
-  render(inview) {
-    if (!inview) return;
+  render(inview, inviewPart) {
+    if (!inview || this.rendering) return;
 
+    this.rendering = true;
     this.$timeout(() => {
       this.dataSource = this.renderTarget;
     }, 0);

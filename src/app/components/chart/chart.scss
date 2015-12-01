@@ -1,11 +1,18 @@
-.chart {
-  text-align: center;
-  margin: 20px;
-  width: 600px;
-  float: left;
+.fs-chart {
   opacity: 0;
+  transition: all 0.3s;
 
   &-show {
     opacity: 1;
   }
+}
+
+.chart {
+  text-align: center;
+  background-image: url('/assets/images/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
+  margin: 20px;
+  width: 600px;
+  float: left;
 }
