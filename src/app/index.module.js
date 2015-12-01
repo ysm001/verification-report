@@ -27,7 +27,7 @@ import { KernbenchTableJSONService } from '../app/components/detail/services/ker
 import { FioTableJSONService } from '../app/components/detail/services/fioTableJSON.service';
 import { LmbenchTableJSONService } from '../app/components/detail/services/LmbenchTableJSON.service';
 
-angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'angular-inview', 'ng-fusioncharts', 'mdl'])
+angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'angular-inview', 'ng-fusioncharts'])
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)
