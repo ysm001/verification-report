@@ -7,15 +7,16 @@
   <div class="chart-card-body-container">
     <div class="chart-card-body">
       <div ng-repeat="dataSource in chart.dataSources">
-        <div fusioncharts
+        <fusioncharts
            class="chart"
            width="600" 
            height="400"
            type={{dataSource.type}}
            dataformat={{chart.dataFormat}}
            datasource="{{dataSource}}"
+           events="chart.events"
            >
-        </div>
+        </fusioncharts>
       </div>
     </div>
   </div>

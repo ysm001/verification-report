@@ -39,6 +39,12 @@ class ChartController {
     this.netperfEachJSON = netperfEachJSON;
     this.netperfTimeJSON = netperfTimeJSON;
 
+    this.renderTargets = [];
+
+    this.events = {
+      renderComplete: this.renderComplete.bind(this)
+    };
+
     this.activate();
 
     const self = this;
@@ -72,18 +78,25 @@ class ChartController {
     }
   }
 
+  renderComplete() {
+    if (this.renderTargets.length > 0) {
+      this.renderOne();
+    }
+  }
+
+  renderOne() {
+    this.dataSources.push(this.renderTargets.shift());
+  }
+
   makeDataSource(jsonServices) {
     return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()}));
   }
 
   loadDataSource(category) {
     this.makeDataSource(this.getJSONServices(category)).then((results) => {
-      const dataSource = Array.prototype.concat.apply([], results);;
-      this.$timeout(() => {
-        if (this.category != 'network') return;
-        this.dataSources = dataSource;
-        this.$scope.$apply();
-      }, 0);
+      // this.dataSources = Array.prototype.concat.apply([], results);
+      this.renderTargets = Array.prototype.concat.apply([], results);
+      this.renderOne();
     });
   }
 }

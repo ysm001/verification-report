@@ -15,6 +15,7 @@ export class NetperfJSONService extends ChartJSONService {
     return {
       caption: operation,
       xAxisName: '',
+      animation: 0,
       showValues: 0
     };
   }
