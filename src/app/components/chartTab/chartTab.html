@@ -10,10 +10,10 @@
 </div>
 
 <div class="chart-container">
-  <chart ng-repeat="category in chartTab.categories"
+  <chart-container ng-repeat="category in chartTab.categories"
   id="{{category.id}}"
   title="{{category.name}}"
-  category="{{category.id}}"></chart>
+  category="{{category.id}}"></chart-container>
 </div>
 
 <div class="chart-tab-footer chart-card mdl-card mdl-shadow--2dp">

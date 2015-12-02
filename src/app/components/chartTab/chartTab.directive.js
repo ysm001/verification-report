@@ -26,7 +26,7 @@ export function ChartTabDirective() {
     var header = angular.element('.chart-tabs-container')[0];
     var offset = header.offsetTop + header.offsetHeight;
 
-    return angular.element('chart').filter(function(idx, chart) {
+    return angular.element('chart-container').filter(function(idx, chart) {
       return chart.offsetTop - offset <= raw.scrollTop;
     }).sort(function(a, b) {return b.offsetTop - a.offsetTop})[0];
   }

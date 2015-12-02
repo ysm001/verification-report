@@ -14,76 +14,57 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setCategory(attrs.category);
-    controller.setTitle(attrs.title);
+    controller.setRenderTarget(JSON.parse(attrs.datasource));
   }
 
   return directive;
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON, netperfEachJSON, netperfTimeJSON) {
+  constructor ($scope, $log, $timeout, $attrs, chartLoader) {
     'ngInject';
 
-    this.$log = $log;
     this.$scope = $scope;
+    this.$log = $log;
     this.$timeout = $timeout;
-    this.type = 'mscolumn2d';
+    this.visible = false;
+
     this.dataFormat = 'json';
-    this.dataSources = [];
-    this.fioJSON = fioJSON;
-    this.kernbenchJSON = kernbenchJSON;
-    this.lmbenchJSON = lmbenchJSON;
-    this.lmbenchLineJSON = lmbenchLineJSON;
-    this.netperfJSON = netperfJSON;
-    this.netperfEachJSON = netperfEachJSON;
-    this.netperfTimeJSON = netperfTimeJSON;
+    this.renderTarget = null;
+    this.dataSource = {"chart": {}};
+    this.rendering = false;
+    this.chartLoader = chartLoader;
+
+    this.events = {
+      renderComplete: this.renderComplete.bind(this)
+    };
 
     this.activate();
-
-    const self = this;
   }
 
   activate() {
-    this.$log.info('Activated ' + this.category + ' Chart View');
+    this.$log.info('Activated Chart View');
   }
 
-  setCategory(category) {
-    this.category = category;
+  render(inview, inviewPart) {
+    if (!inview || this.rendering) return;
 
-    this.loadDataSource(this.category);
+    this.rendering = true;
+    this.chartLoader.load(this, this.renderTarget);
   }
 
-  setTitle(title) {
-    this.title = title;
+  renderComplete() {
+    this.done();
+    this.show();
   }
 
-  getJSONServices(category) {
-    if (category == 'io') {
-      return [this.fioJSON];
-    } else if (category == 'memory') {
-      return [this.kernbenchJSON];
-    } else if (category == 'task') {
-      return [this.lmbenchJSON, this.lmbenchLineJSON];
-    } else if (category == 'network') {
-      return [this.netperfTimeJSON, this.netperfJSON, this.netperfEachJSON];
-    } else {
-      console.log('unknown category');
-    }
+  setRenderTarget(dataSource) {
+    this.renderTarget = dataSource;
   }
 
-  makeDataSource(jsonServices) {
-    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()}));
-  }
-
-  loadDataSource(category) {
-    this.makeDataSource(this.getJSONServices(category)).then((results) => {
-      const dataSource = Array.prototype.concat.apply([], results);;
-      this.$timeout(() => {
-        if (this.category != 'network') return;
-        this.dataSources = dataSource;
-        this.$scope.$apply();
-      }, 0);
-    });
+  show() {
+    this.$timeout(() => {
+      this.visible = true;
+    }, 0);
   }
 }

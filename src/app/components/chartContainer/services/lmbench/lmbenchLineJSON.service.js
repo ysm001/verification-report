@@ -43,16 +43,17 @@ export class LmbenchLineJSONService extends LmbenchJSONService {
   }
 
   makeBorder() {
-    return [{
-      line: [
-      {
-        startvalue: '100',
-        color: '#c0c0c0',
-        displayvalue: '100%',
-        valueOnRight : 1,
-        thickness : 2
-      }
-      ]
-    }];
+    const lineValues = [90, 100];
+    return lineValues.map((val) => {
+      return {
+        line: [{
+          startvalue: val,
+          color: '#c0c0c0',
+          displayvalue: `${val}%`,
+          valueOnRight : 1,
+          thickness : 2
+        }]
+      };
+    });
   }
 }

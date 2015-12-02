@@ -1,39 +1,18 @@
+.fs-chart {
+  opacity: 0;
+  transition: all 0.3s;
+
+  &-show {
+    opacity: 1;
+  }
+}
+
 .chart {
   text-align: center;
+  background-image: url('/assets/images/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center center;
   margin: 20px;
   width: 600px;
   float: left;
-}
-
-.chart-card {
-  width: 100%;
-  margin-bottom: 5px;
-
-  .mdl-card__actions {
-    text-align: center;
-  }
-
-  .chart-card-title {
-    text-align: center;
-    font-family: 'Helvetica Neue', 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro';
-    font-size: 20px;
-    line-height: normal;
-    padding: 10px;
-    color: #424242;
-    background-color: #fafafa;
-  }
-
-  .chart-card-body-container {
-    width: 100%;
-    overflow: scroll;
-  }
-
-  .chart-card-body {
-    width: 1280px;
-    min-width: 1280px;
-  }
-
-  .chart-card-title-bottom-line {
-    margin: 0px;
-  }
 }
