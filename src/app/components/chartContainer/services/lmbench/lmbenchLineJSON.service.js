@@ -20,8 +20,8 @@ export class LmbenchLineJSONService extends LmbenchJSONService {
       xAxisName: '',
       yAxisName: 'Performance Ratio (%)',
       numDivLines: 6,
-      yAxisMaxValue: Math.max(110, Math.floor(this.getMaxValue(rawJson))),
-      yAxisMinValue: Math.min(80, Math.floor(this.getMinValue(rawJson)))
+      yAxisMaxValue: Math.max(115, Math.floor(this.getMaxValue(rawJson))),
+      yAxisMinValue: Math.min(85, Math.floor(this.getMinValue(rawJson)))
     };
   }
 
@@ -53,15 +53,22 @@ export class LmbenchLineJSONService extends LmbenchJSONService {
   }
 
   makeBorders() {
-    const lineValues = [100];
-    return lineValues.map((val) => {
+    const lines = [
+    {value: 80, color: "#ff4081"},
+    {value: 90, color: "#ff4081"},
+    {value: 100, color: "#34343e"},
+    {value: 110, color: "#09a274"},
+    {value: 120, color: "#09a274"},
+    ];
+
+    return lines.map((line) => {
       return {
         line: [{
-          startvalue: val,
-          color: '#ff4081',
-          displayvalue: String(val),
-          valueOnRight : 1,
-          thickness : 1 
+          startvalue: line.value,
+          color: line.color,
+          displayvalue: String(line.value),
+          valueOnRight: 1,
+          thickness: 2
         }]
       };
     });
