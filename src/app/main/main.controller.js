@@ -1,11 +1,12 @@
 export class MainController {
-  constructor ($timeout, webDevTec, toastr) {
+  constructor ($timeout, webDevTec, toastr, appStatus) {
     'ngInject';
 
     this.awesomeThings = [];
     this.classAnimation = '';
     this.creationDate = 1445254772954;
     this.toastr = toastr;
+    this.appStatus = appStatus;
 
     this.activate($timeout, webDevTec);
   }

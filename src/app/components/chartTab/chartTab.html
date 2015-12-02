@@ -1,5 +1,5 @@
 <div class="chart-tabs-container">
-  <div class="chart-tabs">
+  <div class="chart-tabs" ng-class="{'full-width': chartTab.appStatus.isFullScreenMode}">
     <a ng-repeat="category in chartTab.categories"
        id="{{category.id}}-tab"
        href="#"

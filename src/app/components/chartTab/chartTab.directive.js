@@ -35,13 +35,14 @@ export function ChartTabDirective() {
 }
 
 class ChartTabController {
-  constructor ($scope, $log, $location, $anchorScroll, verificationSummary) {
+  constructor ($scope, $log, $location, $anchorScroll, verificationSummary, appStatus) {
     'ngInject';
 
     this.$log = $log;
     this.$location = $location;
     this.$anchorScroll = $anchorScroll;
     this.activeTab = 0;
+    this.appStatus = appStatus;
 
     this.categories = [];
     this.activate(verificationSummary);
