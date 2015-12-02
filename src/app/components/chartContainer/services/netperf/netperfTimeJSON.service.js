@@ -19,7 +19,6 @@ export class NetperfTimeJSONService extends ChartJSONService {
     return {
       caption: operation,
       yAxisName: 'Throughput (Mbps)',
-      animation: 0,
       formatNumberScale: 0
     };
   }

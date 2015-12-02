@@ -26,6 +26,7 @@ import { LmbenchLineJSONService } from '../app/components/chartContainer/service
 import { KernbenchTableJSONService } from '../app/components/detail/services/kernbenchTableJSON.service';
 import { FioTableJSONService } from '../app/components/detail/services/fioTableJSON.service';
 import { LmbenchTableJSONService } from '../app/components/detail/services/LmbenchTableJSON.service';
+import { ChartLoaderService } from '../app/components/chartLoader/chartLoader.service';
 
 angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'angular-inview', 'ng-fusioncharts'])
   .constant('malarkey', malarkey)
@@ -47,6 +48,7 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .service('netperfJSON', NetperfJSONService)
   .service('netperfEachJSON', NetperfEachJSONService)
   .service('netperfTimeJSON', NetperfTimeJSONService)
+  .service('chartLoader', ChartLoaderService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective)

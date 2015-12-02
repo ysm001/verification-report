@@ -21,7 +21,7 @@ export function ChartDirective() {
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs) {
+  constructor ($scope, $log, $timeout, $attrs, chartLoader) {
     'ngInject';
 
     this.$scope = $scope;
@@ -33,6 +33,7 @@ class ChartController {
     this.renderTarget = null;
     this.dataSource = {"chart": {}};
     this.rendering = false;
+    this.chartLoader = chartLoader;
 
     this.events = {
       renderComplete: this.renderComplete.bind(this)
@@ -49,12 +50,11 @@ class ChartController {
     if (!inview || this.rendering) return;
 
     this.rendering = true;
-    this.$timeout(() => {
-      this.dataSource = this.renderTarget;
-    }, 0);
+    this.chartLoader.load(this, this.renderTarget);
   }
 
   renderComplete() {
+    this.done();
     this.show();
   }
 
