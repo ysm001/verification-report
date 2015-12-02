@@ -72,28 +72,4 @@ export class FioJSONService extends ChartJSONService {
       data: isRatio ? throughputs.map(function(t) {return {value: 100 + t[key]}}) : throughputs.map(function(t) {return {value: t[key]}})
     }
   }
-
-  makeBorders() {
-    const lines = [
-    {value: 80, color: "#ff4081"},
-    {value: 90, color: "#ff4081"},
-    {value: 100, color: "#34343e"},
-    {value: 110, color: "#09a274"},
-    {value: 120, color: "#09a274"},
-    ];
-
-    return lines.map((line) => {
-      return {
-        line: [{
-          startvalue: line.value,
-          color: line.color,
-          parentyaxis: 's',
-          displayvalue: String(line.value),
-          valueOnRight: 1,
-          thickness: 1,
-        }]
-      };
-    });
-  }
-
 }

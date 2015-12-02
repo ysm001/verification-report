@@ -80,4 +80,28 @@ export class ChartJSONService {
   makeCategories(operation, formattedJSON) {
     return [];
   }
+
+  makeBorders() {
+    const lines = [
+    {value: 80, color: "#ff4081"},
+    {value: 90, color: "#ff4081"},
+    {value: 100, color: "#34343e"},
+    {value: 110, color: "#09a274"},
+    {value: 120, color: "#09a274"},
+    ];
+
+    return lines.map((line) => {
+      return {
+        line: [{
+          startvalue: line.value,
+          color: line.color,
+          parentyaxis: 's',
+          showValues: '0',
+          displayvalue: String(line.value),
+          valueOnRight: 1,
+          thickness: 1,
+        }]
+      };
+    });
+  }
 }
