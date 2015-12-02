@@ -6,7 +6,7 @@ export class LmbenchLineJSONService extends LmbenchJSONService {
       type: type,
       chart: chart,
       data: data,
-      trendlines: this.makeBorder()
+      trendlines: this.makeBorders()
     };
   }
 
@@ -18,13 +18,23 @@ export class LmbenchLineJSONService extends LmbenchJSONService {
     return {
       caption: operation,
       xAxisName: '',
-      yAxisMinValue: Math.min(80, Math.floor(this.getMinValue(operation, rawJson)))
+      yAxisName: 'Performance Ratio (%)',
+      numDivLines: 6,
+      yAxisMaxValue: Math.max(115, Math.floor(this.getMaxValue(rawJson))),
+      yAxisMinValue: Math.min(85, Math.floor(this.getMinValue(rawJson)))
     };
   }
 
-  getMinValue(operation, rawJson) {
-    const values = Object.keys(rawJson).map((k) => {return (1 + rawJson[k].ratio) * 100});
-    return Math.min.apply(null, values);
+  getValues(rawJson) {
+    return Object.keys(rawJson).map((k) => {return (1 + rawJson[k].ratio) * 100});
+  }
+
+  getMinValue(rawJson) {
+    return Math.min.apply(null, this.getValues(rawJson));
+  }
+
+  getMaxValue(rawJson) {
+    return Math.max.apply(null, this.getValues(rawJson));
   }
 
   formatJSONs(rawJsons) {
@@ -42,16 +52,23 @@ export class LmbenchLineJSONService extends LmbenchJSONService {
     return Object.keys(rawJson).map((k) => {return {label: k, value: (1 + rawJson[k].ratio) * 100}});
   }
 
-  makeBorder() {
-    const lineValues = [90, 100];
-    return lineValues.map((val) => {
+  makeBorders() {
+    const lines = [
+    {value: 80, color: "#ff4081"},
+    {value: 90, color: "#ff4081"},
+    {value: 100, color: "#34343e"},
+    {value: 110, color: "#09a274"},
+    {value: 120, color: "#09a274"},
+    ];
+
+    return lines.map((line) => {
       return {
         line: [{
-          startvalue: val,
-          color: '#c0c0c0',
-          displayvalue: `${val}%`,
-          valueOnRight : 1,
-          thickness : 2
+          startvalue: line.value,
+          color: line.color,
+          displayvalue: String(line.value),
+          valueOnRight: 1,
+          thickness: 2
         }]
       };
     });
