@@ -22,14 +22,5 @@
 }
 
 .detail-container {
-  transition-property: max-height;
-  transition-duration: 0.5s;
   height: auto;
-  max-height: 0px;
-  overflow: hidden;
-
-  &-open {
-    max-height: 5096px;
-    overflow: scroll;
-  }
 }
