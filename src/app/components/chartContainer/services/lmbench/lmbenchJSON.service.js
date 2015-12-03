@@ -35,7 +35,7 @@ export class LmbenchJSONService extends ChartJSONService {
   }
 
   getValues(rawJson) {
-    return Object.keys(rawJson).map((k) => {return (1 + rawJson[k].ratio) * 100});
+    return Object.keys(rawJson).map((k) => {return 100 + rawJson[k].ratio});
   }
 
   getMinValue(rawJson) {
@@ -133,7 +133,7 @@ export class LmbenchJSONService extends ChartJSONService {
       seriesname: key,
       renderas: isRatio ? 'line' : 'mscolumn2d',
       parentyaxis: isRatio ? 's' : 'p',
-      data: isRatio ? Object.keys(rawJson).map(function(k) {return {value: (1 + rawJson[k][key]) * 100}}) : Object.keys(rawJson).map(function(k) {return {value: rawJson[k]['averages'][key]}})
+      data: isRatio ? Object.keys(rawJson).map(function(k) {return {value: 100 + rawJson[k][key]}}) : Object.keys(rawJson).map(function(k) {return {value: rawJson[k]['averages'][key]}})
     }
   }
 }
