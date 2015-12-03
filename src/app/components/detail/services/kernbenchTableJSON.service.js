@@ -9,10 +9,29 @@ export class KernbenchTableJSONService extends TableJSONService {
 
   makeHeaders(rawJson) {
     const sample = rawJson[0];
-    return [Object.keys(sample).map((t) => { return {text: t} } )];
+    const header = rawJson.map((t) => { return {text: `${t.thread_num} Thread`} } );
+    return [[''].concat(header)];
   }
 
   makeRecords(rawJson) {
-    return rawJson.map((r) => { return { cols: Object.keys(r).map((key) => {return {text: r[key]}}) } } );
+    return [this.makeRow(rawJson, 'old'), this.makeRow(rawJson, 'new'), this.makeRow(rawJson, 'ratio')];
+  }
+
+  makeRow(rawJson, key) {
+    const round = (val, digit) => {
+      const powedDigit = Math.pow(10, digit);
+      return Math.round( val * powedDigit ) / powedDigit
+    };
+
+    const isRatioRow = key == 'ratio';
+    const digit = isRatioRow ? 3 : 1;
+    const postFix = isRatioRow ? '[%]' : '[s]';
+    const threshold = 10;
+
+    const row = rawJson.map((t) => {
+      return {text: round(t[key], digit), bad: isRatioRow && t[key] < -threshold, good: isRatioRow && t[key] > threshold}
+    });
+
+    return {cols: [{text: `${key} ${postFix}`}].concat(Array.prototype.concat.apply([], row))};
   }
 }
