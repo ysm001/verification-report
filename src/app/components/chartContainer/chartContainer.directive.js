@@ -69,7 +69,8 @@ class ChartContainerController {
     } else if (category == 'memory') {
       return [this.kernbenchJSON];
     } else if (category == 'task') {
-      return [this.lmbenchJSON, this.lmbenchLineJSON];
+      return [this.lmbenchJSON];
+      // return [this.lmbenchJSON, this.lmbenchLineJSON];
     } else if (category == 'network') {
       return [this.netperfTimeJSON, this.netperfJSON, this.netperfEachJSON];
     } else {

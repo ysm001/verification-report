@@ -7,12 +7,43 @@ export class LmbenchJSONService extends ChartJSONService {
     super($log, $resource, $q, verification, 'task');
   }
 
-  getStyle(operation) {
+  getFushionFormatJSONResult(type, chart, categories, data) {
+    return {
+      type: type,
+      chart: chart,
+      categories: categories,
+      dataset: data,
+      trendlines: this.makeBorders()
+    };
+  }
+
+  getType() {
+    return 'mscombidy2d'
+  }
+
+  getStyle(operation, rawJson) {
     return {
       caption: operation,
       xAxisName: '',
-      yAxisName: this.getYAxisName(operation)
+      pyAxisName: this.getYAxisName(operation),
+      syAxisName: 'Performance Ratio (%)',
+      numDivLines: 6,
+      syAxisMaxValue: Math.max(115, Math.floor(this.getMaxValue(rawJson))),
+      syAxisMinValue: Math.min(85, Math.floor(this.getMinValue(rawJson)))
+
     };
+  }
+
+  getValues(rawJson) {
+    return Object.keys(rawJson).map((k) => {return (1 + rawJson[k].ratio) * 100});
+  }
+
+  getMinValue(rawJson) {
+    return Math.min.apply(null, this.getValues(rawJson));
+  }
+
+  getMaxValue(rawJson) {
+    return Math.max.apply(null, this.getValues(rawJson));
   }
 
   formatJSONs(rawJsons) {
@@ -87,7 +118,7 @@ export class LmbenchJSONService extends ChartJSONService {
   }
 
   makeDataset(operation, rawJson) {
-    return [this.makeSeries(operation, rawJson, 'old'), this.makeSeries(operation, rawJson, 'new')];
+    return [this.makeSeries(operation, rawJson, 'old'), this.makeSeries(operation, rawJson, 'new'), this.makeSeries(operation, rawJson, 'ratio')];
   }
 
   makeCategories(operation, rawJson) {
@@ -97,9 +128,12 @@ export class LmbenchJSONService extends ChartJSONService {
   }
 
   makeSeries(operation, rawJson, key) {
+    const isRatio = key == 'ratio';
     return  {
       seriesname: key,
-      data: Object.keys(rawJson).map(function(k) {return {value: rawJson[k]['averages'][key]}})
+      renderas: isRatio ? 'line' : 'mscolumn2d',
+      parentyaxis: isRatio ? 's' : 'p',
+      data: isRatio ? Object.keys(rawJson).map(function(k) {return {value: (1 + rawJson[k][key]) * 100}}) : Object.keys(rawJson).map(function(k) {return {value: rawJson[k]['averages'][key]}})
     }
   }
 }
