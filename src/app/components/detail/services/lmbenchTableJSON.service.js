@@ -13,7 +13,14 @@ export class LmbenchTableJSONService extends TableJSONService {
     const old_indexes = indexes.map((i) => { return `old ${i + 1}` } );
     const new_indexes = indexes.map((i) => { return `new ${i + 1}` } );
 
-    return [['', 'old ave [μs]'].concat(old_indexes).concat(['new ave [μs]']).concat(new_indexes).concat('ratio [%]').map((t) => { return {text: t} } )];
+    const old_ave_header = [{text: 'old ave [μs]'}];
+    const old_header = old_indexes.map((t) => { return {text: t} });
+    const new_header = new_indexes.map((t) => { return {text: t} });
+    const ratio_header = [{text: 'ratio [%]'}];
+    const new_ave_header = [{text: 'new ave [μs]', class: 'lmbench-ave-col'}];
+    const empty_header = [{text: ''}];
+
+    return [empty_header.concat(old_ave_header).concat(old_header).concat(new_ave_header).concat(new_header).concat(ratio_header)];
   }
 
   makeRecords(rawJson) {
@@ -27,7 +34,7 @@ export class LmbenchTableJSONService extends TableJSONService {
       const cols = rawJson[k];
       const old_cols = cols.values.map((col) => {return {text: round(col.old, digit)}})
       const new_cols = cols.values.map((col) => {return {text: round(col.new, digit)}})
-      const average_cols = [{text: round(cols.averages.new, digit)}];
+      const average_cols = [{text: round(cols.averages.new, digit), class: 'lmbench-ave-col'}];
       const ratio_cols = [{text: round(cols.ratio, digit), class: this.getRatioClass(cols.ratio)}];
 
       const all_cols = [{text: k}, {text: round(cols.averages.old, digit)}]

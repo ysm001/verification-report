@@ -2,7 +2,7 @@
 <table class="detail-table mdl-data-table mdl-js-data-table">
   <thead ng-repeat="headers in detailTable.headers">
     <tr>
-      <th class="detail-table-header" ng-repeat="header in headers" colspan="{{header.colspan}}" class="{{header.class}}">{{header.text}}</th>
+      <th class="detail-table-header {{header.class}}" ng-repeat="header in headers" colspan="{{header.colspan}}">{{header.text}}</th>
     </tr>
   </thead>
 
