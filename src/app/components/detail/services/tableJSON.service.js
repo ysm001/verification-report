@@ -36,9 +36,9 @@ export class TableJSONService {
 
   getRatioClass(ratio) {
     if (ratio < -this.threthold) {
-      return 'detail-table-col-good';
-    } else if (ratio > this.threthold) {
       return 'detail-table-col-bad';
+    } else if (ratio > this.threthold) {
+      return 'detail-table-col-good';
     }
 
     return '';
