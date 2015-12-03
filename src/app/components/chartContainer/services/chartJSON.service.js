@@ -27,7 +27,7 @@ export class ChartJSONService {
     const self = this;
 
     const stylePromise = this.getStyleTemplate().$promise;
-    const rawJsonPromise = self.getJSON(this.type).$promise;
+    const rawJsonPromise = self.getJSON(this.type);
 
     return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
       const groups = this.formatJSONs(values[1].toJSON());

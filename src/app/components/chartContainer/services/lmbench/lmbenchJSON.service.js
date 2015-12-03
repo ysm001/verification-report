@@ -73,7 +73,7 @@ export class LmbenchJSONService extends ChartJSONService {
     const size = groups.length + 1;
 
     const firstKey = `${target} 1/${size}`;
-    result[firstKey] = rawJsons[target];
+    result[firstKey] = angular.copy(rawJsons[target]);
 
     groups.forEach((group, i) => {
       const key = `${target} ${i + 2}/${size}`;
