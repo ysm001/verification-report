@@ -4,7 +4,8 @@ export class TableJSONService {
     this.$resource = $resource;
     this.$q = $q;
     this.verification = verification;
-    this.type = type
+    this.type = type;
+    this.threthold = 10;
   }
 
   getJSON() {
@@ -31,5 +32,15 @@ export class TableJSONService {
 
   makeRecords(rawJson) {
     return [];
+  }
+
+  getRatioClass(ratio) {
+    if (ratio < -this.threthold) {
+      return 'detail-table-col-good';
+    } else if (ratio > this.threthold) {
+      return 'detail-table-col-bad';
+    }
+
+    return '';
   }
 }

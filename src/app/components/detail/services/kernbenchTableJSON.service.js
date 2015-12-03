@@ -29,7 +29,8 @@ export class KernbenchTableJSONService extends TableJSONService {
     const threshold = 10;
 
     const row = rawJson.map((t) => {
-      return {text: round(t[key], digit), bad: isRatioRow && t[key] < -threshold, good: isRatioRow && t[key] > threshold}
+      const cls = isRatioRow ? this.getRatioClass(t[key]) : '';
+      return {text: round(t[key], digit), class: cls}
     });
 
     return {cols: [{text: `${key} ${postFix}`}].concat(Array.prototype.concat.apply([], row))};

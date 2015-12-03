@@ -39,11 +39,11 @@ export class FioTableJSONService extends TableJSONService {
     const mb = isRatioRow ? 1 : 1024;
     const digit = isRatioRow ? 3 : 1;
     const postFix = isRatioRow ? '[%]' : '[MB/s]';
-    const threshold = 10;
 
     const row = rawJson.map((j) => {
       return j.throughputs.map((t) => {
-        return {text: round(t[key] / mb, digit), bad: isRatioRow && t[key] < -threshold, good: isRatioRow && t[key] > threshold}
+        const cls = isRatioRow ? this.getRatioClass(t[key]) : '';
+        return {text: round(t[key] / mb, digit), class: cls};
       })
     });
 
