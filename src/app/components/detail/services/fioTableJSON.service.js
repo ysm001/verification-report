@@ -1,29 +1,10 @@
-export class FioTableJSONService {
+import { TableJSONService } from './tableJSON.service';
+
+export class FioTableJSONService extends TableJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    this.$log = $log;
-    this.$resource = $resource;
-    this.$q = $q;
-    this.verification = verification;
-  }
-
-  getJSON() {
-    return this.verification.getDetail('io');
-  }
-
-  getTableJSONs() {
-    return this.getJSON().then((response) => {
-      const rawJsons = response.toJSON();
-
-      return Object.keys(rawJsons).map((key) => {
-        return {
-          title: key,
-          headers: this.makeHeaders(rawJsons[key]),
-          records: this.makeRecords(rawJsons[key])
-        }
-      });
-    });
+    super($log, $resource, $q, verification, 'io');
   }
 
   makeHeaders(rawJson) {
