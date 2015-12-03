@@ -6,11 +6,13 @@
 
   <div class="chart-card-body-container">
     <div class="chart-card-body">
-      <div ng-repeat="dataSource in chartContainer.dataSources" class="chart-card-grid">
+      <div ng-repeat="(group, items) in chartContainer.dataSources" class="chart-card-grid" group="{{group}}">
         <div class="chart-card-grid-row chart-row">
-          <chart dataSource="{{dataSource}}"></chart>
-        </div>
-        <div class="chart-card-grid-row table-row">
+          <div ng-repeat="item in items" class="chart-grid-row-item">
+            <chart dataSource="{{item}}"></chart>
+          </div>
+          <div class="chart-card-grid-row table-row">
+          </div>
         </div>
       </div>
     </div>

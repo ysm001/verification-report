@@ -32,9 +32,11 @@ export class ChartJSONService {
     return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
       const groups = this.formatJSONs(values[1].toJSON());
 
-      return Object.keys(groups).map((key) => {
-        return self.getFushionFormatJSON(key, groups[key].values, values[0].toJSON());
+      const jsons = Object.keys(groups).map((key) => {
+        return {group: groups[key].group, data: self.getFushionFormatJSON(key, groups[key].values, values[0].toJSON())};
       }).filter((e) => {return e != undefined && e != null});
+      
+      return this.groupBy(jsons);
     })
   }
 
@@ -86,6 +88,15 @@ export class ChartJSONService {
 
   makeGroup(group, values) {
     return {group: group, values: values};
+  }
+
+  groupBy(jsons) {
+    return jsons.reduce((result, json) => {
+      if (!(json.group in result)) result[json.group] = [];
+      result[json.group].push(json.data);
+
+      return result;
+    }, {});
   }
 
   makeBorders() {

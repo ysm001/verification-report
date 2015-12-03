@@ -89,12 +89,19 @@ class ChartContainerController {
   }
 
   makeDataSource(jsonServices) {
-    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()}));
+    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()})).then((results) => {
+      const nestedDataSource = Array.prototype.concat.apply([], results);
+      return nestedDataSource.reduce((result, dataSource) => {
+        Object.keys(dataSource).forEach((key) => {result[key] = dataSource[key];});
+        return result;
+      }, {});
+    });
   }
 
   loadDataSource(category) {
     this.makeDataSource(this.getJSONServices(category)).then((results) => {
-      this.dataSources = Array.prototype.concat.apply([], results);
+      this.dataSources = results;
+      console.log(results);
     });
   }
 }

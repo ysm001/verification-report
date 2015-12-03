@@ -29,7 +29,7 @@ import { LmbenchTableJSONService } from '../app/components/detail/services/Lmben
 import { ChartLoaderService } from '../app/components/chartLoader/chartLoader.service';
 import { AppStatusService } from '../app/components/appStatus/appStatus.service.js';
 
-angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'angular-inview', 'ng-fusioncharts'])
+angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'angular-inview', 'ng-fusioncharts', 'angular.filter'])
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)
