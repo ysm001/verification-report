@@ -62,7 +62,7 @@ export class FioTableJSONService {
 
     const row = rawJson.map((j) => {
       return j.throughputs.map((t) => {
-        return {text: round(t[key] / mb, digit), warn: isRatioRow && Math.abs(t[key]) > threshold}
+        return {text: round(t[key] / mb, digit), bad: isRatioRow && t[key] < -threshold, good: isRatioRow && t[key] > threshold}
       })
     });
 
