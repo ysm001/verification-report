@@ -26,6 +26,13 @@
     min-width: 1280px;
   }
 
+  &-grid {
+    display: flex;
+    &-row {
+      width: 600px;
+    }
+  }
+
   .chart-card-title-bottom-line {
     margin: 0px;
   }

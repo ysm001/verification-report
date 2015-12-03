@@ -30,10 +30,10 @@ export class ChartJSONService {
     const rawJsonPromise = self.getJSON(this.type).$promise;
 
     return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
-      const rawJsons = this.formatJSONs(values[1].toJSON());
+      const groups = this.formatJSONs(values[1].toJSON());
 
-      return Object.keys(rawJsons).map((key) => {
-        return self.getFushionFormatJSON(key, rawJsons[key], values[0].toJSON());
+      return Object.keys(groups).map((key) => {
+        return self.getFushionFormatJSON(key, groups[key].values, values[0].toJSON());
       }).filter((e) => {return e != undefined && e != null});
     })
   }
@@ -66,7 +66,10 @@ export class ChartJSONService {
   }
 
   formatJSONs(rawJsons) {
-    return rawJsons;
+    return Object.keys(rawJsons).reduce((result, key) => {
+      result[key] = this.makeGroup(key, rawJsons[key]);
+      return result;
+    }, {});
   }
 
   formatJSON(operation, rawJson) {
@@ -79,6 +82,10 @@ export class ChartJSONService {
 
   makeCategories(operation, formattedJSON) {
     return [];
+  }
+
+  makeGroup(group, values) {
+    return {group: group, values: values};
   }
 
   makeBorders() {

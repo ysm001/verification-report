@@ -43,7 +43,7 @@ export class NetperfJSONService extends ChartJSONService {
         Object.keys(target)
           .filter((item) => {return target[item] != null;})
           .forEach((item) => {
-            formattedJSON[`${item} [${sender_receiver}]`] = target[item];
+            formattedJSON[`${item} [${sender_receiver}]`] = this.makeGroup(item, target[item]);
           });
 
         return formattedJSON;

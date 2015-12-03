@@ -59,9 +59,9 @@ export class LmbenchJSONService extends ChartJSONService {
       
       if (key in formatFuncs) {
         const formattedData = formatFuncs[key](rawJsons, key, key);
-        Object.keys(formattedData).forEach((key) => { result[key] = formattedData[key] } );
+        Object.keys(formattedData).forEach((k) => { result[k] = this.makeGroup(key, formattedData[k]) } );
       } else {
-        result[key] = rawJsons[key];
+        result[key] = this.makeGroup(key, rawJsons[key]);
       }
 
       return result;
@@ -87,7 +87,7 @@ export class LmbenchJSONService extends ChartJSONService {
       delete result[firstKey][item];
     });
 
-    return result
+    return result;
   }
 
   formatFileVMSystemData(rawJsons, target, key) {
