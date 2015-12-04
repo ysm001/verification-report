@@ -22,7 +22,7 @@ export function DetailDirective() {
 }
 
 class DetailController {
-  constructor ($scope, $log, $timeout, $attrs, kernbenchTableJSON, fioTableJSON, lmbenchTableJSON) {
+  constructor ($scope, $log, $timeout, $attrs, kernbenchTableJSON, fioTableJSON, lmbenchTableJSON, netperfTableJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -30,6 +30,7 @@ class DetailController {
     this.kernbenchTableJSON = kernbenchTableJSON;
     this.lmbenchTableJSON = lmbenchTableJSON;
     this.fioTableJSON = fioTableJSON;
+    this.netperfTableJSON = netperfTableJSON;
     this.tables = null;
     this.$timeout = $timeout;
 
@@ -60,8 +61,10 @@ class DetailController {
       return this.kernbenchTableJSON;
     } else if (category == 'task') {
       return this.lmbenchTableJSON;
+    } else if (category == 'network') {
+      return this.netperfTableJSON;
     } else {
-      return this.kernbenchTableJSON;
+      console.log('unknow category');
     }
   }
 

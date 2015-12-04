@@ -14,7 +14,7 @@ export class TableJSONService {
 
   getTableJSONs() {
     return this.getJSON().then((response) => {
-      const rawJsons = response.toJSON();
+      const rawJsons = this.formatJSONs(response.toJSON());
 
       return Object.keys(rawJsons).map((key) => {
         return {
@@ -24,6 +24,10 @@ export class TableJSONService {
         }
       });
     });
+  }
+
+  formatJSONs(jsons) {
+    return jsons;
   }
 
   makeHeaders(rawJson) {

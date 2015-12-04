@@ -4,12 +4,11 @@ export class NetperfTableJSONService extends TableJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'network');
+    super($log, $resource, $q, verification, 'network-time');
   }
 
   makeHeaders(rawJson) {
-    const sample = rawJson[0];
-    const header = rawJson.map((t) => { return {text: `${t.thread_num} Thread`} } );
+    const header = Object.keys(rawJson).map((t) => { return {text: t} } );
     return [[''].concat(header)];
   }
 
@@ -25,12 +24,12 @@ export class NetperfTableJSONService extends TableJSONService {
 
     const isRatioRow = key == 'ratio';
     const digit = isRatioRow ? 3 : 1;
-    const postFix = isRatioRow ? '[%]' : '[s]';
+    const postFix = isRatioRow ? '[%]' : '[Mbps]';
     const threshold = 10;
 
-    const row = rawJson.map((t) => {
-      const cls = isRatioRow ? this.getRatioClass(t[key]) : '';
-      return {text: round(t[key], digit), class: cls}
+    const row = Object.keys(rawJson).map((k) => {
+      const cls = isRatioRow ? this.getRatioClass(rawJson[k][key]) : '';
+      return {text: round(rawJson[k][key], digit), class: cls}
     });
 
     return {cols: [{text: `${key} ${postFix}`}].concat(Array.prototype.concat.apply([], row))};
