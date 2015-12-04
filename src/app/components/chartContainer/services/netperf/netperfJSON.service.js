@@ -15,6 +15,7 @@ export class NetperfJSONService extends ChartJSONService {
     return {
       caption: operation,
       xAxisName: '',
+      yAxisName: 'CPU Usage (%)',
       showValues: 0
     };
   }

@@ -26,6 +26,7 @@ import { LmbenchLineJSONService } from '../app/components/chartContainer/service
 import { KernbenchTableJSONService } from '../app/components/detail/services/kernbenchTableJSON.service';
 import { FioTableJSONService } from '../app/components/detail/services/fioTableJSON.service';
 import { LmbenchTableJSONService } from '../app/components/detail/services/LmbenchTableJSON.service';
+import { NetperfTableJSONService } from '../app/components/detail/services/NetperfTableJSON.service';
 import { ChartLoaderService } from '../app/components/chartLoader/chartLoader.service';
 import { AppStatusService } from '../app/components/appStatus/appStatus.service.js';
 
@@ -46,6 +47,7 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .service('kernbenchTableJSON', KernbenchTableJSONService)
   .service('fioTableJSON', FioTableJSONService)
   .service('lmbenchTableJSON', LmbenchTableJSONService)
+  .service('netperfTableJSON', NetperfTableJSONService)
   .service('netperfJSON', NetperfJSONService)
   .service('netperfEachJSON', NetperfEachJSONService)
   .service('netperfTimeJSON', NetperfTimeJSONService)

@@ -24,13 +24,13 @@ export class LmbenchJSONService extends ChartJSONService {
   getStyle(operation, rawJson) {
     return {
       caption: operation,
+      formatNumberScale: 0,
       xAxisName: '',
       pyAxisName: this.getYAxisName(operation),
       syAxisName: 'Performance Ratio (%)',
       numDivLines: 6,
       syAxisMaxValue: Math.max(115, Math.floor(this.getMaxValue(rawJson))),
       syAxisMinValue: Math.min(85, Math.floor(this.getMinValue(rawJson)))
-
     };
   }
 
