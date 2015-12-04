@@ -14,29 +14,57 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setDataSource(attrs.datasource);
+    controller.setRenderTarget(JSON.parse(attrs.datasource));
   }
 
   return directive;
 }
 
 class ChartController {
-  constructor ($scope, $log) {
+  constructor ($scope, $log, $timeout, $attrs, chartLoader) {
     'ngInject';
 
+    this.$scope = $scope;
     this.$log = $log;
-    this.type = 'mscolumn2d'
-    this.dataSource = 'data/details/chart-network.json';
-    this.dataFormat = 'jsonurl';
+    this.$timeout = $timeout;
+    this.visible = false;
+
+    this.dataFormat = 'json';
+    this.renderTarget = null;
+    this.dataSource = {"chart": {}};
+    this.rendering = false;
+    this.chartLoader = chartLoader;
+
+    this.events = {
+      renderComplete: this.renderComplete.bind(this)
+    };
 
     this.activate();
   }
 
   activate() {
-    this.$log.info('Activated NetworkChart View');
+    this.$log.info('Activated Chart View');
   }
 
-  setDataSource(dataSource) {
-    this.dataSource = dataSource;
+  render(inview, inviewPart) {
+    if (!inview || this.rendering) return;
+
+    this.rendering = true;
+    this.chartLoader.load(this, this.renderTarget);
+  }
+
+  renderComplete() {
+    this.done();
+    this.show();
+  }
+
+  setRenderTarget(dataSource) {
+    this.renderTarget = dataSource;
+  }
+
+  show() {
+    this.$timeout(() => {
+      this.visible = true;
+    }, 0);
   }
 }

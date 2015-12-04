@@ -1,18 +1,18 @@
 [
   {
-    "id": "chart-network",
-    "name": "Network"
+    "id": "io",
+    "name": "FIO"
   },
   {
-    "id": "chart-io",
-    "name": "I/O"
+    "id": "memory",
+    "name": "KernBench"
   },
   {
-    "id": "chart-memory",
-    "name": "Memory"
+    "id": "task",
+    "name": "LmBench"
   },
   {
-    "id": "chart-task",
-    "name": "Task"
+    "id": "network",
+    "name": "NetPerf"
   }
 ]

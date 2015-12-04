@@ -7,8 +7,8 @@
   <main class="mdl-layout__content">
     <div class="page-content">
       <div class="mdl-grid">
-        <summary-table class="mdl-cell mdl-cell--3-col"> </summary-table>
-        <chart-tab class="mdl-cell mdl-cell--9-col"></chart-tab>
+        <summary-table class="mdl-cell mdl-cell--3-col" ng-class="{'zero-width': main.appStatus.isFullScreenMode}"> </summary-table>
+        <chart-tab class="" ng-class="{'full-width': main.appStatus.isFullScreenMode}" in-view-container></chart-tab>
       </div>
     </div>
   </main>

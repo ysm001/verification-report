@@ -108,6 +108,18 @@ main {
   }
 }
 
+.zero-width {
+  width: 0 !important;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.mdl-layout__header-row {
+  padding-left: 0px;
+}
+
 /**
  *  Do not remove the comment below. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

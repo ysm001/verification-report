@@ -22,11 +22,11 @@ export function ChartTabDirective() {
   }
 
   function getActiveTab(element) {
-    var raw = element[0];
-    var header = angular.element('.chart-tabs-container')[0];
-    var offset = header.offsetTop + header.offsetHeight;
+    const raw = element[0];
+    const header = angular.element('.chart-tabs-container')[0];
+    const offset = header.offsetTop + header.offsetHeight;
 
-    return angular.element('chart').filter(function(idx, chart) {
+    return angular.element('chart-container').filter(function(idx, chart) {
       return chart.offsetTop - offset <= raw.scrollTop;
     }).sort(function(a, b) {return b.offsetTop - a.offsetTop})[0];
   }
@@ -35,13 +35,15 @@ export function ChartTabDirective() {
 }
 
 class ChartTabController {
-  constructor ($scope, $log, $location, $anchorScroll, verificationSummary) {
+  constructor ($scope, $log, $location, $anchorScroll, verificationSummary, appStatus) {
     'ngInject';
 
     this.$log = $log;
     this.$location = $location;
     this.$anchorScroll = $anchorScroll;
     this.activeTab = 0;
+    this.activeTabId = null;
+    this.appStatus = appStatus;
 
     this.categories = [];
     this.activate(verificationSummary);
@@ -72,6 +74,9 @@ class ChartTabController {
   }
 
   setActiveTabById(id) {
+    if (id == this.activeTabId) return;
+
+    this.activeTabId = id;
     this.setActiveTab(this.categories.findIndex(function(category) {return category.id == id;}));
   }
 
