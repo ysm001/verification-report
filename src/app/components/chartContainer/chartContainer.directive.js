@@ -91,7 +91,13 @@ class ChartContainerController {
     return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()})).then((results) => {
       const nestedDataSource = Array.prototype.concat.apply([], results);
       return nestedDataSource.reduce((result, dataSource) => {
-        Object.keys(dataSource).forEach((key) => {result[key] = dataSource[key];});
+        Object.keys(dataSource).forEach((key) => {
+          if (key in result) {
+            result[`${key}_`] = dataSource[key];
+          } else {
+            result[key] = dataSource[key];
+          }
+        });
         return result;
       }, {});
     });
