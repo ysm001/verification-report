@@ -31,7 +31,6 @@ export class LmbenchJSONService extends ChartJSONService {
       numDivLines: 6,
       syAxisMaxValue: Math.max(115, Math.floor(this.getMaxValue(rawJson))),
       syAxisMinValue: Math.min(85, Math.floor(this.getMinValue(rawJson)))
-
     };
   }
 

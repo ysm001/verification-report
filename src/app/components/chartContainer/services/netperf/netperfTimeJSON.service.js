@@ -7,6 +7,16 @@ export class NetperfTimeJSONService extends ChartJSONService {
     super($log, $resource, $q, verification, 'network-time');
   }
 
+  getFushionFormatJSONResult(type, chart, categories, data) {
+    return {
+      type: type,
+      chart: chart,
+      categories: categories,
+      dataset: data,
+      trendlines: this.makeBorders()
+    };
+  }
+
   formatJSONs(rawJsons) {
     return Object.keys(rawJsons).reduce((result, key) => {
       result[key] = this.makeGroup(key, rawJsons[key]);
@@ -18,17 +28,33 @@ export class NetperfTimeJSONService extends ChartJSONService {
     return Array.prototype.concat.apply([], rawJson);
   }
 
-  getStyle(operation) {
+  getStyle(operation, rawJson) {
     return {
       caption: operation,
       xAxisName: '',
-      yAxisName: 'Throughput (Mbps)',
-      formatNumberScale: 0
+      pyAxisName: 'Throughput (Mbps)',
+      syAxisName: 'Performance Ratio (%)',
+      formatNumberScale: 0,
+      numDivLines: 6,
+      syAxisMaxValue: Math.max(115, Math.floor(this.getMaxValue(rawJson))),
+      syAxisMinValue: Math.min(85, Math.floor(this.getMinValue(rawJson)))
     };
   }
 
+  getValues(rawJson) {
+    return Object.keys(rawJson).map((k) => {return 100 + rawJson[k].ratio});
+  }
+
+  getMinValue(rawJson) {
+    return Math.min.apply(null, this.getValues(rawJson));
+  }
+
+  getMaxValue(rawJson) {
+    return Math.max.apply(null, this.getValues(rawJson));
+  }
+
   getType(operation) {
-    return 'mscolumn2d';
+    return 'mscombidy2d';
   }
 
   getKeys(rawJson) {
@@ -38,7 +64,7 @@ export class NetperfTimeJSONService extends ChartJSONService {
   }
 
   makeDataset(operation, rawJson) {
-    return [this.makeSeries(rawJson, 'old'), this.makeSeries(rawJson, 'new')]
+    return [this.makeSeries(rawJson, 'old'), this.makeSeries(rawJson, 'new'), this.makeSeries(rawJson, 'ratio')]
   }
 
   makeCategories(operation, rawJson) {
@@ -48,9 +74,13 @@ export class NetperfTimeJSONService extends ChartJSONService {
   }
 
   makeSeries(rawJson, key) {
+    const isRatio = key == 'ratio';
+
     return  {
       seriesname: key,
-      data: this.getKeys(rawJson).map(function(k) {return {value: rawJson[k][key]}})
+      renderas: isRatio ? 'line' : 'mscolumn2d',
+      parentyaxis: isRatio ? 's' : 'p',
+      data: isRatio ? this.getKeys(rawJson).map(function(k) {return {value: rawJson[k][key] + 100}}) : this.getKeys(rawJson).map(function(k) {return {value: rawJson[k][key]}})
     }
   }
 }
