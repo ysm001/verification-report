@@ -27,14 +27,16 @@ export class ChartJSONService {
     const self = this;
 
     const stylePromise = this.getStyleTemplate().$promise;
-    const rawJsonPromise = self.getJSON(this.type).$promise;
+    const rawJsonPromise = self.getJSON(this.type);
 
     return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
-      const rawJsons = this.formatJSONs(values[1].toJSON());
+      const groups = this.formatJSONs(values[1].toJSON());
 
-      return Object.keys(rawJsons).map((key) => {
-        return self.getFushionFormatJSON(key, rawJsons[key], values[0].toJSON());
+      const jsons = Object.keys(groups).map((key) => {
+        return {group: groups[key].group, data: self.getFushionFormatJSON(key, groups[key].values, values[0].toJSON())};
       }).filter((e) => {return e != undefined && e != null});
+      
+      return this.groupBy(jsons);
     })
   }
 
@@ -66,7 +68,10 @@ export class ChartJSONService {
   }
 
   formatJSONs(rawJsons) {
-    return rawJsons;
+    return Object.keys(rawJsons).reduce((result, key) => {
+      result[key] = this.makeGroup(key, rawJsons[key]);
+      return result;
+    }, {});
   }
 
   formatJSON(operation, rawJson) {
@@ -79,6 +84,19 @@ export class ChartJSONService {
 
   makeCategories(operation, formattedJSON) {
     return [];
+  }
+
+  makeGroup(group, values) {
+    return {group: group, values: values};
+  }
+
+  groupBy(jsons) {
+    return jsons.reduce((result, json) => {
+      if (!(json.group in result)) result[json.group] = [];
+      result[json.group].push(json.data);
+
+      return result;
+    }, {});
   }
 
   makeBorders() {

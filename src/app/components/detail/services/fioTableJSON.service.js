@@ -1,29 +1,10 @@
-export class FioTableJSONService {
+import { TableJSONService } from './tableJSON.service';
+
+export class FioTableJSONService extends TableJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    this.$log = $log;
-    this.$resource = $resource;
-    this.$q = $q;
-    this.verification = verification;
-  }
-
-  getJSON() {
-    return this.verification.getDetail('io');
-  }
-
-  getTableJSONs() {
-    return this.getJSON().then((response) => {
-      const rawJsons = response.toJSON();
-
-      return Object.keys(rawJsons).map((key) => {
-        return {
-          title: key,
-          headers: this.makeHeaders(rawJsons[key]),
-          records: this.makeRecords(rawJsons[key])
-        }
-      });
-    });
+    super($log, $resource, $q, verification, 'io');
   }
 
   makeHeaders(rawJson) {
@@ -58,11 +39,11 @@ export class FioTableJSONService {
     const mb = isRatioRow ? 1 : 1024;
     const digit = isRatioRow ? 3 : 1;
     const postFix = isRatioRow ? '[%]' : '[MB/s]';
-    const threshold = 10;
 
     const row = rawJson.map((j) => {
       return j.throughputs.map((t) => {
-        return {text: round(t[key] / mb, digit), warn: isRatioRow && Math.abs(t[key]) > threshold}
+        const cls = isRatioRow ? this.getRatioClass(t[key]) : '';
+        return {text: round(t[key] / mb, digit), class: cls};
       })
     });
 

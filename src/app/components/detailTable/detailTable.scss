@@ -1,7 +1,6 @@
 .detail-table {
-  margin-right : auto;
-  margin-left : auto;
-  margin-bottom: 40px;
+  margin: 40px;
+  margin-top: 0px;
   width: 90%;
 }
 
@@ -28,8 +27,17 @@
   padding-top: 0px !important;
   vertical-align: middle !important;
 
-  &-warn {
-    background-color: #5F7D8C;
-    color: white;
+  &-bad {
+    color: #ff4081;
+    font-weight: bold;
   }
+
+  &-good {
+    color: rgb(9, 162, 116);
+    font-weight: bold;
+  }
+}
+
+.lmbench-ave-col {
+  border-left: 2px solid #929292;
 }

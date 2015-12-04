@@ -16,7 +16,7 @@ export class NetperfEachJSONService extends NetperfJSONService {
           Object.keys(target[version])
             .filter((item) => {return target[version][item] != null;})
             .forEach((item) => {
-              formattedJSON[`${item} [${sender_receiver} ${version}]`] = target[version][item];
+              formattedJSON[`${item} [${sender_receiver} ${version}]`] = this.makeGroup(item, target[version][item]);
             });
         });
 

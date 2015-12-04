@@ -25,6 +25,6 @@ export class VerificationService {
     return this.$resource(this.apiHost + query).get((response) => {
       this.cache[query] = response;
       return response;
-    });
+    }).$promise;
   }
 }

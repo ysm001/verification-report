@@ -47,8 +47,8 @@ chart-tab {
 
 chart-tab {
   width: calc(75% + 16px);
-  overflow: scroll;
   height: calc(100vh - 64px);
+  overflow: scroll;
 
   .chart-tab-footer {
     height: 250px;

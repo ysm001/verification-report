@@ -1,29 +1,10 @@
-export class LmbenchTableJSONService {
+import { TableJSONService } from './tableJSON.service';
+
+export class LmbenchTableJSONService extends TableJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    this.$log = $log;
-    this.$resource = $resource;
-    this.$q = $q;
-    this.verification = verification;
-  }
-
-  getJSON() {
-    return this.verification.getDetail('task');
-  }
-
-  getTableJSONs() {
-    return this.getJSON().then((response) => {
-      const rawJsons = response.toJSON();
-
-      return Object.keys(rawJsons).map((key) => {
-        return {
-          title: key,
-          headers: this.makeHeaders(rawJsons[key]),
-          records: this.makeRecords(rawJsons[key])
-        }
-      });
-    });
+    super($log, $resource, $q, verification, 'task');
   }
 
   makeHeaders(rawJson) {
@@ -32,9 +13,14 @@ export class LmbenchTableJSONService {
     const old_indexes = indexes.map((i) => { return `old ${i + 1}` } );
     const new_indexes = indexes.map((i) => { return `new ${i + 1}` } );
 
-    return [['criteria', 'old ave [μs]'].concat(old_indexes).concat(['new ave [μs]']).concat(new_indexes).concat('ratio [%]').map((t) => { return {text: t} } )];
+    const old_ave_header = [{text: 'old ave [μs]'}];
+    const old_header = old_indexes.map((t) => { return {text: t} });
+    const new_header = new_indexes.map((t) => { return {text: t} });
+    const ratio_header = [{text: 'ratio [%]'}];
+    const new_ave_header = [{text: 'new ave [μs]', class: 'lmbench-ave-col'}];
+    const empty_header = [{text: ''}];
 
-    return [[''].concat(Object.keys(sample).map((t) => { return {text: t} } ))];
+    return [empty_header.concat(old_ave_header).concat(old_header).concat(new_ave_header).concat(new_header).concat(ratio_header)];
   }
 
   makeRecords(rawJson) {
@@ -44,11 +30,20 @@ export class LmbenchTableJSONService {
     };
 
     return Object.keys(rawJson).map((k) => { 
+      const digit = 3;
       const cols = rawJson[k];
-      const old_cols = cols.values.map((col) => {return {text: round(col.old, 3)}})
-      const new_cols = cols.values.map((col) => {return {text: round(col.new, 3)}})
+      const old_cols = cols.values.map((col) => {return {text: round(col.old, digit)}})
+      const new_cols = cols.values.map((col) => {return {text: round(col.new, digit)}})
+      const average_cols = [{text: round(cols.averages.new, digit), class: 'lmbench-ave-col'}];
+      const ratio_cols = [{text: round(cols.ratio, digit), class: this.getRatioClass(cols.ratio)}];
 
-      return { cols: [{text: k}, {text: round(cols.averages.old, 3)}].concat(old_cols).concat([{text: round(cols.averages.new, 3)}]).concat(new_cols).concat([{text: round(cols.ratio, 3)}]) }
+      const all_cols = [{text: k}, {text: round(cols.averages.old, digit)}]
+      .concat(old_cols)
+      .concat(average_cols)
+      .concat(new_cols)
+      .concat(ratio_cols);
+
+      return { cols:  all_cols };
     });
   }
 }

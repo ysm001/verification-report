@@ -1,6 +1,16 @@
+chart {
+  display: inline-block;
+  height: auto;
+}
+
+fusioncharts {
+  display: inline-block;
+}
+
 .fs-chart {
   opacity: 0;
   transition: all 0.3s;
+  display: inline-block;
 
   &-show {
     opacity: 1;

@@ -8,7 +8,10 @@ export class NetperfTimeJSONService extends ChartJSONService {
   }
 
   formatJSONs(rawJsons) {
-    return rawJsons;
+    return Object.keys(rawJsons).reduce((result, key) => {
+      result[key] = this.makeGroup(key, rawJsons[key]);
+      return result;
+    }, {});
   }
 
   formatJson(rawJson) {

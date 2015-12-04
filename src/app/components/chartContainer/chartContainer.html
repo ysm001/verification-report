@@ -6,13 +6,16 @@
 
   <div class="chart-card-body-container">
     <div class="chart-card-body">
-      <div ng-repeat="dataSource in chartContainer.dataSources">
-        <chart dataSource="{{dataSource}}"></chart>
+      <div ng-repeat="(group, items) in chartContainer.dataSources" class="chart-card-grid" group="{{group}}" ng-class="{'no-border': $last}">
+        <div class="chart-card-grid-row chart-row">
+          <div ng-repeat="item in items" class="chart-grid-row-item">
+            <chart dataSource="{{item}}"></chart>
+          </div>
+        </div>
+        <div class="chart-card-grid-row table-row">
+          <detail category="{{chartContainer.category}}" group="{{group}}"></detail>
+        </div>
       </div>
     </div>
-  </div>
-
-  <div class="mdl-card__actions mdl-card--border">
-    <detail category="{{chartContainer.category}}"></detail>
   </div>
 </div>
