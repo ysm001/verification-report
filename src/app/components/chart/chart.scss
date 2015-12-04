@@ -26,3 +26,9 @@ fusioncharts {
   width: 600px;
   float: left;
 }
+
+.fusioncharts-container {
+  svg > text {
+    display: none;
+  }
+}
