@@ -24,6 +24,7 @@ export class LmbenchJSONService extends ChartJSONService {
   getStyle(operation, rawJson) {
     return {
       caption: operation,
+      formatNumberScale: 0,
       xAxisName: '',
       pyAxisName: this.getYAxisName(operation),
       syAxisName: 'Performance Ratio (%)',
