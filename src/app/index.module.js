@@ -16,6 +16,9 @@ import { ChartTabDirective } from '../app/components/chartTab/chartTab.directive
 import { ChartContainerDirective } from '../app/components/chartContainer/chartContainer.directive';
 import { DetailTableDirective } from '../app/components/detailTable/detailTable.directive';
 import { DetailDirective } from '../app/components/detail/detail.directive';
+import { UploaderModalLinkDirective } from '../app/components/uploaderModalLink/uploaderModalLink.directive';
+import { UploaderController } from '../app/components/uploaderModalLink/uploader.controller';
+import { DropAreaDirective } from '../app/components/uploaderModalLink/drop-area/drop-area.directive.js';
 import { FioJSONService } from '../app/components/chartContainer/services/fioJSON.service';
 import { NetperfJSONService } from '../app/components/chartContainer/services/netperf/netperfJSON.service';
 import { NetperfEachJSONService } from '../app/components/chartContainer/services/netperf/netperfEachJSON.service';
@@ -30,7 +33,7 @@ import { NetperfTableJSONService } from '../app/components/detail/services/Netpe
 import { ChartLoaderService } from '../app/components/chartLoader/chartLoader.service';
 import { AppStatusService } from '../app/components/appStatus/appStatus.service.js';
 
-angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'angular-inview', 'ng-fusioncharts', 'angular.filter'])
+angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr', 'angular-inview', 'ng-fusioncharts', 'angular.filter', 'angularModalService'])
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)
@@ -60,5 +63,8 @@ angular.module('verificationSummary', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngS
   .directive('chartTab', ChartTabDirective)
   .directive('chart', ChartDirective)
   .directive('chartContainer', ChartContainerDirective)
+  .directive('uploaderModalLink', UploaderModalLinkDirective)
   .directive('detailTable', DetailTableDirective)
-  .directive('detail', DetailDirective);
+  .directive('detail', DetailDirective)
+  .directive('dropArea', DropAreaDirective)
+  .controller('uploader', UploaderController);
