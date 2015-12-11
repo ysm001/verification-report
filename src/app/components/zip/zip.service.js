@@ -38,42 +38,39 @@ export class ZipService {
   }
 
   zipToObject(files) {
-    let result = {};
-
+    files['/'] = { name: '/', dir: true, root: true };
     Object.keys(files).forEach((key) => {
       const file = files[key];
-      const dirs = this.getDirectory(file.name).split("/").filter((e) => {return e != ""});
-      const fileName = this.getFileName(file.name);
-      const elem = this.dig(dirs, result);
+      if (file.root) return;
 
-      if (fileName != '' && !(fileName in elem)) {
-        elem[fileName] = file.dir ? {} : file;
-      }
+      this.appendFileObject(files, file);
     });
 
-    return result;
+    return files['/'].children;
   }
 
-  dig(dirs, result) {
-    if (dirs.length == 0) {
-      return result;
+  appendFileObject(files, file) {
+    const directory = `${this.getDirectory(file)}/`;
+
+    if (files[directory].children == null) {
+      files[directory].children = {};
     }
 
-    const dir = dirs[0];
-    if (result[dir] == null) {
-      result[dir] = {};
-    }
-
-    return this.dig(dirs.slice(1, dirs.length), result[dir]);
+    files[directory].children[this.getFileName(file)] = file;
   }
 
-  getFileName(path) {
-    return path.split('\\').pop().split('/').pop()
+  getFileName(file) {
+    const pathArr = file.name.split('\\').pop().split('/');
+
+    return file.dir ? pathArr[pathArr.length - 2] : pathArr[pathArr.length - 1];
   }
 
-  getDirectory(path) {
-    let pathArr = path.split('\\').pop().split('/');
+  getDirectory(file) {
+    let pathArr = file.name.split('\\').pop().split('/');
+
     pathArr.pop();
+    if (file.dir) pathArr.pop();
+
     return pathArr.join('/');
   }
 }
