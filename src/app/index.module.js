@@ -19,6 +19,7 @@ import { DetailDirective } from '../app/components/detail/detail.directive';
 import { UploaderModalLinkDirective } from '../app/components/uploaderModalLink/uploaderModalLink.directive';
 import { UploaderController } from '../app/components/uploaderModalLink/uploader.controller';
 import { ArchiveValidatorService } from '../app/components/uploaderModalLink/drop-area/archive-validator.service.js';
+import { ZipService } from '../app/components/zip/zip.service.js';
 import { DropAreaDirective } from '../app/components/uploaderModalLink/drop-area/drop-area.directive.js';
 import { FioJSONService } from '../app/components/chartContainer/services/fioJSON.service';
 import { NetperfJSONService } from '../app/components/chartContainer/services/netperf/netperfJSON.service';
@@ -58,6 +59,7 @@ angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSa
   .service('netperfTimeJSON', NetperfTimeJSONService)
   .service('chartLoader', ChartLoaderService)
   .service('appStatus', AppStatusService)
+  .service('zip', ZipService)
   .service('archiveValidator', ArchiveValidatorService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', NavbarDirective)
