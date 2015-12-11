@@ -13,7 +13,7 @@ export function DropAreaDirective() {
     link: link
   };
 
-  function link(scope, element, attrs, controller) {
+  function link($scope, $element, attrs, controller) {
     const cancelEvent = (event) => {
       event.stopPropagation();
       event.preventDefault();
@@ -25,32 +25,31 @@ export function DropAreaDirective() {
     }
 
     const onDrop = (event) => {
-      controller.onDrop();
-      cancelEvent(event);
-
       controller.onDrop(event.originalEvent.dataTransfer.files);
+      cancelEvent(event);
     }
 
     const onDragLeave = (event) => {
       controller.onLeave();
     }
 
-    element.bind('dragover', onDragOverOrEnter);
-    element.bind('dragenter', onDragOverOrEnter);
-    element.bind('drop', onDrop);
-    element.bind('dragleave', onDragLeave);
+    $element.bind('dragover', onDragOverOrEnter);
+    $element.bind('dragenter', onDragOverOrEnter);
+    $element.bind('drop', onDrop);
+    $element.bind('dragleave', onDragLeave);
   }
 
   return directive;
 }
 
-export class DropAreaController {
-  constructor ($scope, $log) {
+class DropAreaController {
+  constructor ($scope, $log, archiveValidator) {
     'ngInject';
 
     this.$log = $log;
     this.$scope = $scope;
     this.status = 'none';
+    this.archiveValidator = archiveValidator;
   }
 
   onEnter() {
@@ -59,6 +58,7 @@ export class DropAreaController {
 
   onDrop(files) {
     this.setStatus('none');
+    this.archiveValidator.validate(files[0]);
   }
 
   onLeave() {

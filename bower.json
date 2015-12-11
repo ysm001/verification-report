@@ -21,7 +21,9 @@
     "angular-inview": "~1.5.6",
     "angular-material-design-lite": "~0.4.2",
     "angular-filter": "~0.5.8",
-    "angular-modal-service": "~0.6.9"
+    "angular-modal-service": "~0.6.9",
+    "jszip": "Stuk/jszip#~2.5.0",
+    "bower-parseUri": "bower-parseuri#~1.2.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2"
