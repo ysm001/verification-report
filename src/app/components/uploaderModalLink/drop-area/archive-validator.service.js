@@ -19,14 +19,14 @@ export class ArchiveValidatorService {
   }
 
   validate(zipFile) {
-    this.zip.extract(zipFile).then((file) => {
+    return this.zip.extract(zipFile).then((file) => {
       const metaJson = this.metaJsonValidator.validate(file);
       this.fioValidator.validate(file, metaJson);
       this.kernbenchValidator.validate(file, metaJson);
       this.lmbenchValidator.validate(file, metaJson);
       this.netperfValidator.validate(file, metaJson);
-    }).catch((e) => {
-      console.log(e);
+
+      return metaJson;
     });
   }
 

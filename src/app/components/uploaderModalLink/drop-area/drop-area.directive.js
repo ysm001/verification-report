@@ -43,13 +43,14 @@ export function DropAreaDirective() {
 }
 
 class DropAreaController {
-  constructor ($scope, $log, archiveValidator) {
+  constructor ($scope, $log, archiveValidator, verification) {
     'ngInject';
 
     this.$log = $log;
     this.$scope = $scope;
     this.status = 'none';
     this.archiveValidator = archiveValidator;
+    this.verification = verification;
   }
 
   onEnter() {
@@ -58,7 +59,13 @@ class DropAreaController {
 
   onDrop(files) {
     this.setStatus('none');
-    this.archiveValidator.validate(files[0]);
+
+    const zipFile = files[0];
+    this.archiveValidator.validate(zipFile).then((metaJson) => {
+      this.verification.upload(zipFile, metaJson);
+    }).catch((e) => {
+      console.log(e);
+    });
   }
 
   onLeave() {

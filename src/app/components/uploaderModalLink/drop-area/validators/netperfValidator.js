@@ -17,7 +17,6 @@ export class NetperfValidator extends SecondLevelLogValidator {
     this.existsKey(file, this.rootKey, 'zip file');
 
     const root = file[this.rootKey].children;
-    this.existsKeys(root, requiredKeys, `${this.rootKey}/`);
 
     const directories = this.filterDirectory(root);
     Object.keys(directories).forEach((key) => {
