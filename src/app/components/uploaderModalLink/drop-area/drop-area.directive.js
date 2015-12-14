@@ -1,3 +1,5 @@
+import { LogArchive } from './logArchive.model.js';
+
 export function DropAreaDirective() {
   'ngInject';
 
@@ -61,10 +63,12 @@ class DropAreaController {
     this.setStatus('none');
 
     const zipFile = files[0];
-    this.archiveValidator.validate(zipFile).then((metaJson) => {
-      this.verification.upload(zipFile, metaJson);
-    }).catch((e) => {
-      console.log(e);
+    const logArchive = new LogArchive(zipFile);
+
+    this.verification.upload(logArchive).success((data, status, headers, config) => {;
+      console.log(data);
+    }).error((data, status, headers, config) => {
+      console.log(data);
     });
   }
 

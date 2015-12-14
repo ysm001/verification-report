@@ -31,14 +31,18 @@ export class VerificationService {
     }).$promise;
   }
 
-  upload(file, metaJson) {
-    const query = `${this.apiRemoteHost}/logs/${metaJson.jenkinsJobName}/${metaJson.jenkinsBuildNumber}/upload`;
+  upload(logArchive) {
+    const query = `${this.apiRemoteHost}/logs/${logArchive.jobName}/${logArchive.buildNumber}/upload`;
     const formData = new FormData();
 
-    formData.append('archive', file);
-    this.$http.post(query, formData, {
+    logArchive.validate();
+    formData.append('archive', logArchive.file);
+    return this.$http({
+      method: 'POST',
+      url: query,
+      data: formData,
       transformRequest: null,
       headers: {'Content-type': undefined}
-    })
+    });
   }
 }
