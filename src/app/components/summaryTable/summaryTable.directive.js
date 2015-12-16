@@ -16,24 +16,24 @@ export function SummaryTableDirective() {
 }
 
 class SummaryTableController {
-  constructor ($scope, $log, verificationSummary) {
+  constructor ($scope, $log, verification) {
     'ngInject';
 
     this.$log = $log;
     this.summaries = [];
     this.activeRecord = 0;
 
-    this.activate(verificationSummary);
+    this.activate(verification);
   }
 
-  activate(verificationSummary) {
-    return this.getSummaries(verificationSummary).then(() => {
+  activate(verification) {
+    return this.getSummaries(verification).then(() => {
       this.$log.info('Activated Summaries View');
     });
   }
 
-  getSummaries(verificationSummary) {
-    return verificationSummary.getSummaries().then((data) => {
+  getSummaries(verification) {
+    return verification.getSummary().then((data) => {
       this.summaries = data;
 
       return this.summaries;

@@ -42,7 +42,6 @@ export class KernbenchJSONService extends ChartJSONService {
   }
 
   getMinValue(rawJson) {
-    console.log(this.getValues(rawJson));
     return Math.min.apply(null, this.getValues(rawJson));
   }
 
