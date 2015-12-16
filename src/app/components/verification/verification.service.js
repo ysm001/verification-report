@@ -31,12 +31,14 @@ export class VerificationService {
     }).$promise;
   }
 
-  upload(logArchive) {
+  upload(logArchive, oldVersion, newVersion) {
     const query = `${this.apiRemoteHost}/logs/${logArchive.jobName}/${logArchive.buildNumber}/upload`;
     const formData = new FormData();
 
-    logArchive.validate();
     formData.append('archive', logArchive.file);
+    formData.append('oldVersion', oldVersion);
+    formData.append('newVersion', newVersion);
+
     return this.$http({
       method: 'POST',
       url: query,
@@ -44,5 +46,12 @@ export class VerificationService {
       transformRequest: null,
       headers: {'Content-type': undefined}
     });
+  }
+
+  getSummary() {
+    const query = `${this.apiRemoteHost}/logs/summary.json`;
+    return this.$resource(query).query((response) => {
+      return response;
+    }).$promise;
   }
 }

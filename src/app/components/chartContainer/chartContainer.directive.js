@@ -105,7 +105,7 @@ class ChartContainerController {
 
   loadDataSource(category) {
     this.makeDataSource(this.getJSONServices(category)).then((results) => {
-      // this.dataSources = results;
+      this.dataSources = results;
     });
   }
 }

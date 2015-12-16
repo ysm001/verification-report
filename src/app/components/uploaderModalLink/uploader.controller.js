@@ -53,7 +53,7 @@ export class UploaderController {
 
     this.setStatus('uploading');
 
-    this.verification.upload(this.uploader.archive).success((data, status, headers, config) => {;
+    this.verification.upload(this.uploader.archive, this.uploader.oldVersion, this.uploader.newVersion).success((data, status, headers, config) => {;
       this.setStatus('idle');
 
       if (data.result) {
