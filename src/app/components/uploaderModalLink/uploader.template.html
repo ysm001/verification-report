@@ -15,6 +15,9 @@
         </div>
         <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate upload-progress-bar" ng-class="{show: uploader.isUploading()}" ></div>
         <div class="modal-footer">
+          <div class="uploader-message" ng-class="{'uploader-message-error': uploader.hasErrorMessage(), 'uploader-message-success': uploader.hasSuccessMessage()}">
+            {{uploader.message}}
+          </div>
           <button class="mdl-button mdl-js-button upload-button" ng-click="uploader.onUploadButtonClicked()" ng-disabled="uploader.isUploading()">
             Upload
           </button>

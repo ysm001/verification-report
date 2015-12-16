@@ -9,8 +9,9 @@ export class LogArchive {
   }
 
   parseName(file) {
-    const splittedName = this.getFileName(file).split('-');
-    const ret = {jobName: splittedName[0], buildNumber: splittedName[1]};
+    const reg = /^([^-]+)-(\d+).zip$/;
+    const match = file.name.match(reg) || [];
+    const ret = {jobName: match[1], buildNumber: match[2]};
 
     return ret;
   }
@@ -22,11 +23,11 @@ export class LogArchive {
 
   validate() {
     if (this.file.type != 'application/zip') {
-      throw new Error('File type must be "application/zip".');
+      return 'File type must be "application/zip".';
     }
 
     if (this.buildNumber == null || !/^\d+$/.test(this.buildNumber)) {
-      throw new Error('Invalid file name. File name must be <JENKINS_JOB_NAME>-<JENKINS_BUILD_NUMBER> (e.x. job-100)');
+      return 'Invalid file name. File name must be <JENKINS_JOB_NAME>-<JENKINS_BUILD_NUMBER>.zip (e.x. job-100.zip)';
     }
   }
 }

@@ -164,3 +164,20 @@
 .show {
   opacity: 1;
 }
+
+.uploader-message {
+  display: inline-block;
+  text-align: left;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  width: 78%;
+
+  &-error {
+    color: #ff4081;
+  }
+
+  &-success {
+    color: #009688;
+  }
+}
