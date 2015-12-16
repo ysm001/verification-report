@@ -17,7 +17,9 @@ import { ChartContainerDirective } from '../app/components/chartContainer/chartC
 import { DetailTableDirective } from '../app/components/detailTable/detailTable.directive';
 import { DetailDirective } from '../app/components/detail/detail.directive';
 import { UploaderModalLinkDirective } from '../app/components/uploaderModalLink/uploaderModalLink.directive';
+import { VersionInputFieldDirective } from '../app/components/uploaderModalLink/versionInputField/versionInputField.directive';
 import { UploaderController } from '../app/components/uploaderModalLink/uploader.controller';
+import { UploaderService } from '../app/components/uploaderModalLink/uploader.service';
 import { ArchiveValidatorService } from '../app/components/uploaderModalLink/drop-area/archive-validator.service.js';
 import { ZipService } from '../app/components/zip/zip.service.js';
 import { DropAreaDirective } from '../app/components/uploaderModalLink/drop-area/drop-area.directive.js';
@@ -61,6 +63,7 @@ angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSa
   .service('appStatus', AppStatusService)
   .service('zip', ZipService)
   .service('archiveValidator', ArchiveValidatorService)
+  .service('uploader', UploaderService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', NavbarDirective)
   .directive('acmeMalarkey', MalarkeyDirective)
@@ -72,4 +75,5 @@ angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSa
   .directive('detailTable', DetailTableDirective)
   .directive('detail', DetailDirective)
   .directive('dropArea', DropAreaDirective)
+  .directive('versionInputField', VersionInputFieldDirective)
   .controller('uploader', UploaderController);

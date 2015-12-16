@@ -1,11 +1,11 @@
 export class LogArchive {
   constructor(file) {
     this.file = file;
-    const ret = this.parseName(this.file);
 
-    this.jobName = ret.jobName;
-    this.buildNumber = ret.buildNumber;
-    console.log(ret);
+    const parsedFileName = this.parseName(this.file);
+    this.fileName = file.name;
+    this.jobName = parsedFileName.jobName;
+    this.buildNumber = parsedFileName.buildNumber;
   }
 
   parseName(file) {

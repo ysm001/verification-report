@@ -10,6 +10,11 @@ export function UploaderModalLinkDirective() {
     controller: UploaderModalLinkController,
     controllerAs: 'uploaderModalLink',
     bindToController: true,
+    link: {
+      post: ($element) => {
+        componentHandler.upgradeDom();
+      }
+    }
   };
 
   return directive;

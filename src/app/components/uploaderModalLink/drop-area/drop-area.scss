@@ -16,7 +16,15 @@
   align-items: center;
 }
 
-.enter {
+.enter, .attached {
   border: 3px dashed #009688;
   color: #009688;
+}
+
+.attached {
+  border: 3px solid #009688;
+}
+
+.archive-file-icon {
+  font-size: 100px;
 }

@@ -45,14 +45,14 @@ export function DropAreaDirective() {
 }
 
 class DropAreaController {
-  constructor ($scope, $log, archiveValidator, verification) {
+  constructor ($scope, $log, archiveValidator, uploader) {
     'ngInject';
 
     this.$log = $log;
     this.$scope = $scope;
     this.status = 'none';
     this.archiveValidator = archiveValidator;
-    this.verification = verification;
+    this.uploader = uploader;
   }
 
   onEnter() {
@@ -61,15 +61,8 @@ class DropAreaController {
 
   onDrop(files) {
     this.setStatus('none');
-
-    const zipFile = files[0];
-    const logArchive = new LogArchive(zipFile);
-
-    this.verification.upload(logArchive).success((data, status, headers, config) => {;
-      console.log(data);
-    }).error((data, status, headers, config) => {
-      console.log(data);
-    });
+    this.uploader.archive = new LogArchive(files[0]);
+    this.$scope.$apply();
   }
 
   onLeave() {
@@ -82,9 +75,30 @@ class DropAreaController {
     });
   }
 
+  archiveExists() {
+    return this.uploader.archive != null
+  }
+
+  getDescription() {
+    if (this.archiveExists()) {
+      return this.uploader.archive.fileName;
+    } else {
+      return 'Drop zipped log file'
+    }
+  }
+
+  getIcon() {
+    if (this.archiveExists()) {
+      return 'assignment_turned_in';
+    } else {
+      return 'assignment_late';
+    }
+  }
+
   getClass() {
     return {
-      enter: this.status == 'enter'
+      enter: this.status == 'enter',
+      attached: this.archiveExists()
     };
   }
 }

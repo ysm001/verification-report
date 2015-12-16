@@ -1,0 +1,17 @@
+version-input-field {
+  display: flex;
+  justify-content: center;
+
+  .version-textfield {
+    display: inline-block;
+    width: 100px;
+  }
+
+  .vs-text {
+    padding: 20px;
+  }
+
+  .mdl-textfield__label, .mdl-textfield__input {
+    text-align: center;
+  }
+}

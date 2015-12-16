@@ -154,3 +154,13 @@
 .close-button {
   color: rgba(0, 0, 0, .5);
 }
+
+.upload-progress-bar {
+  width: 100%;
+  opacity: 0;
+  transition: all 0.5s;
+}
+
+.show {
+  opacity: 1;
+}
