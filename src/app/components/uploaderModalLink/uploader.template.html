@@ -7,7 +7,7 @@
           <button class="mdl-button mdl-js-button mdl-button--icon close-button" ng-click="uploader.close('Cancel')" data-dismiss="modal" aria-hidden="true">
             <i class="material-icons">close</i>
           </button>
-          <h4 class="modal-title">Upload Log Files</h4>
+          <h4 class="modal-title">Upload Log File</h4>
         </div>
         <div class="modal-body">
           <version-input-field></version-input-field>
@@ -18,7 +18,7 @@
           <div class="uploader-message" ng-class="{'uploader-message-error': uploader.hasErrorMessage(), 'uploader-message-success': uploader.hasSuccessMessage()}">
             {{uploader.message}}
           </div>
-          <button class="mdl-button mdl-js-button upload-button" ng-click="uploader.onUploadButtonClicked()" ng-disabled="uploader.isUploading()">
+          <button class="mdl-button mdl-js-button upload-button mdl-button--primary" ng-click="uploader.onUploadButtonClicked()" ng-disabled="uploader.isUploading()">
             Upload
           </button>
         </div>

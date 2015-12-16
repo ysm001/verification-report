@@ -70,25 +70,16 @@ export class UploaderController {
 
   setStatus(status) {
     this.status = status;
-    if (this.$scope.$root.$$phase != '$apply' && this.$scope.$root.$$phase != '$digest') {
-      this.$scope.$apply();
-    }
   }
 
   setErrorMessage(message) {
     this.message = message;
     this.messageType = 'error';
-    if (this.$scope.$root.$$phase != '$apply' && this.$scope.$root.$$phase != '$digest') {
-      this.$scope.$apply();
-    }
   }
 
   setSuccessMessage(message) {
     this.message = message;
     this.messageType = 'success';
-    if (this.$scope.$root.$$phase != '$apply' && this.$scope.$root.$$phase != '$digest') {
-      this.$scope.$apply();
-    }
   }
 
   clearMessage() {
