@@ -4,7 +4,7 @@ export class NetperfTimeJSONService extends ChartJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'network');
+    super($log, $resource, $q, verification, 'netperf-single');
   }
 
   getFushionFormatJSONResult(type, chart, categories, data) {

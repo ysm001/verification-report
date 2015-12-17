@@ -55,7 +55,7 @@ class ChartTabController {
 
       this.categories = data;
 
-      return this.summaries;
+      return this.categories;
     });
   }
 

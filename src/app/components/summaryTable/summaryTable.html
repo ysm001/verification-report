@@ -1,8 +1,8 @@
 <aside class="table-container">
   <table class="summary-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <tbody>
-      <tr id="{{summary._id}}" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
-                                                                             ng-class="summaryTable.getClass($index)" ng-click="summaryTable.onClick($index)">
+      <tr id="summary._id" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
+                                                                         ng-class="summaryTable.getClass(summary)" ng-click="summaryTable.onClick(summary)">
         <td class="mdl-data-table__cell--non-numeric">{{summary.oldVersion}} vs {{summary.newVersion}}</td>
         <td>
           {{summary.jobName}}

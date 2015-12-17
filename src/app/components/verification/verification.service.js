@@ -16,8 +16,8 @@ export class VerificationService {
     return `/data/details/${category}.json`;
   }
 
-  getDetail(category) {
-    const query = this.makeQuery(category);
+  getDetail(id, category) {
+    const query = `${this.apiRemoteHost}/logs/${id}/${category}.json`;
 
     if (query in this.cache) {
       return this.$q((resolve) => {

@@ -8,12 +8,12 @@ export class TableJSONService {
     this.threthold = 10;
   }
 
-  getJSON() {
-    return this.verification.getDetail(this.type);
+  getJSON(id) {
+    return this.verification.getDetail(id, this.type);
   }
 
-  getTableJSONs() {
-    return this.getJSON().then((response) => {
+  getTableJSONs(id) {
+    return this.getJSON(id).then((response) => {
       const rawJsons = this.formatJSONs(response.toJSON());
 
       return Object.keys(rawJsons).map((key) => {

@@ -22,7 +22,7 @@ export function ChartContainerDirective() {
 }
 
 class ChartContainerController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON, netperfEachJSON, netperfTimeJSON) {
+  constructor ($scope, $log, $timeout, $attrs, appStatus, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON, netperfEachJSON, netperfTimeJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -37,6 +37,7 @@ class ChartContainerController {
     this.netperfJSON = netperfJSON;
     this.netperfEachJSON = netperfEachJSON;
     this.netperfTimeJSON = netperfTimeJSON;
+    this.appStatus = appStatus;
 
     this.renderTargets = [];
 
@@ -45,6 +46,7 @@ class ChartContainerController {
     };
 
     this.activate();
+    this.watchId();
 
     const self = this;
   }
@@ -55,12 +57,18 @@ class ChartContainerController {
 
   setCategory(category) {
     this.category = category;
-
-    this.loadDataSource(this.category);
   }
 
   setTitle(title) {
     this.title = title;
+  }
+
+  watchId() {
+    this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
+      if (newVal) {
+        this.loadDataSource(newVal, this.category);
+      }
+    }, true);
   }
 
   getJSONServices(category) {
@@ -87,8 +95,8 @@ class ChartContainerController {
     this.dataSources.push(this.renderTargets.shift());
   }
 
-  makeDataSource(jsonServices) {
-    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()})).then((results) => {
+  makeDataSource(jsonServices, id) {
+    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs(id)})).then((results) => {
       const nestedDataSource = Array.prototype.concat.apply([], results);
       return nestedDataSource.reduce((result, dataSource) => {
         Object.keys(dataSource).forEach((key) => {
@@ -103,8 +111,9 @@ class ChartContainerController {
     });
   }
 
-  loadDataSource(category) {
-    this.makeDataSource(this.getJSONServices(category)).then((results) => {
+  loadDataSource(id, category) {
+    console.log('load: ' + category);
+    this.makeDataSource(this.getJSONServices(category), id).then((results) => {
       this.dataSources = results;
     });
   }

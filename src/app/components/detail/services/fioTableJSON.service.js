@@ -4,7 +4,7 @@ export class FioTableJSONService extends TableJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'io');
+    super($log, $resource, $q, verification, 'fio');
   }
 
   makeHeaders(rawJson) {

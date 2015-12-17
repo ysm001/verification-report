@@ -22,7 +22,7 @@ export function DetailDirective() {
 }
 
 class DetailController {
-  constructor ($scope, $log, $timeout, $attrs, kernbenchTableJSON, fioTableJSON, lmbenchTableJSON, netperfTableJSON) {
+  constructor ($scope, $log, $timeout, $attrs, appStatus, kernbenchTableJSON, fioTableJSON, lmbenchTableJSON, netperfTableJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -33,7 +33,9 @@ class DetailController {
     this.netperfTableJSON = netperfTableJSON;
     this.tables = null;
     this.$timeout = $timeout;
+    this.appStatus = appStatus;
 
+    this.watchId();
     this.activate();
   }
 
@@ -41,8 +43,8 @@ class DetailController {
     this.$log.info('Activated detail View');
   }
 
-  loadDataSource(category) {
-    this.getJSONService(category).getTableJSONs().then((tables) => {
+  loadDataSource(id, category) {
+    this.getJSONService(category).getTableJSONs(id).then((tables) => {
       this.$log.info('Activated detail View');
       this.tables = this.filterTables(tables);
     });
@@ -70,10 +72,14 @@ class DetailController {
 
   setCategory(category) {
     this.category = category;
+  }
 
-    this.$timeout(()=> {
-      this.loadDataSource(this.category);
-    }, 0);
+  watchId() {
+    this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
+      if (newVal) {
+        this.loadDataSource(newVal, this.category);
+      }
+    }, true);
   }
 
   setGroup(group) {

@@ -4,7 +4,7 @@ export class NetperfJSONService extends ChartJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'network');
+    super($log, $resource, $q, verification, 'netperf-single');
   }
 
   getType(operation) {
