@@ -1,18 +1,16 @@
-<div class="detail-table-container" in-view="detailTable.render($inview, $inviewpart)" ng-class="{'detail-table-container-show': detailTable.visible}">
-  <div class="detail-table-title">{{detailTable.title}}</div>
-  <table class="detail-table mdl-data-table mdl-js-data-table">
-    <thead ng-repeat="headers in detailTable.headers">
-      <tr>
-        <th class="detail-table-header {{header.class}}" ng-repeat="header in headers" colspan="{{header.colspan}}">{{header.text}}</th>
-      </tr>
-    </thead>
+<div class="detail-table-title">{{detailTable.title}}</div>
+<table class="detail-table mdl-data-table mdl-js-data-table">
+  <thead ng-repeat="headers in detailTable.headers">
+    <tr>
+      <th class="detail-table-header {{header.class}}" ng-repeat="header in headers" colspan="{{header.colspan}}">{{header.text}}</th>
+    </tr>
+  </thead>
 
-    <tbody>
-      <tr class="" ng-repeat="record in detailTable.records">
-        <td class="detail-table-col {{col.class}}" ng-repeat="col in record.cols">
-          {{col.text}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  <tbody>
+    <tr class="" ng-repeat="record in detailTable.records">
+      <td class="detail-table-col {{col.class}}" ng-repeat="col in record.cols">
+        {{col.text}}
+      </td>
+    </tr>
+  </tbody>
+</table>

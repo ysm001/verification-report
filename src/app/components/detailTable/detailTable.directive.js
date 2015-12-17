@@ -14,7 +14,7 @@ export function DetailTableDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setRenderTarget(attrs.title, JSON.parse(attrs.headers), JSON.parse(attrs.records));
+    controller.setTableData(attrs.title, JSON.parse(attrs.headers), JSON.parse(attrs.records));
   }
 
   return directive;
@@ -39,26 +39,5 @@ class DetailTableController {
     this.title = title;
     this.headers = headers;
     this.records = records;
-  }
-
-  render(inview, inviewPart) {
-    if (!inview || !this.renderTarget) return;
-
-    this.setTableData(this.renderTarget.title, this.renderTarget.headers, this.renderTarget.records);
-    this.show();
-  }
-
-  setRenderTarget(title, headers, records) {
-    this.renderTarget = {
-      title: title,
-      headers: headers,
-      records: records
-    };
-  }
-
-  show() {
-    this.$timeout(() => {
-      this.visible = true;
-    }, 0);
   }
 }

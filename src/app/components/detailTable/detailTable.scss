@@ -41,12 +41,3 @@
 .lmbench-ave-col {
   border-left: 2px solid #929292;
 }
-
-.detail-table-container {
-  opacity: 0;
-  transition: all 0.3s;
-
-  &-show {
-    opacity: 1;
-  }
-}

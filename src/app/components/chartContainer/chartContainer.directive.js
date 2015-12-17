@@ -16,6 +16,12 @@ export function ChartContainerDirective() {
   function postLink(scope, element, attrs, controller) {
     controller.setCategory(attrs.category);
     controller.setTitle(attrs.title);
+
+    scope.$watch(() => {
+      return element.attr('active');
+    }, (newValue) => {
+      controller.setActive(newValue);
+    });
   }
 
   return directive;
@@ -38,6 +44,8 @@ class ChartContainerController {
     this.netperfEachJSON = netperfEachJSON;
     this.netperfTimeJSON = netperfTimeJSON;
     this.appStatus = appStatus;
+    this.dataSourcesCache = [];
+    this.isActive = false;
 
     this.activate();
     this.watchId();
@@ -97,7 +105,21 @@ class ChartContainerController {
 
   loadDataSource(id, category) {
     this.makeDataSource(this.getJSONServices(category), id).then((results) => {
-      this.dataSources = results;
+      this.dataSourcesCache = results;
+      if (this.isActive) {
+        this.render();
+      }
     });
+  }
+
+  render() {
+    if (this.dataSources != this.dataSourcesCache) {
+      this.dataSources = this.dataSourcesCache;
+    }
+  }
+
+  setActive(isActive) {
+    this.isActive = isActive;
+    this.render();
   }
 }
