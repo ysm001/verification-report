@@ -105,7 +105,9 @@ class ChartContainerController {
 
   loadDataSource(id, category) {
     this.makeDataSource(this.getJSONServices(category), id).then((results) => {
+      this.dataSources = [];
       this.dataSourcesCache = results;
+
       if (this.isActive) {
         this.render();
       }
@@ -114,12 +116,16 @@ class ChartContainerController {
 
   render() {
     if (this.dataSources != this.dataSourcesCache) {
+      console.log(`render: ${this.category}`);
       this.dataSources = this.dataSourcesCache;
     }
   }
 
   setActive(isActive) {
-    this.isActive = isActive;
-    this.render();
+    this.isActive = isActive == 'true';
+
+    if (this.isActive) {
+      this.render();
+    }
   }
 }
