@@ -108,14 +108,12 @@ class ChartContainerController {
       this.dataSources = [];
       this.dataSourcesCache = results;
 
-      if (this.isActive) {
-        this.render();
-      }
+      this.render(this.isActive);
     });
   }
 
-  render() {
-    if (this.dataSources != this.dataSourcesCache) {
+  render($inview) {
+    if ($inview && this.dataSources != this.dataSourcesCache) {
       console.log(`render: ${this.category}`);
       this.dataSources = this.dataSourcesCache;
     }
@@ -123,9 +121,6 @@ class ChartContainerController {
 
   setActive(isActive) {
     this.isActive = isActive == 'true';
-
-    if (this.isActive) {
-      this.render();
-    }
+    this.render(this.isActive);
   }
 }
