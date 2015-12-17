@@ -39,12 +39,6 @@ class ChartContainerController {
     this.netperfTimeJSON = netperfTimeJSON;
     this.appStatus = appStatus;
 
-    this.renderTargets = [];
-
-    this.events = {
-      renderComplete: this.renderComplete.bind(this)
-    };
-
     this.activate();
     this.watchId();
 
@@ -83,16 +77,6 @@ class ChartContainerController {
     } else {
       console.log(`unknown category: ${category}`);
     }
-  }
-
-  renderComplete() {
-    if (this.renderTargets.length > 0) {
-      this.renderOne();
-    }
-  }
-
-  renderOne() {
-    this.dataSources.push(this.renderTargets.shift());
   }
 
   makeDataSource(jsonServices, id) {
