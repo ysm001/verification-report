@@ -26,6 +26,7 @@ class DetailTableController {
 
     this.$log = $log;
     this.$scope = $scope;
+    this.$timeout = $timeout;
 
     this.activate();
   }

@@ -20,6 +20,10 @@
     width: 100%;
   }
 
+  .chart-card-body {
+    min-height: 500px;
+  }
+
   &-grid {
     display: flex;
     flex-flow: nowrap;
