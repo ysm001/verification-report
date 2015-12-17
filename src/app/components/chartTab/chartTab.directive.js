@@ -14,11 +14,11 @@ export function ChartTabDirective() {
   };
 
   function postLink(scope, element, attrs, ctrl) {
-    element.bind('scroll', function() {
-      scope.$apply(function() {
-        ctrl.setActiveTabById((getActiveTab(element) || {}).id);
-      });
-    });
+    // element.bind('scroll', function() {
+    //   scope.$apply(function() {
+    //     ctrl.setActiveTabById((getActiveTab(element) || {}).id);
+    //   });
+    // });
   }
 
   function getActiveTab(element) {

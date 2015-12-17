@@ -72,16 +72,16 @@ class ChartContainerController {
   }
 
   getJSONServices(category) {
-    if (category == 'io') {
+    if (category == 'fio') {
       return [this.fioJSON];
-    } else if (category == 'memory') {
+    } else if (category == 'kernbench') {
       return [this.kernbenchJSON];
-    } else if (category == 'task') {
+    } else if (category == 'lmbench') {
       return [this.lmbenchJSON];
-    } else if (category == 'network') {
+    } else if (category == 'netperf') {
       return [this.netperfTimeJSON, this.netperfJSON, this.netperfEachJSON];
     } else {
-      console.log('unknown category');
+      console.log(`unknown category: ${category}`);
     }
   }
 
@@ -112,7 +112,6 @@ class ChartContainerController {
   }
 
   loadDataSource(id, category) {
-    console.log('load: ' + category);
     this.makeDataSource(this.getJSONServices(category), id).then((results) => {
       this.dataSources = results;
     });

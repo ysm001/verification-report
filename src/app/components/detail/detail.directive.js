@@ -57,13 +57,13 @@ class DetailController {
   }
 
   getJSONService(category) {
-    if (category == 'io') {
+    if (category == 'fio') {
       return this.fioTableJSON;
-    } else if (category == 'memory') {
+    } else if (category == 'kernbench') {
       return this.kernbenchTableJSON;
-    } else if (category == 'task') {
+    } else if (category == 'lmbench') {
       return this.lmbenchTableJSON;
-    } else if (category == 'network') {
+    } else if (category == 'netperf') {
       return this.netperfTableJSON;
     } else {
       console.log('unknow category');
