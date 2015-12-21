@@ -13,7 +13,9 @@
   <chart-container ng-repeat="category in chartTab.categories"
   id="{{category.id}}"
   title="{{category.name}}"
-  category="{{category.id}}"></chart-container>
+  category="{{category.id}}"
+  active="{{chartTab.isActive($index)}}"
+  ></chart-container>
 </div>
 
 <div class="chart-tab-footer chart-card mdl-card mdl-shadow--2dp">

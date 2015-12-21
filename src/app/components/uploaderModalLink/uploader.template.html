@@ -1,0 +1,28 @@
+<!-- The actual modal template, just a bit o bootstrap -->
+<div class="modal" ng-class="{fade: !uploader.visible(), in: uploader.visible()}">
+  <div class="modal-backdrop" ng-class="{fade: !uploader.visible(), in: uploader.visible()}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="mdl-button mdl-js-button mdl-button--icon close-button" ng-click="uploader.close('Cancel')" data-dismiss="modal" aria-hidden="true">
+            <i class="material-icons">close</i>
+          </button>
+          <h4 class="modal-title">Upload Log File</h4>
+        </div>
+        <div class="modal-body">
+          <version-input-field></version-input-field>
+          <drop-area></drop-area>
+        </div>
+        <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate upload-progress-bar" ng-class="{show: uploader.isUploading()}" ></div>
+        <div class="modal-footer">
+          <div class="uploader-message" ng-class="{'uploader-message-error': uploader.hasErrorMessage(), 'uploader-message-success': uploader.hasSuccessMessage()}">
+            {{uploader.message}}
+          </div>
+          <button class="mdl-button mdl-js-button upload-button mdl-button--primary" ng-click="uploader.onUploadButtonClicked()" ng-disabled="uploader.isUploading()">
+            Upload
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -55,7 +55,7 @@ class ChartTabController {
 
       this.categories = data;
 
-      return this.summaries;
+      return this.categories;
     });
   }
 
@@ -81,6 +81,10 @@ class ChartTabController {
   }
 
   getClass(index) {
-    return this.activeTab == index ? 'chart-tab-active' : '';
+    return this.isActive(index) ? 'chart-tab-active' : '';
+  }
+
+  isActive(index) {
+    return this.activeTab == index;
   }
 }

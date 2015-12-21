@@ -4,7 +4,11 @@ export class NetperfTableJSONService extends TableJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'network-time');
+    super($log, $resource, $q, verification, 'netperf-single');
+  }
+
+  formatJSONs(jsons) {
+    return jsons.pattern.netperf;
   }
 
   makeHeaders(rawJson) {

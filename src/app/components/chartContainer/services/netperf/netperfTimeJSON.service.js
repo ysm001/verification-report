@@ -4,7 +4,7 @@ export class NetperfTimeJSONService extends ChartJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'network-time');
+    super($log, $resource, $q, verification, 'netperf-single');
   }
 
   getFushionFormatJSONResult(type, chart, categories, data) {
@@ -18,8 +18,10 @@ export class NetperfTimeJSONService extends ChartJSONService {
   }
 
   formatJSONs(rawJsons) {
-    return Object.keys(rawJsons).reduce((result, key) => {
-      result[key] = this.makeGroup(key, rawJsons[key]);
+    const netperf = rawJsons.pattern.netperf;
+
+    return Object.keys(netperf).reduce((result, key) => {
+      result[key] = this.makeGroup(key, netperf[key]);
       return result;
     }, {});
   }

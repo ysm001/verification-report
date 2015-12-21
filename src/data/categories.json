@@ -1,18 +1,18 @@
 [
   {
-    "id": "io",
+    "id": "fio",
     "name": "FIO"
   },
   {
-    "id": "memory",
+    "id": "kernbench",
     "name": "KernBench"
   },
   {
-    "id": "task",
+    "id": "lmbench",
     "name": "LmBench"
   },
   {
-    "id": "network",
+    "id": "netperf",
     "name": "NetPerf"
   }
 ]

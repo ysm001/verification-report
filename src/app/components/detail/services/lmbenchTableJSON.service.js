@@ -4,7 +4,7 @@ export class LmbenchTableJSONService extends TableJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'task');
+    super($log, $resource, $q, verification, 'lmbench');
   }
 
   makeHeaders(rawJson) {

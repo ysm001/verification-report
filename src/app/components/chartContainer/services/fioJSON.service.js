@@ -4,7 +4,7 @@ export class FioJSONService extends ChartJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'io');
+    super($log, $resource, $q, verification, 'fio');
   }
 
   getFushionFormatJSONResult(type, chart, categories, data) {

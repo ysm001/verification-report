@@ -16,35 +16,39 @@ export function SummaryTableDirective() {
 }
 
 class SummaryTableController {
-  constructor ($scope, $log, verificationSummary) {
+  constructor ($scope, $log, verification, appStatus) {
     'ngInject';
 
     this.$log = $log;
     this.summaries = [];
-    this.activeRecord = 0;
+    this.appStatus = appStatus;
 
-    this.activate(verificationSummary);
+    this.activate(verification);
   }
 
-  activate(verificationSummary) {
-    return this.getSummaries(verificationSummary).then(() => {
+  activate(verification) {
+    return this.getSummaries(verification).then((summaries) => {
+      if (summaries.length > 0) {
+        this.appStatus.currentId = summaries[0]._id;
+      }
+
       this.$log.info('Activated Summaries View');
     });
   }
 
-  getSummaries(verificationSummary) {
-    return verificationSummary.getSummaries().then((data) => {
+  getSummaries(verification) {
+    return verification.getSummary().then((data) => {
       this.summaries = data;
 
       return this.summaries;
     });
   }
 
-  getClass(index) {
-    return this.activeRecord == index ? 'summary-record-active' : '';
+  getClass(element) {
+    return this.appStatus.currentId == element._id ? 'summary-record-active' : '';
   }
 
-  onClick(index) {
-    this.activeRecord = index;
+  onClick(element) {
+    this.appStatus.currentId = element._id;
   }
 }

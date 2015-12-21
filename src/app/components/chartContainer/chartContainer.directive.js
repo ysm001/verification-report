@@ -16,13 +16,19 @@ export function ChartContainerDirective() {
   function postLink(scope, element, attrs, controller) {
     controller.setCategory(attrs.category);
     controller.setTitle(attrs.title);
+
+    scope.$watch(() => {
+      return element.attr('active');
+    }, (newValue) => {
+      controller.setActive(newValue);
+    });
   }
 
   return directive;
 }
 
 class ChartContainerController {
-  constructor ($scope, $log, $timeout, $attrs, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON, netperfEachJSON, netperfTimeJSON) {
+  constructor ($scope, $log, $timeout, $attrs, appStatus, fioJSON, kernbenchJSON, lmbenchJSON, lmbenchLineJSON, netperfJSON, netperfEachJSON, netperfTimeJSON) {
     'ngInject';
 
     this.$log = $log;
@@ -37,14 +43,12 @@ class ChartContainerController {
     this.netperfJSON = netperfJSON;
     this.netperfEachJSON = netperfEachJSON;
     this.netperfTimeJSON = netperfTimeJSON;
-
-    this.renderTargets = [];
-
-    this.events = {
-      renderComplete: this.renderComplete.bind(this)
-    };
+    this.appStatus = appStatus;
+    this.dataSourcesCache = [];
+    this.isActive = false;
 
     this.activate();
+    this.watchId();
 
     const self = this;
   }
@@ -55,40 +59,36 @@ class ChartContainerController {
 
   setCategory(category) {
     this.category = category;
-
-    this.loadDataSource(this.category);
   }
 
   setTitle(title) {
     this.title = title;
   }
 
+  watchId() {
+    this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
+      if (newVal) {
+        this.loadDataSource(newVal, this.category);
+      }
+    }, true);
+  }
+
   getJSONServices(category) {
-    if (category == 'io') {
+    if (category == 'fio') {
       return [this.fioJSON];
-    } else if (category == 'memory') {
+    } else if (category == 'kernbench') {
       return [this.kernbenchJSON];
-    } else if (category == 'task') {
+    } else if (category == 'lmbench') {
       return [this.lmbenchJSON];
-    } else if (category == 'network') {
+    } else if (category == 'netperf') {
       return [this.netperfTimeJSON, this.netperfJSON, this.netperfEachJSON];
     } else {
-      console.log('unknown category');
+      console.log(`unknown category: ${category}`);
     }
   }
 
-  renderComplete() {
-    if (this.renderTargets.length > 0) {
-      this.renderOne();
-    }
-  }
-
-  renderOne() {
-    this.dataSources.push(this.renderTargets.shift());
-  }
-
-  makeDataSource(jsonServices) {
-    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs()})).then((results) => {
+  makeDataSource(jsonServices, id) {
+    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs(id)})).then((results) => {
       const nestedDataSource = Array.prototype.concat.apply([], results);
       return nestedDataSource.reduce((result, dataSource) => {
         Object.keys(dataSource).forEach((key) => {
@@ -103,9 +103,24 @@ class ChartContainerController {
     });
   }
 
-  loadDataSource(category) {
-    this.makeDataSource(this.getJSONServices(category)).then((results) => {
-      this.dataSources = results;
+  loadDataSource(id, category) {
+    this.makeDataSource(this.getJSONServices(category), id).then((results) => {
+      this.dataSources = [];
+      this.dataSourcesCache = results;
+
+      this.render(this.isActive);
     });
+  }
+
+  render($inview) {
+    if ($inview && this.dataSources != this.dataSourcesCache) {
+      console.log(`render: ${this.category}`);
+      this.dataSources = this.dataSourcesCache;
+    }
+  }
+
+  setActive(isActive) {
+    this.isActive = isActive == 'true';
+    this.render(this.isActive);
   }
 }

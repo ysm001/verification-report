@@ -4,7 +4,7 @@ export class KernbenchJSONService extends ChartJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'memory');
+    super($log, $resource, $q, verification, 'kernbench');
   }
 
   getFushionFormatJSONResult(type, chart, categories, data) {
@@ -42,7 +42,6 @@ export class KernbenchJSONService extends ChartJSONService {
   }
 
   getMinValue(rawJson) {
-    console.log(this.getValues(rawJson));
     return Math.min.apply(null, this.getValues(rawJson));
   }
 

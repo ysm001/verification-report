@@ -4,7 +4,7 @@ export class NetperfJSONService extends ChartJSONService {
   constructor ($log, $resource, $q, verification) {
     'ngInject';
 
-    super($log, $resource, $q, verification, 'network');
+    super($log, $resource, $q, verification, 'netperf-single');
   }
 
   getType(operation) {
@@ -35,12 +35,13 @@ export class NetperfJSONService extends ChartJSONService {
   }
 
   formatJSONs(rawJsons) {
-    const targetName = this.getTarget();
+    const cpu_usage = rawJsons.pattern.cpu_usage;
+    const targetName = 'all';
 
-    return Object.keys(rawJsons)
-      .filter((sender_receiver) => {return rawJsons[sender_receiver] != null && rawJsons[sender_receiver][targetName] != null})
+    return Object.keys(cpu_usage)
+      .filter((sender_receiver) => {return cpu_usage[sender_receiver] != null && cpu_usage[sender_receiver][targetName] != null})
       .reduce((formattedJSON, sender_receiver) => {
-        const target = rawJsons[sender_receiver][targetName];
+        const target = cpu_usage[sender_receiver][targetName];
         Object.keys(target)
           .filter((item) => {return target[item] != null;})
           .forEach((item) => {

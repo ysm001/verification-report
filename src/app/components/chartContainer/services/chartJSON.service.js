@@ -7,8 +7,8 @@ export class ChartJSONService {
     this.type = type;
   }
 
-  getJSON(type) {
-    return this.verification.getDetail(this.type);
+  getJSON(id, type) {
+    return this.verification.getDetail(id, this.type);
   }
 
   getStyleTemplate() {
@@ -23,11 +23,11 @@ export class ChartJSONService {
     return 'mscolumn2d';
   }
 
-  getFushionFormatJSONs() {
+  getFushionFormatJSONs(id) {
     const self = this;
 
     const stylePromise = this.getStyleTemplate().$promise;
-    const rawJsonPromise = self.getJSON(this.type);
+    const rawJsonPromise = self.getJSON(id, this.type);
 
     return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
       const groups = this.formatJSONs(values[1].toJSON());

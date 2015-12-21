@@ -1,0 +1,30 @@
+.drag-and-drop-area {
+    border: 3px dashed #ccc;
+    border-radius: 5px;
+    height: 150px;
+    width: 500px;
+    font-size: 30px;
+    color: #ccc;
+    transition: all .5s ease-in-out;
+    margin: 0 auto;
+    position: relative;
+}
+
+.centerall {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enter, .attached {
+  border: 3px dashed #009688;
+  color: #009688;
+}
+
+.attached {
+  border: 3px solid #009688;
+}
+
+.archive-file-icon {
+  font-size: 100px;
+}
