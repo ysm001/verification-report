@@ -1,5 +1,5 @@
 export class UploaderController {
-  constructor ($scope, $log, close, uploader, verification) {
+  constructor ($scope, $log, close, uploader, verification, appStatus) {
     'ngInject';
 
     this.$scope = $scope;
@@ -10,6 +10,7 @@ export class UploaderController {
     this.verification = verification;
     this.status = 'idle';
     this.message = '';
+    this.appStatus = appStatus;
   }
 
   show() {
@@ -58,6 +59,7 @@ export class UploaderController {
 
       if (data.result) {
         this.setSuccessMessage('Successfully uploaded.');
+        this.appStatus.summaryUpdated = true;
       } else {
         this.setErrorMessage(data.error.message);
       }
