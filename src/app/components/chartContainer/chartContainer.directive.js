@@ -98,7 +98,7 @@ class ChartContainerController {
         result[tab.tab] = result[tab.tab] || {};
         Object.keys(tab.jsons).forEach((key) => {
           if (key in result[tab.tab]) {
-            result[tab.tab][`${key}_`] = tab.jsons[key];
+            result[tab.tab][`${key}_${Date.now}`] = tab.jsons[key];
           } else {
             result[tab.tab][key] = tab.jsons[key];
           }
