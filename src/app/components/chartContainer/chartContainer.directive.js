@@ -87,6 +87,9 @@ class ChartContainerController {
     }
   }
 
+  makeTab() {
+  }
+
   makeDataSource(jsonServices, id) {
     return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs(id)})).then((results) => {
       const nestedDataSource = Array.prototype.concat.apply([], results);
