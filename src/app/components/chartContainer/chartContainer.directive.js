@@ -46,6 +46,7 @@ class ChartContainerController {
     this.appStatus = appStatus;
     this.dataSourcesCache = [];
     this.isActive = false;
+    this.activeTab = "";
 
     this.activate();
     this.watchId();
@@ -91,39 +92,54 @@ class ChartContainerController {
   }
 
   makeDataSource(jsonServices, id) {
-    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs(id)})).then((results) => {
-      const nestedDataSource = Array.prototype.concat.apply([], results);
-      return nestedDataSource.reduce((result, dataSource) => {
-        Object.keys(dataSource).forEach((key) => {
-          if (key in result) {
-            result[`${key}_`] = dataSource[key];
-          } else {
-            result[key] = dataSource[key];
-          }
+    return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs(id)})).then((tabs) => {
+      const nestedTabs = Array.prototype.concat.apply([], tabs);
+      return nestedTabs.reduce((result, tab) => {
+        result[tab.tab] = {};
+        Object.keys(tab.jsons).forEach((key) => {
+          result[tab.tab][key] = tab.jsons[key];
         });
+
         return result;
       }, {});
     });
   }
 
   loadDataSource(id, category) {
-    this.makeDataSource(this.getJSONServices(category), id).then((results) => {
+    this.makeDataSource(this.getJSONServices(category), id).then((dataSources) => {
       this.dataSources = [];
-      this.dataSourcesCache = results;
+      this.tabs = Object.keys(dataSources);
 
+      this.tabDataSourcesCache = {};
+      Object.keys(dataSources).forEach((tab) => {
+        this.tabDataSourcesCache[tab] = dataSources[tab];
+      });
+
+      this.setActiveTab(this.tabs[0]);
       this.render(this.isActive);
     });
   }
 
   render($inview) {
-    if ($inview && this.dataSources != this.dataSourcesCache) {
-      console.log(`render: ${this.category}`);
-      this.dataSources = this.dataSourcesCache;
+    if ($inview && this.tabDataSources != this.tabDataSourcesCache) {
+      this.tabDataSources = this.tabDataSourcesCache;
     }
   }
 
   setActive(isActive) {
     this.isActive = isActive == 'true';
     this.render(this.isActive);
+  }
+
+  onChartCardTabItemClicked(tab) {
+    this.setActiveTab(tab);
+  }
+
+  isActiveTab(tab, flg) {
+    return tab == this.activeTab;
+  }
+
+  setActiveTab(tab) {
+    this.activeTab = tab;
   }
 }
