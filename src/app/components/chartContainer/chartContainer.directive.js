@@ -95,9 +95,13 @@ class ChartContainerController {
     return Promise.all(jsonServices.map((service) => {return service.getFushionFormatJSONs(id)})).then((tabs) => {
       const nestedTabs = Array.prototype.concat.apply([], tabs);
       return nestedTabs.reduce((result, tab) => {
-        result[tab.tab] = {};
+        result[tab.tab] = result[tab.tab] || {};
         Object.keys(tab.jsons).forEach((key) => {
-          result[tab.tab][key] = tab.jsons[key];
+          if (key in result[tab.tab]) {
+            result[tab.tab][`${key}_`] = tab.jsons[key];
+          } else {
+            result[tab.tab][key] = tab.jsons[key];
+          }
         });
 
         return result;
