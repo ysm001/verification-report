@@ -14,7 +14,7 @@
   <div class="chart-card-body-container">
     <div class="chart-card-body">
 
-      <div ng-repeat="(tab, dataSources) in chartContainer.tabDataSources" ng-class="{hide: !chartContainer.isActiveTab(tab, true)}">
+      <div ng-repeat="(tab, dataSources) in chartContainer.tabDataSources" ng-class="{hide: !chartContainer.isActiveTab(tab)}">
         <div ng-repeat="(group, items) in dataSources" class="chart-card-grid" group="{{group}}" ng-class="{'no-border': $last}">
           <div class="chart-card-grid-row chart-row">
             <div ng-repeat="item in items" class="chart-grid-row-item">

@@ -139,7 +139,7 @@ class ChartContainerController {
     this.setActiveTab(tab);
   }
 
-  isActiveTab(tab, flg) {
+  isActiveTab(tab) {
     return tab == this.activeTab;
   }
 
