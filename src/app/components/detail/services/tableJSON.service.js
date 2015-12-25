@@ -12,9 +12,9 @@ export class TableJSONService {
     return this.verification.getDetail(id, this.type);
   }
 
-  getTableJSONs(id) {
+  getTableJSONs(id, tab) {
     return this.getJSON(id).then((response) => {
-      const rawJsons = this.formatJSONs(response.toJSON());
+      const rawJsons = this.formatJSONs(response.toJSON()[tab]);
 
       return Object.keys(rawJsons).map((key) => {
         return {

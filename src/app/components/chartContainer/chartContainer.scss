@@ -16,6 +16,30 @@
     background-color: #fafafa;
   }
 
+  .chart-card-tab {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    color: rgba(0,0,0,.30);
+    padding: 5px 0px 5px 0px;
+    border-bottom: 1px solid #aaa;
+
+    &-item {
+      cursor: pointer;
+      font-weight: bold;
+      outline: none;
+
+      &:hover {
+        color: rgb(0,150,136);
+      }
+
+      &-active {
+        color: rgb(0,150,136) !important;
+        font-weight: bold;
+      }
+    }
+  }
+
   .chart-card-body-container {
     width: 100%;
   }
@@ -43,4 +67,8 @@
 
 .no-border {
   border-bottom: none;
+}
+
+.hide {
+  display: none;
 }

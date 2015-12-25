@@ -23,6 +23,15 @@ export class ChartJSONService {
     return 'mscolumn2d';
   }
 
+  getTabs(fullJsons) {
+    return Object.keys(fullJsons).map((key) => {
+      return {
+        tab: key,
+        value: fullJsons[key]
+      }
+    });
+  }
+
   getFushionFormatJSONs(id) {
     const self = this;
 
@@ -30,14 +39,16 @@ export class ChartJSONService {
     const rawJsonPromise = self.getJSON(id, this.type);
 
     return this.$q.all([stylePromise, rawJsonPromise]).then((values) => {
-      const groups = this.formatJSONs(values[1].toJSON());
+      return this.getTabs(values[1].toJSON()).map((tabValue) => {
+        const groups = this.formatJSONs(tabValue.value);
 
-      const jsons = Object.keys(groups).map((key) => {
-        return {group: groups[key].group, data: self.getFushionFormatJSON(key, groups[key].values, values[0].toJSON())};
-      }).filter((e) => {return e != undefined && e != null});
-      
-      return this.groupBy(jsons);
-    })
+        const jsons = Object.keys(groups).map((key) => {
+          return {group: groups[key].group, data: self.getFushionFormatJSON(key, groups[key].values, values[0].toJSON())};
+        }).filter((e) => {return e != undefined && e != null});
+
+        return { tab: tabValue.tab, jsons: this.groupBy(jsons) };
+      });
+    });
   }
 
   getFushionFormatJSON(operation, rawJson, styleTemplate) {
