@@ -19,26 +19,43 @@ class SummaryTableController {
   constructor ($scope, $log, verification, appStatus) {
     'ngInject';
 
+    this.$scope = $scope;
     this.$log = $log;
     this.summaries = [];
     this.appStatus = appStatus;
+    this.verification = verification;
 
-    this.activate(verification);
+    this.watchUpdateFlag();
+    this.activate();
   }
 
-  activate(verification) {
-    return this.getSummaries(verification).then((summaries) => {
-      if (summaries.length > 0) {
-        this.appStatus.currentId = summaries[0]._id;
-      }
-
+  activate() {
+    return this.fetchAndUpdate().then((summaries) => {
       this.$log.info('Activated Summaries View');
     });
   }
 
-  getSummaries(verification) {
-    return verification.getSummary().then((data) => {
-      this.summaries = data;
+  watchUpdateFlag() {
+    this.$scope.$watch(() => {return this.appStatus.summaryUpdated}, (newVal, oldVal) => {
+      if (newVal) {
+        this.fetchAndUpdate();
+        this.appStatus.summaryUpdated = false;
+      }
+    }, true);
+  }
+
+
+  fetchAndUpdate() {
+    return this.getSummaries().then((summaries) => {
+      if (summaries.length > 0) {
+        this.appStatus.currentId = summaries[0]._id;
+      }
+    });
+  }
+
+  getSummaries() {
+    return this.verification.getSummary().then((data) => {
+      this.summaries = data.sort((a, b) => { return new Date(b.updatedAt) - new Date(a.updatedAt); });
 
       return this.summaries;
     });
