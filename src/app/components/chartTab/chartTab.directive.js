@@ -19,7 +19,9 @@ export function ChartTabDirective() {
 
     element.bind('scroll', function() {
       scope.$apply(function() {
-        ctrl.setActiveTabById((getActiveTab(element, offset) || {}).id);
+        const activeTab = getActiveTab(element, offset) || {};
+        ctrl.setActiveTabById(activeTab.id);
+        ctrl.setCardTabFixed(cardTabFixed(element , offset, activeTab));
       });
     });
   }
@@ -30,6 +32,16 @@ export function ChartTabDirective() {
     return angular.element('chart-container').filter((idx, chart) => {
       return chart.offsetTop - offset <= raw.scrollTop;
     }).sort((a, b) => {return b.offsetTop - a.offsetTop})[0];
+  }
+
+  function cardTabFixed(element, offset, activeTab) {
+    const raw = element[0];
+
+    const cardTab = angular.element(angular.element(activeTab).find('.chart-card-tab')[0]);
+    const offsetTop = activeTab.offsetTop + raw.offsetTop - cardTab.height() - offset;
+    console.log(`${raw.scrollTop} > ${offsetTop}`);
+
+    return raw.scrollTop > offsetTop;
   }
 
   return directive;
@@ -45,6 +57,7 @@ class ChartTabController {
     this.activeTab = 0;
     this.activeTabId = null;
     this.appStatus = appStatus;
+    this.cardTabFixed = false;
 
     this.categories = [];
     this.activate(verificationSummary);
@@ -79,6 +92,10 @@ class ChartTabController {
 
     this.activeTabId = id;
     this.setActiveTab(this.categories.findIndex(function(category) {return category.id == id;}));
+  }
+
+  setCardTabFixed(fixed) {
+    this.cardTabFixed = fixed;
   }
 
   getClass(index) {

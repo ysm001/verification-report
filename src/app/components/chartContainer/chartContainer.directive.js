@@ -20,7 +20,13 @@ export function ChartContainerDirective() {
     scope.$watch(() => {
       return element.attr('active');
     }, (newValue) => {
-      controller.setActive(newValue);
+      controller.setActive(newValue == 'true');
+    });
+
+    scope.$watch(() => {
+      return element.attr('tabFixed');
+    }, (newValue) => {
+      controller.setTabFixed(newValue === 'true');
     });
   }
 
@@ -47,6 +53,7 @@ class ChartContainerController {
     this.dataSourcesCache = [];
     this.isActive = false;
     this.activeTab = "";
+    this.tabFixed = false;
 
     this.activate();
     this.watchId();
@@ -131,7 +138,7 @@ class ChartContainerController {
   }
 
   setActive(isActive) {
-    this.isActive = isActive == 'true';
+    this.isActive = isActive;
     this.render(this.isActive);
   }
 
@@ -145,5 +152,10 @@ class ChartContainerController {
 
   setActiveTab(tab) {
     this.activeTab = tab;
+  }
+
+  setTabFixed(fixed) {
+    console.log(fixed);
+    this.tabFixed = fixed;
   }
 }

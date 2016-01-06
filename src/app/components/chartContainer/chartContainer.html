@@ -3,7 +3,7 @@
     {{chartContainer.title}}
   </div>
   <hr class="chart-card-title-bottom-line">
-  <div class="chart-card-tab">
+  <div class="chart-card-tab" ng-class="{'chart-card-tab-fixed': chartContainer.tabFixed && chartContainer.isActive, 'full-width': chartContainer.appStatus.isFullScreenMode}">
     <div ng-repeat="tab in chartContainer.tabs">
       <div class="chart-card-tab-item" ng-click="chartContainer.onChartCardTabItemClicked(tab)" ng-class="{'chart-card-tab-item-active': chartContainer.isActiveTab(tab)}">
         {{tab}}
