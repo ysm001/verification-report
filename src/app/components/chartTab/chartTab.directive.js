@@ -39,7 +39,6 @@ export function ChartTabDirective() {
 
     const cardTab = angular.element(angular.element(activeTab).find('.chart-card-tab')[0]);
     const offsetTop = activeTab.offsetTop + raw.offsetTop - cardTab.height() - offset;
-    console.log(`${raw.scrollTop} > ${offsetTop}`);
 
     return raw.scrollTop > offsetTop;
   }
