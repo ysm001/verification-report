@@ -13,6 +13,8 @@ export function ChartTabDirective() {
     link: postLink
   };
 
+  let cardTabs = {};
+
   function postLink(scope, element, attrs, ctrl) {
     const header = angular.element('.chart-tabs-container')[0];
     const offset = header.offsetTop + header.offsetHeight;
@@ -37,10 +39,18 @@ export function ChartTabDirective() {
   function cardTabFixed(element, offset, activeTab) {
     const raw = element[0];
 
-    const cardTab = angular.element(angular.element(activeTab).find('.chart-card-tab')[0]);
+    const cardTab = getCardTab(activeTab);
     const offsetTop = activeTab.offsetTop + raw.offsetTop - cardTab.height() - offset;
 
     return raw.scrollTop > offsetTop;
+  }
+
+  function getCardTab(activeTab) {
+    if (!(activeTab.id in cardTabs)) {
+      cardTabs[activeTab.id] = angular.element(angular.element(activeTab).find('.chart-card-tab')[0]);
+    }
+
+    return cardTabs[activeTab.id];
   }
 
   return directive;
