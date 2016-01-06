@@ -47,6 +47,7 @@ class SummaryTableController {
 
   fetchAndUpdate() {
     return this.getSummaries().then((summaries) => {
+      this.appStatus.summaryIds = summaries.map((s) => {return s._id;});
       if (summaries.length > 0) {
         this.appStatus.currentId = summaries[0]._id;
       }

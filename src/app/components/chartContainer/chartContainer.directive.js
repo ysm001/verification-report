@@ -16,6 +16,7 @@ export function ChartContainerDirective() {
   function postLink(scope, element, attrs, controller) {
     controller.setCategory(attrs.category);
     controller.setTitle(attrs.title);
+    controller.setDataId(attrs.dataid);
 
     scope.$watch(() => {
       return element.attr('active');
@@ -51,9 +52,12 @@ class ChartContainerController {
     this.netperfTimeJSON = netperfTimeJSON;
     this.appStatus = appStatus;
     this.dataSourcesCache = [];
+    this.tabDataSourcesCache = {};
+    this.tabDataSources = {};
     this.isActive = false;
     this.activeTab = "";
     this.tabFixed = false;
+    this.dataId = '';
 
     this.activate();
     this.watchId();
@@ -75,7 +79,7 @@ class ChartContainerController {
 
   watchId() {
     this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
-      if (newVal) {
+      if (newVal == this.dataId && !this.dataLoaded()) {
         this.loadDataSource(newVal, this.category);
       }
     }, true);
@@ -93,9 +97,6 @@ class ChartContainerController {
     } else {
       console.log(`unknown category: ${category}`);
     }
-  }
-
-  makeTab() {
   }
 
   makeDataSource(jsonServices, id) {
@@ -137,6 +138,10 @@ class ChartContainerController {
     }
   }
 
+  dataLoaded() {
+    return Object.keys(this.tabDataSourcesCache).length != 0;
+  }
+
   setActive(isActive) {
     this.isActive = isActive;
     this.render(this.isActive);
@@ -157,5 +162,9 @@ class ChartContainerController {
   setTabFixed(fixed) {
     console.log(fixed);
     this.tabFixed = fixed;
+  }
+
+  setDataId(dataId) {
+    this.dataId = dataId;
   }
 }

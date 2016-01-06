@@ -16,6 +16,8 @@ export function ChartTabDirective() {
   let cardTabs = {};
 
   function postLink(scope, element, attrs, ctrl) {
+    ctrl.setDataId(attrs.dataid);
+
     const header = angular.element('.chart-tabs-container')[0];
     const offset = header.offsetTop + header.offsetHeight;
 
@@ -67,6 +69,7 @@ class ChartTabController {
     this.activeTabId = null;
     this.appStatus = appStatus;
     this.cardTabFixed = false;
+    this.dataId = '';
 
     this.categories = [];
     this.activate(verificationSummary);
@@ -113,5 +116,9 @@ class ChartTabController {
 
   isActive(index) {
     return this.activeTab == index;
+  }
+
+  setDataId(dataId) {
+    this.dataId = dataId;
   }
 }
