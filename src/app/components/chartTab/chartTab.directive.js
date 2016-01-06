@@ -14,21 +14,22 @@ export function ChartTabDirective() {
   };
 
   function postLink(scope, element, attrs, ctrl) {
+    const header = angular.element('.chart-tabs-container')[0];
+    const offset = header.offsetTop + header.offsetHeight;
+
     element.bind('scroll', function() {
       scope.$apply(function() {
-        ctrl.setActiveTabById((getActiveTab(element) || {}).id);
+        ctrl.setActiveTabById((getActiveTab(element, offset) || {}).id);
       });
     });
   }
 
-  function getActiveTab(element) {
+  function getActiveTab(element, offset) {
     const raw = element[0];
-    const header = angular.element('.chart-tabs-container')[0];
-    const offset = header.offsetTop + header.offsetHeight;
 
-    return angular.element('chart-container').filter(function(idx, chart) {
+    return angular.element('chart-container').filter((idx, chart) => {
       return chart.offsetTop - offset <= raw.scrollTop;
-    }).sort(function(a, b) {return b.offsetTop - a.offsetTop})[0];
+    }).sort((a, b) => {return b.offsetTop - a.offsetTop})[0];
   }
 
   return directive;
