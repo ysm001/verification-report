@@ -160,7 +160,6 @@ class ChartContainerController {
   }
 
   setTabFixed(fixed) {
-    console.log(fixed);
     this.tabFixed = fixed;
   }
 

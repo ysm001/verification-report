@@ -33,7 +33,6 @@ class DetailController {
     this.lmbenchTableJSON = lmbenchTableJSON;
     this.fioTableJSON = fioTableJSON;
     this.netperfTableJSON = netperfTableJSON;
-    this.tables = null;
     this.$timeout = $timeout;
     this.appStatus = appStatus;
     this.tab = '';

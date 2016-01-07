@@ -1,15 +1,15 @@
-<div class="detail-table-title">{{detailTable.title}}</div>
+<div class="detail-table-title">{{::detailTable.title}}</div>
 <table class="detail-table mdl-data-table mdl-js-data-table">
   <thead ng-repeat="headers in detailTable.headers">
     <tr>
-      <th class="detail-table-header {{header.class}}" ng-repeat="header in headers" colspan="{{header.colspan}}">{{header.text}}</th>
+      <th class="detail-table-header {::{header.class}}" ng-repeat="header in ::headers" colspan="{{::header.colspan}}">{{::header.text}}</th>
     </tr>
   </thead>
 
   <tbody>
-    <tr class="" ng-repeat="record in detailTable.records">
-      <td class="detail-table-col {{col.class}}" ng-repeat="col in record.cols">
-        {{col.text}}
+    <tr class="" ng-repeat="record in ::detailTable.records">
+      <td class="detail-table-col {{::col.class}}" ng-repeat="col in ::record.cols">
+        {{::col.text}}
       </td>
     </tr>
   </tbody>
