@@ -107,7 +107,9 @@ class ChartTabController {
   }
 
   setCardTabFixed(fixed) {
-    this.cardTabFixed = fixed;
+    if (this.cardTabFixed != fixed) {
+      this.cardTabFixed = fixed;
+    }
   }
 
   getClass(index) {
