@@ -15,6 +15,15 @@ export function ChartDirective() {
 
   function postLink(scope, element, attrs, controller) {
     controller.setRenderTarget(JSON.parse(attrs.datasource));
+    scope.$watch(() => {
+      return controller.svg;
+    }, (newValue) => {
+      if (newValue != '') {
+        element.find('fusioncharts').remove();
+        element.find('.fs-chart-svg-container').append(angular.element(newValue));
+        controller.svgRenderComplete();
+      }
+    });
   }
 
   return directive;
@@ -34,9 +43,11 @@ class ChartController {
     this.dataSource = {"chart": {}};
     this.rendering = false;
     this.chartLoader = chartLoader;
+    this.id = new Date().getTime();
+    this.svg = '';
 
     this.events = {
-      renderComplete: this.renderComplete.bind(this)
+      renderComplete: chartLoader.renderComplete.bind(chartLoader)
     };
 
     this.activate();
@@ -53,13 +64,20 @@ class ChartController {
     this.chartLoader.load(this, this.renderTarget);
   }
 
-  renderComplete() {
-    this.done();
+  renderComplete(svg) {
+    this.renderSVG(svg);
+  }
+
+  svgRenderComplete() {
     this.show();
   }
 
   setRenderTarget(dataSource) {
     this.renderTarget = dataSource;
+  }
+
+  renderSVG(svg) {
+    this.svg = svg;
   }
 
   show() {

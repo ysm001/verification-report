@@ -1,5 +1,6 @@
 <div class="chart">
   <fusioncharts
+     id="{{chart.id}}"
      class="fs-chart"
      ng-class="{'fs-chart-show': chart.visible}"
      in-view="chart.render($inview, $inviewpart)"
@@ -11,4 +12,10 @@
      events="chart.events"
      >
   </fusioncharts>
+  <div
+     class="fs-chart fs-chart-svg-container"
+     ng-class="{'fs-chart-show': chart.visible}"
+     width="600"
+     heiht="400"
+   ></div>
 </chart>
