@@ -1,6 +1,6 @@
 <div class="detail-table-title">{{::detailTable.title}}</div>
 <table class="detail-table mdl-data-table mdl-js-data-table">
-  <thead ng-repeat="headers in detailTable.headers">
+  <thead ng-repeat="headers in ::detailTable.headers">
     <tr>
       <th class="detail-table-header {::{header.class}}" ng-repeat="header in ::headers" colspan="{{::header.colspan}}">{{::header.text}}</th>
     </tr>

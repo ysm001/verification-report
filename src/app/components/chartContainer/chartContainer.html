@@ -14,15 +14,15 @@
   <div class="chart-card-body-container">
     <div class="chart-card-body">
 
-      <div ng-repeat="(tab, dataSources) in chartContainer.tabDataSources" ng-class="{hide: !chartContainer.isActiveTab(tab)}">
-        <div ng-repeat="(group, items) in dataSources" class="chart-card-grid" group="{{::group}}" ng-class="{'no-border': $last}">
+      <div ng-repeat="tab in chartContainer.tabDataSourceKeys" ng-class="{hide: !chartContainer.isActiveTab(tab)}">
+        <div ng-repeat="group in chartContainer.getGroups(tab)" class="chart-card-grid" group="{{::group}}" ng-class="{'no-border': $last}">
           <div class="chart-card-grid-row chart-row">
-            <div ng-repeat="item in ::items" class="chart-grid-row-item">
-              <chart dataSource="{{::item}}"></chart>
+            <div ng-repeat="itemId in chartContainer.getItemIds(tab, group)" class="chart-grid-row-item">
+              <chart tab="{{::tab}}" group="{{::group}}" itemId="{{::itemId}}"></chart>
             </div>
           </div>
           <div class="chart-card-grid-row table-row">
-            <detail dataId="{{chartContainer.dataId}}" category="{{chartContainer.category}}" group="{{group}}" tab="{{tab}}"></detail>
+            <detail dataId="{{::chartContainer.dataId}}" category="{{::chartContainer.category}}" group="{{::group}}" tab="{{::tab}}"></detail>
           </div>
         </div>
       </div>

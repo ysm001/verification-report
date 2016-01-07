@@ -14,7 +14,8 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setRenderTarget(JSON.parse(attrs.datasource));
+    // controller.setRenderTarget(JSON.parse(attrs.datasource));
+    controller.setRenderTarget(scope.$parent.chartContainer.getDataSource(attrs.tab, attrs.group, attrs.itemid));
     scope.$watch(() => {
       return controller.svg;
     }, (newValue) => {

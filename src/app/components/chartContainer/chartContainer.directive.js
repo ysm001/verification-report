@@ -134,8 +134,21 @@ class ChartContainerController {
 
   render($inview) {
     if ($inview && this.tabDataSources != this.tabDataSourcesCache) {
-      this.tabDataSources = this.tabDataSourcesCache;
+      // this.tabDataSources = this.tabDataSourcesCache;
+      this.tabDataSourceKeys = Object.keys(this.tabDataSourcesCache);
     }
+  }
+
+  getGroups(tab) {
+    return Object.keys(this.tabDataSourcesCache[tab]);
+  }
+
+  getItemIds(tab, group) {
+    return Object.keys(this.tabDataSourcesCache[tab][group]);
+  }
+
+  getDataSource(tab, group, itemId) {
+    return this.tabDataSourcesCache[tab][group][itemId];
   }
 
   dataLoaded() {
