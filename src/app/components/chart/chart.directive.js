@@ -15,6 +15,7 @@ export function ChartDirective() {
 
   function postLink(scope, element, attrs, controller) {
     controller.setRenderTarget(scope.$parent.chartContainer.getDataSource(attrs.tab, attrs.group, attrs.itemid));
+
     scope.$watch(() => {
       return controller.svg;
     }, (newValue) => {
@@ -24,18 +25,29 @@ export function ChartDirective() {
         controller.svgRenderComplete();
       }
     });
+
+    scope.$watch(() => {
+      return controller.fusionChartElem;
+    }, (newValue) => {
+      if (newValue != '') {
+        element.append(newValue);
+        controller.$compile(element.find('fusioncharts')[0])(scope);
+      }
+    });
   }
 
   return directive;
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, chartLoader) {
+  constructor ($scope, $log, $timeout, $compile, chartLoader) {
     'ngInject';
 
     this.$scope = $scope;
     this.$log = $log;
     this.$timeout = $timeout;
+    this.$compile = $compile;
+
     this.visible = false;
 
     this.dataSource = {chart: {}};
@@ -78,6 +90,10 @@ class ChartController {
 
   renderSVG(svg) {
     this.svg = svg;
+  }
+
+  renederFusionChart(elem) {
+    this.fusionChartElem = elem;
   }
 
   show() {
