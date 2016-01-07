@@ -35,18 +35,20 @@ class DetailController {
     this.netperfTableJSON = netperfTableJSON;
     this.$timeout = $timeout;
     this.appStatus = appStatus;
+    this.tablesCache = null;
+    this.isActive = false;
 
     this.watchId();
   }
 
   activate() {
+    this.isActive = true;
     this.$log.info('Activated detail View');
   }
 
   loadDataSource(id, category, tab) {
     this.getJSONService(category).getTableJSONs(id, tab).then((tables) => {
-      this.tables = this.filterTables(tables);
-      this.activate();
+      this.tablesCache = this.filterTables(tables);
     });
   }
 
@@ -82,8 +84,15 @@ class DetailController {
     }, true);
   }
 
+  render() {
+    if (this.tables == null) {
+      this.tables = this.tablesCache;
+      this.activate();
+    }
+  }
+
   dataLoaded() {
-    return this.tables != null;
+    return this.tablesCache != null;
   }
 
   setGroup(group) {
