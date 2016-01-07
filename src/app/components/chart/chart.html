@@ -1,13 +1,13 @@
 <div class="chart">
   <fusioncharts
-     id="{{chart.id}}"
+     id="{{::chart.id}}"
      class="fs-chart"
      ng-class="{'fs-chart-show': chart.visible}"
      in-view="chart.render($inview, $inviewpart)"
      width="600" 
      height="400"
-     type={{chart.dataSource.type}}
-     dataformat={{chart.dataFormat}}
+     type={{::chart.dataSource.type}}
+     dataformat={{::chart.dataFormat}}
      datasource={{chart.dataSource}}
      events="chart.events"
      >

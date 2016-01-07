@@ -35,8 +35,6 @@ class DetailController {
     this.netperfTableJSON = netperfTableJSON;
     this.$timeout = $timeout;
     this.appStatus = appStatus;
-    this.tab = '';
-    this.dataId = '';
 
     this.watchId();
   }

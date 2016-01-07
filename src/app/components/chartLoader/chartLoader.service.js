@@ -20,10 +20,6 @@ export class ChartLoaderService {
     this.notify(id, svg);
   }
 
-  cacheLoaded(chart, svg) {
-    this.notify(chart.id, svg);
-  }
-
   notify(id, svg) {
     const chart = this.doneFuncs[id].chart;
     const done = this.doneFuncs[id].done;
@@ -33,24 +29,24 @@ export class ChartLoaderService {
   }
 
   load(chart, dataSource) {
+    const cachedSVG = this.chartCache.get(dataSource);
+    if (cachedSVG != null) {
+      chart.renderComplete(cachedSVG);
+    } else {
+      this.loadDataSource(chart, dataSource);
+    }
+  }
+
+  loadDataSource(chart, dataSource) {
     const loadFunc = (done) => {
       this.doneFuncs[chart.id] = {
         chart: chart,
         done: done
       };
 
-      this.loadChart(chart, dataSource);
+      chart.dataSource = dataSource;
     };
 
     this.promiseQueue.add(loadFunc, true);
-  }
-
-  loadChart(chart, dataSource) {
-    const cachedSVG = this.chartCache.get(dataSource);
-    if (cachedSVG == null) {
-      chart.dataSource = dataSource;
-    } else {
-      this.cacheLoaded(chart, cachedSVG);
-    }
   }
 }

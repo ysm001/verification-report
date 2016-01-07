@@ -14,7 +14,6 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    // controller.setRenderTarget(JSON.parse(attrs.datasource));
     controller.setRenderTarget(scope.$parent.chartContainer.getDataSource(attrs.tab, attrs.group, attrs.itemid));
     scope.$watch(() => {
       return controller.svg;
@@ -39,9 +38,9 @@ class ChartController {
     this.$timeout = $timeout;
     this.visible = false;
 
+    this.dataSource = {chart: {}};
     this.dataFormat = 'json';
     this.renderTarget = null;
-    this.dataSource = {"chart": {}};
     this.rendering = false;
     this.chartLoader = chartLoader;
     this.id = new Date().getTime();
