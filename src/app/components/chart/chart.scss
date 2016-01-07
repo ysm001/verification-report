@@ -15,6 +15,13 @@ fusioncharts {
   &-show {
     opacity: 1;
   }
+
+  &-dummy {
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+    position: absolute;
+  }
 }
 
 .chart {
@@ -24,6 +31,7 @@ fusioncharts {
   background-position: center center;
   margin: 20px;
   width: 600px;
+  height: 400px;
   float: left;
 }
 

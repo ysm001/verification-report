@@ -13,7 +13,11 @@ export function ChartTabDirective() {
     link: postLink
   };
 
+  let cardTabs = {};
+
   function postLink(scope, element, attrs, ctrl) {
+    ctrl.setDataId(attrs.dataid);
+
     const header = angular.element('.chart-tabs-container')[0];
     const offset = header.offsetTop + header.offsetHeight;
 
@@ -37,17 +41,25 @@ export function ChartTabDirective() {
   function cardTabFixed(element, offset, activeTab) {
     const raw = element[0];
 
-    const cardTab = angular.element(angular.element(activeTab).find('.chart-card-tab')[0]);
+    const cardTab = getCardTab(activeTab);
     const offsetTop = activeTab.offsetTop + raw.offsetTop - cardTab.height() - offset;
 
     return raw.scrollTop > offsetTop;
+  }
+
+  function getCardTab(activeTab) {
+    if (!(activeTab.id in cardTabs)) {
+      cardTabs[activeTab.id] = angular.element(angular.element(activeTab).find('.chart-card-tab')[0]);
+    }
+
+    return cardTabs[activeTab.id];
   }
 
   return directive;
 }
 
 class ChartTabController {
-  constructor ($scope, $log, $location, $anchorScroll, verificationSummary, appStatus) {
+  constructor ($scope, $log, $location, $anchorScroll, $interval, verificationSummary, appStatus) {
     'ngInject';
 
     this.$log = $log;
@@ -57,9 +69,13 @@ class ChartTabController {
     this.activeTabId = null;
     this.appStatus = appStatus;
     this.cardTabFixed = false;
+    this.dataId = '';
+    this.$interval = $interval;
+    this.tabs = angular.element('chart-tab');
 
     this.categories = [];
     this.activate(verificationSummary);
+    this.$interval(this.autoScroll.bind(this), 500);
   }
 
   activate(verificationSummary) {
@@ -69,6 +85,13 @@ class ChartTabController {
       this.categories = data;
 
       return this.categories;
+    });
+  }
+
+  autoScroll() {
+    angular.forEach(this.tabs, (tab) => {
+      tab.scrollTop += 1;
+      tab.scrollTop -= 1;
     });
   }
 
@@ -94,7 +117,9 @@ class ChartTabController {
   }
 
   setCardTabFixed(fixed) {
-    this.cardTabFixed = fixed;
+    if (this.cardTabFixed != fixed) {
+      this.cardTabFixed = fixed;
+    }
   }
 
   getClass(index) {
@@ -103,5 +128,9 @@ class ChartTabController {
 
   isActive(index) {
     return this.activeTab == index;
+  }
+
+  setDataId(dataId) {
+    this.dataId = dataId;
   }
 }

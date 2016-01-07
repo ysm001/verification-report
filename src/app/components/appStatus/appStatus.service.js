@@ -5,8 +5,11 @@ export class AppStatusService {
     this._isFullScreenMode = false;
     this._currentId = null;
     this._summaryUpdated = false;
+    this._summaryIds = [];
   }
 
+  get summaryIds() { return this._summaryIds; }
+  set summaryIds(val) { this._summaryIds = val; }
   get summaryUpdated() { return this._summaryUpdated; }
   set summaryUpdated(val) { this._summaryUpdated = val; }
   get isFullScreenMode() { return this._isFullScreenMode; }

@@ -36,6 +36,7 @@ import { LmbenchTableJSONService } from '../app/components/detail/services/Lmben
 import { NetperfTableJSONService } from '../app/components/detail/services/NetperfTableJSON.service';
 import { ChartLoaderService } from '../app/components/chartLoader/chartLoader.service';
 import { AppStatusService } from '../app/components/appStatus/appStatus.service.js';
+import { ChartCacheService } from '../app/components/chartCache/chartCache.service.js';
 
 angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr',
     'angular-inview', 'ng-fusioncharts', 'angular.filter', 'angularModalService'])
@@ -61,6 +62,7 @@ angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSa
   .service('netperfTimeJSON', NetperfTimeJSONService)
   .service('chartLoader', ChartLoaderService)
   .service('appStatus', AppStatusService)
+  .service('chartCache', ChartCacheService)
   .service('zip', ZipService)
   .service('archiveValidator', ArchiveValidatorService)
   .service('uploader', UploaderService)
