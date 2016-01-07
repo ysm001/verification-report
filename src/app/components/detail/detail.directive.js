@@ -14,6 +14,7 @@ export function DetailDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
+    controller.setDataId(attrs.dataid);
     controller.setGroup(attrs.group);
     controller.setCategory(attrs.category);
     controller.setTab(attrs.tab);
@@ -36,9 +37,9 @@ class DetailController {
     this.$timeout = $timeout;
     this.appStatus = appStatus;
     this.tab = '';
+    this.dataId = '';
 
     this.watchId();
-    this.activate();
   }
 
   activate() {
@@ -47,8 +48,8 @@ class DetailController {
 
   loadDataSource(id, category, tab) {
     this.getJSONService(category).getTableJSONs(id, tab).then((tables) => {
-      this.$log.info('Activated detail View');
       this.tables = this.filterTables(tables);
+      this.activate();
     });
   }
 
@@ -78,10 +79,14 @@ class DetailController {
 
   watchId() {
     this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
-      if (newVal) {
+      if (newVal && this.appStatus.currentId == this.dataId && !this.dataLoaded()) {
         this.loadDataSource(newVal, this.category, this.tab);
       }
     }, true);
+  }
+
+  dataLoaded() {
+    return this.tables != null;
   }
 
   setGroup(group) {
@@ -90,5 +95,9 @@ class DetailController {
 
   setTab(tab) {
     this.tab = tab;
+  }
+  
+  setDataId(dataId) {
+    this.dataId = dataId;
   }
 }

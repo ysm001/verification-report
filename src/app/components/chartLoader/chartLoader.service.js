@@ -21,7 +21,6 @@ export class ChartLoaderService {
   }
 
   cacheLoaded(chart, svg) {
-    console.log('cache used');
     this.notify(chart.id, svg);
   }
 
