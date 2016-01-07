@@ -59,7 +59,7 @@ export function ChartTabDirective() {
 }
 
 class ChartTabController {
-  constructor ($scope, $log, $location, $anchorScroll, verificationSummary, appStatus) {
+  constructor ($scope, $log, $location, $anchorScroll, $interval, verificationSummary, appStatus) {
     'ngInject';
 
     this.$log = $log;
@@ -70,9 +70,12 @@ class ChartTabController {
     this.appStatus = appStatus;
     this.cardTabFixed = false;
     this.dataId = '';
+    this.$interval = $interval;
+    this.tabs = angular.element('chart-tab');
 
     this.categories = [];
     this.activate(verificationSummary);
+    this.$interval(this.autoScroll.bind(this), 500);
   }
 
   activate(verificationSummary) {
@@ -82,6 +85,13 @@ class ChartTabController {
       this.categories = data;
 
       return this.categories;
+    });
+  }
+
+  autoScroll() {
+    angular.forEach(this.tabs, (tab) => {
+      tab.scrollTop += 1;
+      tab.scrollTop -= 1;
     });
   }
 
