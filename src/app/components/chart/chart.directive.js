@@ -21,9 +21,12 @@ export function ChartDirective() {
       return controller.svg;
     }, (newValue) => {
       if (newValue != '') {
+        createCanvasFromSVG(newValue, (canvas) => {
+          element.find('.fs-chart-svg-container').append(canvas);
+          controller.svgRenderComplete();
+        });
+
         element.find('fusioncharts').remove();
-        element.find('.fs-chart-svg-container').append(angular.element(newValue));
-        controller.svgRenderComplete();
       }
     });
 
@@ -35,6 +38,25 @@ export function ChartDirective() {
         controller.$compile(element.find('fusioncharts')[0])(scope);
       }
     });
+  }
+
+  function createCanvasFromImg(img) {
+    const canvas = angular.element('<canvas width="600px" height="400px" />')[0];
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    return canvas;
+  }
+
+  function createCanvasFromSVG(svg, callback) {
+    const img = new Image();
+
+    img.onload = () => {
+      const canvas = createCanvasFromImg(img);
+      callback(canvas);
+    };
+
+    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
   }
 
   return directive;
