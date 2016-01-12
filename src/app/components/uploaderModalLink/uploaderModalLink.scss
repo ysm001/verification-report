@@ -171,6 +171,8 @@
   font-size: 14px;
   font-weight: 500;
   width: 78%;
+  overflow: scroll;
+  max-height: 100px;
 
   &-error {
     color: #ff4081;
