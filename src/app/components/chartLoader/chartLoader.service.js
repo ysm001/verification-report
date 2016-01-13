@@ -14,8 +14,9 @@ export class ChartLoaderService {
   renderComplete(eventObj, eventArgs) {
     const id = eventObj.sender.args.renderAt.id;
     const svg = eventObj.sender.getSVGString();
+    const chart = eventObj.sender.args;
 
-    this.chartCache.set(eventObj.sender.args.dataSource, svg);
+    this.chartCache.set(chart.id, svg, chart.dataSource);
     this.notify(id, svg);
   }
 
@@ -28,12 +29,14 @@ export class ChartLoaderService {
   }
 
   load(chart, dataSource) {
-    const cachedSVG = this.chartCache.get(dataSource);
-    if (cachedSVG != null) {
-      chart.renderComplete(cachedSVG);
-    } else {
-      this.loadDataSource(chart, dataSource);
-    }
+    this.chartCache.get(chart.chartId, dataSource).then((cache) => {
+      if (cache != null) {
+        console.log('cache used');
+        chart.renderComplete(cache);
+      } else {
+        this.loadDataSource(chart, dataSource);
+      }
+    });
   }
 
   loadDataSource(chart, dataSource) {
@@ -54,6 +57,7 @@ export class ChartLoaderService {
     const elem = `
     <fusioncharts
        id="{{::chart.id}}"
+       chartId="{{::chart.chartId}}"
        class="fs-chart fs-chart-dummy"
        ng-class="{'fs-chart-show': chart.visible}"
        in-view="chart.render($inview, $inviewpart)"

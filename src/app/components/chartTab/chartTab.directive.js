@@ -75,7 +75,7 @@ class ChartTabController {
 
     this.categories = [];
     this.activate(verificationSummary);
-    this.$interval(this.autoScroll.bind(this), 500);
+    // this.$interval(this.autoScroll.bind(this), 500);
   }
 
   activate(verificationSummary) {
