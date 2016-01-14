@@ -79,6 +79,7 @@ class ChartController {
     this.renderTarget = null;
     this.rendering = false;
     this.rendered = false;
+    this.cached = false;
     this.chartLoader = chartLoader;
     this.id = new Date().getTime();
     this.svg = '';
@@ -122,6 +123,10 @@ class ChartController {
   svgRenderComplete() {
     this.rendered = true;
     this.show();
+  }
+
+  cacheComplete() {
+    this.cached = true;
   }
 
   setRenderTarget(dataSource) {

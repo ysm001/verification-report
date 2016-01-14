@@ -9,8 +9,9 @@ export class ChartCacheService {
   }
 
   set(id, svg, source) {
-    this.saveToServer(id, svg, source).success((result) => {
+    return this.saveToServer(id, svg, source).success((result) => {
       console.log(result);
+      return result.result;
     }).error((err) => {
       console.log(err);
     });

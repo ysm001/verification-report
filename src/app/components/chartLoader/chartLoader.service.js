@@ -13,10 +13,15 @@ export class ChartLoaderService {
 
   renderComplete(eventObj, eventArgs) {
     const id = eventObj.sender.args.renderAt.id;
+    const chart = this.doneFuncs[id].chart;
     const svg = eventObj.sender.getSVGString();
-    const chart = eventObj.sender.args;
 
-    this.chartCache.set(chart.id, svg, chart.dataSource);
+    this.chartCache.set(chart.chartId, svg, chart.dataSource).then((result) => {
+      if (result) {
+        chart.cacheComplete(false);
+      }
+    });
+
     this.notify(id, svg);
   }
 
@@ -32,6 +37,7 @@ export class ChartLoaderService {
     this.chartCache.get(chart.chartId, dataSource).then((cache) => {
       if (cache != null) {
         console.log(`cache used: ${chart.chartId}`);
+        chart.cacheComplete(true);
         chart.renderComplete(cache);
       } else {
         this.loadDataSource(chart, dataSource);
