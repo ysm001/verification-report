@@ -23,7 +23,8 @@
     "angular-filter": "~0.5.8",
     "angular-modal-service": "~0.6.9",
     "jszip": "Stuk/jszip#~2.5.0",
-    "bower-parseUri": "bower-parseuri#~1.2.2"
+    "bower-parseUri": "bower-parseuri#~1.2.2",
+    "angular-svg-round-progressbar": "~0.3.9"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2"

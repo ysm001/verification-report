@@ -40,7 +40,7 @@ import { AppStatusService } from '../app/components/appStatus/appStatus.service.
 import { ChartCacheService } from '../app/components/chartCache/chartCache.service.js';
 
 angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr',
-    'angular-inview', 'ng-fusioncharts', 'angular.filter', 'angularModalService'])
+    'angular-inview', 'ng-fusioncharts', 'angular.filter', 'angularModalService', 'angular-svg-round-progress'])
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)
