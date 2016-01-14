@@ -18,7 +18,7 @@
         <div ng-repeat="group in chartContainer.getGroups(tab)" class="chart-card-grid" group="{{::group}}" ng-class="{'no-border': $last}">
           <div class="chart-card-grid-row chart-row">
             <div ng-repeat="itemId in chartContainer.getItemIds(tab, group)" class="chart-grid-row-item">
-              <chart dataId="{{::chartContainer.dataId}}" tab="{{::tab}}" group="{{::group}}" itemId="{{::itemId}}"></chart>
+              <chart dataId="{{::chartContainer.dataId}}" category="{{::chartContainer.category}}" tab="{{::tab}}" group="{{::group}}" itemId="{{::itemId}}"></chart>
             </div>
           </div>
           <div class="chart-card-grid-row table-row">

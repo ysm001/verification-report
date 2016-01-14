@@ -14,7 +14,7 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setChartId(attrs.dataid, attrs.tab, attrs.group, attrs.itemid);
+    controller.setChartId(attrs.category, attrs.dataid, attrs.tab, attrs.group, attrs.itemid);
     controller.setRenderTarget(scope.$parent.chartContainer.getDataSource(attrs.tab, attrs.group, attrs.itemid));
 
     scope.$watch(() => {
@@ -133,9 +133,9 @@ class ChartController {
     this.renderTarget = dataSource;
   }
 
-  setChartId(dataId, tab, group, itemId) {
+  setChartId(category, dataId, tab, group, itemId) {
     this.dataId = dataId;
-    this.chartId = `${dataId}_${tab}_${group}_${itemId}`;
+    this.chartId = `${category}_${tab}_${group}_${itemId}_${dataId}`;
   }
 
   renderSVG(svg) {
