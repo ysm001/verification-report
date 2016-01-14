@@ -33,7 +33,7 @@ export function ChartDirective() {
     scope.$watch(() => {
       return controller.fusionChartElem;
     }, (newValue) => {
-      if (newValue != '') {
+      if (newValue && newValue != '') {
         element.append(newValue);
         controller.$compile(element.find('fusioncharts')[0])(scope);
       }
@@ -63,13 +63,14 @@ export function ChartDirective() {
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $compile, chartLoader) {
+  constructor ($scope, $log, $timeout, $compile, chartLoader, appStatus) {
     'ngInject';
 
     this.$scope = $scope;
     this.$log = $log;
     this.$timeout = $timeout;
     this.$compile = $compile;
+    this.appStatus = appStatus;
 
     this.visible = false;
 
@@ -77,6 +78,7 @@ class ChartController {
     this.dataFormat = 'json';
     this.renderTarget = null;
     this.rendering = false;
+    this.rendered = false;
     this.chartLoader = chartLoader;
     this.id = new Date().getTime();
     this.svg = '';
@@ -86,10 +88,24 @@ class ChartController {
     };
 
     this.activate();
+    this.watchRenderFlag();
   }
 
   activate() {
     this.$log.info('Activated Chart View');
+  }
+
+  watchRenderFlag() {
+    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal, oldVal) => {
+      if (newVal && this.appStatus.currentId == this.dataId) {
+        this.forceRender();
+      }
+    }, true);
+  }
+
+  forceRender() {
+    console.log(`force render chart: ${this.chartId}`);
+    this.render(true);
   }
 
   render(inview, inviewPart) {
@@ -104,6 +120,7 @@ class ChartController {
   }
 
   svgRenderComplete() {
+    this.rendered = true;
     this.show();
   }
 
@@ -112,6 +129,7 @@ class ChartController {
   }
 
   setChartId(dataId, tab, group, itemId) {
+    this.dataId = dataId;
     this.chartId = `${dataId}_${tab}_${group}_${itemId}`;
   }
 
@@ -119,7 +137,7 @@ class ChartController {
     this.svg = svg;
   }
 
-  renederFusionChart(elem) {
+  renderFusionChart(elem) {
     this.fusionChartElem = elem;
   }
 

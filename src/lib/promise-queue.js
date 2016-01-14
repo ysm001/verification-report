@@ -79,4 +79,8 @@ export class PromiseQueue {
     func(() => { deferred.resolve(); });
     return deferred.promise;
   }
+
+  get length() {
+    return this._queue.length;
+  }
 }

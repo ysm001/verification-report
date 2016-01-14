@@ -31,7 +31,7 @@ export class ChartLoaderService {
   load(chart, dataSource) {
     this.chartCache.get(chart.chartId, dataSource).then((cache) => {
       if (cache != null) {
-        console.log('cache used');
+        console.log(`cache used: ${chart.chartId}`);
         chart.renderComplete(cache);
       } else {
         this.loadDataSource(chart, dataSource);
@@ -71,6 +71,6 @@ export class ChartLoaderService {
     </fusioncharts>
     `
 
-    chart.renederFusionChart(elem);
+    chart.renderFusionChart(elem);
   }
 }

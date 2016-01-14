@@ -6,6 +6,7 @@ export class AppStatusService {
     this._currentId = null;
     this._summaryUpdated = false;
     this._summaryIds = [];
+    this._requiresFullRender = false;
   }
 
   get summaryIds() { return this._summaryIds; }
@@ -16,4 +17,8 @@ export class AppStatusService {
   set isFullScreenMode(val) { this._isFullScreenMode = val; }
   get currentId() { return this._currentId; }
   set currentId(val) { this._currentId = val; }
+  get currentId() { return this._currentId; }
+  set currentId(val) { this._currentId = val; }
+  get requiresFullRender() { return this._requiresFullRender; }
+  set requiresFullRender(val) { this._requiresFullRender = val; }
 }
