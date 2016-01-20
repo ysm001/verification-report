@@ -29,11 +29,16 @@ class ExporterController {
 
   forceRender() {
     this.initProgress().then(() => {
-      this.appStatus.requiresFullRender = true;
+      this.isRendering = true;
       this.waitForRenderComplete(() => {
         this.appStatus.requiresFullRender = false;
+        this.$timeout(() => {this.isRendering = false;}, 1000);
         console.log('render complete');
       });
+
+      this.$timeout(() => {
+        this.appStatus.requiresFullRender = true;
+      }, 1000);
     });
   }
 
@@ -60,6 +65,7 @@ class ExporterController {
 
   initProgress() {
     return this.$timeout(() => {
+      this.isRendering = false;
       this.renderTargetNum = 0;
       this.renderCompletedNum = 0;
       this.progressText = '0/0';
@@ -67,13 +73,11 @@ class ExporterController {
   }
 
   getRenderTarget() {
-    return angular.element('.fs-chart-svg-container').toArray().filter((chart) => {
+    const charts = angular.element('.fs-chart-svg-container').toArray();
+    const tables = angular.element('.detail-container').toArray();
+    return charts.concat(tables).filter((chart) => {
       return chart.getAttribute('dataid') == this.appStatus.currentId;
     });
-  }
-
-  isRendering() {
-    return this.appStatus.requiresFullRender;
   }
 
   onClick() {
