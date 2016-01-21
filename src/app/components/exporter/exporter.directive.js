@@ -16,7 +16,26 @@ export function ExporterDirective() {
 }
 
 class ExporterController {
-  constructor ($scope, $log, $interval, $timeout, appStatus, verification) {
+  constructor (ModalService) {
+    'ngInject';
+
+    this.ModalService = ModalService
+  }
+
+  onClick() {
+    this.ModalService.showModal({
+      templateUrl: 'app/components/exporter/exporterModal.template.html',
+      controller: ExporterModalController,
+      controllerAs: 'exporter'
+    }).then((modal) => {
+      componentHandler.upgradeDom();
+      modal.controller.forceRender();
+    });
+  }
+}
+
+class ExporterModalController {
+  constructor ($scope, $log, $interval, $timeout, appStatus, verification, ModalService, close) {
     'ngInject';
 
     this.$log = $log;
@@ -26,6 +45,8 @@ class ExporterController {
     this.appStatus = appStatus;
     this.verification = verification;
     this.initProgress();
+    this.ModalService = ModalService;
+    this.modalClose = close;
   }
 
   renderComplete() {
@@ -35,6 +56,8 @@ class ExporterController {
     this.$timeout(() => {
       this.isRendering = false;
       this.isExporting = true;
+      this.modalTitle = 'Download Zip File';
+      this.progressText = 'Complete';
       this.exportURL = this.verification.getExportUrl(this.appStatus.currentId);
     }, 1000);
   }
@@ -75,6 +98,7 @@ class ExporterController {
     return this.$timeout(() => {
       this.isRendering = false;
       this.isExporting = false;
+      this.modalTitle = 'Rendering...';
       this.renderTargetNum = 0;
       this.renderCompletedNum = 0;
       this.progressText = '0/0';
@@ -90,12 +114,12 @@ class ExporterController {
     });
   }
 
-  onClick() {
-    this.forceRender();
+  visible() {
+    return this.isRendering || this.isExporting;
   }
 
-  onDownloadButtonClicked() {
+  close(result) {
     this.initProgress();
+    this.modalClose(result, 500);
   }
 }
-
