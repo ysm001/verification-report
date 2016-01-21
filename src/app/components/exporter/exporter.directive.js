@@ -16,10 +16,11 @@ export function ExporterDirective() {
 }
 
 class ExporterController {
-  constructor (ModalService) {
+  constructor (ModalService, appStatus) {
     'ngInject';
 
-    this.ModalService = ModalService
+    this.ModalService = ModalService;
+    this.appStatus = appStatus;
   }
 
   onClick() {
@@ -31,6 +32,10 @@ class ExporterController {
       componentHandler.upgradeDom();
       modal.controller.forceRender();
     });
+  }
+
+  isDisabled() {
+    return this.appStatus.currentId == null || this.appStatus.currentId == '';
   }
 }
 

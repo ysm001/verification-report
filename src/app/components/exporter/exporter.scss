@@ -83,3 +83,8 @@
 .hide {
   opacity: 0;
 }
+
+.disable {
+  cursor: default;
+  color: #666 !important;
+}

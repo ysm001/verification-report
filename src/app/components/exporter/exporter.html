@@ -1,1 +1,1 @@
-<a class="mdl-navigation__link" href="#" ng-click="exporter.onClick()">Export</a>
+<a class="mdl-navigation__link" href="#" ng-click="!exporter.isDisabled() && exporter.onClick()" ng-class="{disable: exporter.isDisabled()}">Export</a>
