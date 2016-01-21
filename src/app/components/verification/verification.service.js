@@ -26,10 +26,22 @@ export class VerificationService {
     }
 
     console.log('load: ' + category);
-    return this.$resource(this.apiHost + query).get((response) => {
+    return this.$resource(query).get((response) => {
       this.cache[query] = response;
       return response;
     }).$promise;
+  }
+
+  export(id) {
+    const query = this.getExportUrl(id);
+
+    return this.$resource(query).get((response) => {
+      return response;
+    }).$promise;
+  }
+
+  getExportUrl(id) {
+    return `${this.apiRemoteHost}/logs/${id}/export`;
   }
 
   upload(logArchive, oldVersion, newVersion) {

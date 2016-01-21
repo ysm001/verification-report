@@ -1,7 +1,7 @@
 <a class="mdl-navigation__link" href="#" ng-click="exporter.onClick()">Export</a>
-<div ng-show="exporter.isRendering">
+<div ng-show="exporter.isRendering || exporter.isExporting">
   <div class="overlay"></div>
-  <div class="rendering-progress-wrapper">
+  <div class="rendering-progress-wrapper" ng-class="{show: exporter.isRendering}">
     <div class="rendering-progress-text-wrapper ng-cloak">
       <p class="rendering-progress-text">{{exporter.progressText}}</p>
     </div>
@@ -23,4 +23,6 @@
        animation-delay="0">
     </div>
   </div>
+  
+  <a class='export-link' target='_self' ng-class="{show: exporter.isExporting}" href="{{exporter.exportURL}}" download='log.zip' ng-click="exporter.onDownloadButtonClicked()"><p class='export-link-text'>Download Zip</p></a>
 </div>

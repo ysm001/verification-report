@@ -16,7 +16,7 @@ export function ExporterDirective() {
 }
 
 class ExporterController {
-  constructor ($scope, $log, $interval, $timeout, appStatus) {
+  constructor ($scope, $log, $interval, $timeout, appStatus, verification) {
     'ngInject';
 
     this.$log = $log;
@@ -24,17 +24,25 @@ class ExporterController {
     this.$interval = $interval;
     this.$timeout = $timeout;
     this.appStatus = appStatus;
+    this.verification = verification;
     this.initProgress();
+  }
+
+  renderComplete() {
+    console.log('render complete');
+    this.appStatus.requiresFullRender = false;
+
+    this.$timeout(() => {
+      this.isRendering = false;
+      this.isExporting = true;
+      this.exportURL = this.verification.getExportUrl(this.appStatus.currentId);
+    }, 1000);
   }
 
   forceRender() {
     this.initProgress().then(() => {
       this.isRendering = true;
-      this.waitForRenderComplete(() => {
-        this.appStatus.requiresFullRender = false;
-        this.$timeout(() => {this.isRendering = false;}, 1000);
-        console.log('render complete');
-      });
+      this.waitForRenderComplete(this.renderComplete.bind(this));
 
       this.$timeout(() => {
         this.appStatus.requiresFullRender = true;
@@ -66,9 +74,11 @@ class ExporterController {
   initProgress() {
     return this.$timeout(() => {
       this.isRendering = false;
+      this.isExporting = false;
       this.renderTargetNum = 0;
       this.renderCompletedNum = 0;
       this.progressText = '0/0';
+      this.exportURL = '';
     }, 0);
   }
 
@@ -82,6 +92,10 @@ class ExporterController {
 
   onClick() {
     this.forceRender();
+  }
+
+  onDownloadButtonClicked() {
+    this.initProgress();
   }
 }
 
