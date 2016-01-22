@@ -10,7 +10,22 @@ export function SummaryTableDirective() {
     controller: SummaryTableController,
     controllerAs: 'summaryTable',
     bindToController: true,
+    link: postLink
   };
+
+  function postLink(scope, element, attrs, controller) {
+    scope.$watch(() => {
+      return controller.isActivated;
+    }, (newValue) => {
+      if (newValue) {
+        const table = element.find('table');
+        console.log('upgrade');
+        table.find('th')[0].remove();
+        table.removeAttr('data-upgraded');
+        componentHandler.upgradeDom();
+      }
+    });
+  }
 
   return directive;
 }
@@ -24,6 +39,7 @@ class SummaryTableController {
     this.summaries = [];
     this.appStatus = appStatus;
     this.verification = verification;
+    this.isActivated = false;
 
     this.watchUpdateFlag();
     this.activate();
@@ -31,6 +47,7 @@ class SummaryTableController {
 
   activate() {
     return this.fetchAndUpdate().then((summaries) => {
+      this.isActivated = true;
       this.$log.info('Activated Summaries View');
     });
   }
@@ -68,5 +85,10 @@ class SummaryTableController {
 
   onClick(element) {
     this.appStatus.currentId = element._id;
+  }
+
+  onRemoveButtonClicked() {
+    const targets = angular.element('.summary-table tbody .is-checked');
+    console.log(targets.length);
   }
 }

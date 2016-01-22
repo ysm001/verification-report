@@ -1,12 +1,18 @@
 <aside class="table-container">
-  <table class="summary-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <table class="summary-table mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric remove-button-container">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent remove-button" ng-click="summaryTable.onRemoveButtonClicked()">
+            Remove Selected Logs
+          </button>
+        </th>
+      </tr>
+    </thead>
     <tbody>
       <tr id="summary._id" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
-                                                                         ng-class="summaryTable.getClass(summary)" ng-click="summaryTable.onClick(summary)">
-        <td class="mdl-data-table__cell--non-numeric">{{summary.jobName}}</td>
-        <td class="mdl-data-table__cell--non-numeric">{{summary.oldVersion}} vs {{summary.newVersion}}</td>
-        <td class="mdl-data-table__cell--non-numeric">{{summary.machine}}</td>
-        <td class="mdl-data-table__cell--non-numeric">{{summary.createdAt}}</td>
+                                                                         ng-class="summaryTable.getClass(summary)">
+        <td class="mdl-data-table__cell--non-numeric" ng-click="summaryTable.onClick(summary)">{{summary.jobName}}</td>
       </tr>
     </tbody>
   </table>

@@ -32,11 +32,22 @@ summary-table {
     &-active {
       color: #252530;
       background: #b5b5b5;
+      &.is-selected {
+        color: #252530;
+        background: #b5b5b5;
+      }
     }
   }
 
+  td {
+    outline: none;
+  }
+
   thead {
-    background: #252530;
+    background: #fafafa;
+    &:hover {
+      cursor: default;
+    }
   }
 
   th {
@@ -73,6 +84,21 @@ summary-table {
   .result-label-ng {
     background-color: #ff4081;
   }
+
+  .mdl-checkbox.is-checked .mdl-checkbox__box-outline {
+    border: 2px solid #ff4081;
+  }
+
+  .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {
+    background-color: #ff4081;
+  }
+
+  .remove-button {
+    width: 100%;
+    height: 100%;
+    text-transform: none;
+    font-weight: bold;
+  }
 }
 
 .table-container {
@@ -81,4 +107,25 @@ summary-table {
   background: #34343e;
 }
 
+.mdl-data-table tbody tr {
+  &:hover.is-selected {
+    background-color: #eee !important;
+    color: grey;
+  }
 
+  &.is-selected {
+    background-color: initial;
+  }
+}
+
+.mdl-data-table th.remove-button-container {
+  padding: 0px;
+}
+
+.mdl-data-table th.remove-button-container:last-of-type {
+  padding-right: 0px;
+}
+
+.remove-button-container {
+  padding: 0px;
+}
