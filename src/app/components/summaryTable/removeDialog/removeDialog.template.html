@@ -1,0 +1,43 @@
+<!-- The actual modal template, just a bit o bootstrap -->
+<div class="modal" ng-class="{fade: !removeDialog.visible(), in: removeDialog.visible()}">
+  <div class="modal-backdrop" ng-class="{fade: !removeDialog.visible(), in: removeDialog.visible()}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="mdl-button mdl-js-button mdl-button--icon close-button" ng-click="removeDialog.close('Cancel')" data-dismiss="modal" aria-hidden="true">
+            <i class="material-icons">close</i>
+          </button>
+          <h4 class="modal-title">Would you like to delete selected logs?</h4>
+        </div>
+        <div class="modal-body">
+          <div>Following {{removeDialog.targets.length}} logs will be deleted.</div>
+          <div class='remove-target-table-container'>
+            <table class="remove-target-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+              <thead>
+                <tr>
+                  <th class="mdl-data-table__cell--non-numeric">name</th>
+                  <th class="mdl-data-table__cell--non-numeric">created at</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="target in removeDialog.targets" ng-class="{'removed-record': target.isRemoved}">
+                  <td class="mdl-data-table__cell--non-numeric">{{target.name}}</td>
+                  <td class="mdl-data-table__cell--non-numeric">{{target.createdAt}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate upload-progress-bar" ng-class="{show: removeDialog.isRemoving}" ></div>
+        <div class="modal-footer">
+          <div class="uploader-message" ng-class="{'uploader-message-error': removeDialog.hasErrorMessage(), 'uploader-message-success': removeDialog.hasSuccessMessage()}">
+            {{removeDialog.message}}
+          </div>
+          <button class="mdl-button mdl-js-button upload-button mdl-button--primary" ng-click="removeDialog.remove()" ng-disabled="removeDialog.isRemoving || removeDialog.isRemoved">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

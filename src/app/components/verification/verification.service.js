@@ -44,6 +44,14 @@ export class VerificationService {
     return `${this.apiRemoteHost}/logs/${id}/export`;
   }
 
+  remove(id) {
+    return this.$resource(`${this.apiRemoteHost}/logs/${id}`, {}, {
+      remove: {method: 'DELETE'}
+    }).remove((response) => {
+      return response;
+    }).$promise;
+  }
+
   upload(logArchive, oldVersion, newVersion) {
     const query = `${this.apiRemoteHost}/logs/${logArchive.jobName}/${logArchive.buildNumber}/upload`;
     const formData = new FormData();

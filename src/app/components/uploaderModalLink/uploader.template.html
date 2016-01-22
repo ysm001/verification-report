@@ -4,7 +4,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button class="mdl-button mdl-js-button mdl-button--icon close-button" ng-click="uploader.close('Cancel')" data-dismiss="modal" aria-hidden="true">
+          <button class="mdl-button mdl-js-button mdl-button--icon close-button" ng-click="uploader.close('Cancel')" data-dismiss="modal" aria-hidden="true" ng-disabled="uploader.isUploading()">
             <i class="material-icons">close</i>
           </button>
           <h4 class="modal-title">Upload Log File</h4>
@@ -12,9 +12,13 @@
         <div class="modal-body">
           <version-input-field ng-class="{'zero-height': uploader.isAnsibleFormat}"></version-input-field>
           <drop-area class="drop-area" ng-class="{'drop-area-expand': uploader.isAnsibleFormat}"></drop-area>
-          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect ansible-format-checkbox" ng-click="uploader.onAnsibleFormatCheckboxClicked()" for="ansible-format-checkbox">
-            <input type="checkbox" id="ansible-format-checkbox" class="mdl-checkbox__input" checked>
-            <span class="mdl-checkbox__label">Ansible Format</span>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect ansible-format-checkbox"
+            ng-click="uploader.onAnsibleFormatCheckboxClicked()"
+            for="ansible-format-checkbox"
+            ng-disabled="uploader.isUploading()"
+            >
+            <input type="checkbox" id="ansible-format-checkbox" class="mdl-checkbox__input" checked ng-disabled="uploader.isUploading()">
+            <span class="mdl-checkbox__label" ng-disabled="uploader.isUploading()">Ansible Format</span>
           </label>
         </div>
         <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate upload-progress-bar" ng-class="{show: uploader.isUploading()}" ></div>
