@@ -61,6 +61,21 @@ export class VerificationService {
     });
   }
 
+  uploadAnsibleFormatArchive(logArchive) {
+    const query = `${this.apiRemoteHost}/logs/upload`;
+    const formData = new FormData();
+
+    formData.append('archive', logArchive.file);
+
+    return this.$http({
+      method: 'POST',
+      url: query,
+      data: formData,
+      transformRequest: null,
+      headers: {'Content-type': undefined}
+    });
+  }
+
   getSummary() {
     const query = `${this.apiRemoteHost}/logs/summary.json`;
     return this.$resource(query).query((response) => {

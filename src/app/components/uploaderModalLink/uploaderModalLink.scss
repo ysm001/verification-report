@@ -182,3 +182,18 @@
     color: #009688;
   }
 }
+
+.ansible-format-checkbox {
+  margin-left: 31px;
+  margin-top: 10px;
+}
+
+version-input-field {
+  height: 67px;
+  transition: height 0.2s;
+}
+
+.zero-height {
+  height: 0px;
+  overflow: hidden;
+}

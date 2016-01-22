@@ -10,8 +10,12 @@
           <h4 class="modal-title">Upload Log File</h4>
         </div>
         <div class="modal-body">
-          <version-input-field></version-input-field>
-          <drop-area></drop-area>
+          <version-input-field ng-class="{'zero-height': uploader.isAnsibleFormat}"></version-input-field>
+          <drop-area class="drop-area" ng-class="{'drop-area-expand': uploader.isAnsibleFormat}"></drop-area>
+          <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect ansible-format-checkbox" ng-click="uploader.onAnsibleFormatCheckboxClicked()" for="ansible-format-checkbox">
+            <input type="checkbox" id="ansible-format-checkbox" class="mdl-checkbox__input" checked>
+            <span class="mdl-checkbox__label">Ansible Format</span>
+          </label>
         </div>
         <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate upload-progress-bar" ng-class="{show: uploader.isUploading()}" ></div>
         <div class="modal-footer">
