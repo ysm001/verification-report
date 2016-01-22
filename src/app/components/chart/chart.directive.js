@@ -14,36 +14,99 @@ export function ChartDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setRenderTarget(JSON.parse(attrs.datasource));
+    controller.setChartId(attrs.category, attrs.dataid, attrs.tab, attrs.group, attrs.itemid);
+    controller.setRenderTarget(scope.$parent.chartContainer.getDataSource(attrs.tab, attrs.group, attrs.itemid));
+
+    scope.$watch(() => {
+      return controller.svg;
+    }, (newValue) => {
+      if (newValue != '') {
+        createCanvasFromSVG(newValue, (canvas) => {
+          element.find('.fs-chart-svg-container').append(canvas);
+          controller.svgRenderComplete();
+        });
+
+        element.find('fusioncharts').remove();
+      }
+    });
+
+    scope.$watch(() => {
+      return controller.fusionChartElem;
+    }, (newValue) => {
+      if (newValue && newValue != '') {
+        element.append(newValue);
+        controller.$compile(element.find('fusioncharts')[0])(scope);
+      }
+    });
+  }
+
+  function createCanvasFromImg(img) {
+    const canvas = angular.element('<canvas width="600px" height="400px" />')[0];
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    return canvas;
+  }
+
+  function createCanvasFromSVG(svg, callback) {
+    const img = new Image();
+
+    img.onload = () => {
+      const canvas = createCanvasFromImg(img);
+      callback(canvas);
+    };
+
+    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svg)));
   }
 
   return directive;
 }
 
 class ChartController {
-  constructor ($scope, $log, $timeout, $attrs, chartLoader) {
+  constructor ($scope, $log, $timeout, $compile, chartLoader, appStatus) {
     'ngInject';
 
     this.$scope = $scope;
     this.$log = $log;
     this.$timeout = $timeout;
+    this.$compile = $compile;
+    this.appStatus = appStatus;
+
     this.visible = false;
 
+    this.dataSource = {chart: {}};
     this.dataFormat = 'json';
     this.renderTarget = null;
-    this.dataSource = {"chart": {}};
     this.rendering = false;
+    this.rendered = false;
+    this.cached = false;
     this.chartLoader = chartLoader;
+    this.id = new Date().getTime();
+    this.svg = '';
 
     this.events = {
-      renderComplete: this.renderComplete.bind(this)
+      renderComplete: chartLoader.renderComplete.bind(chartLoader)
     };
 
     this.activate();
+    this.watchRenderFlag();
   }
 
   activate() {
     this.$log.info('Activated Chart View');
+  }
+
+  watchRenderFlag() {
+    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal, oldVal) => {
+      if (newVal && this.appStatus.currentId == this.dataId) {
+        this.forceRender();
+      }
+    }, true);
+  }
+
+  forceRender() {
+    console.log(`force render chart: ${this.chartId}`);
+    this.render(true);
   }
 
   render(inview, inviewPart) {
@@ -53,13 +116,34 @@ class ChartController {
     this.chartLoader.load(this, this.renderTarget);
   }
 
-  renderComplete() {
-    this.done();
+  renderComplete(svg) {
+    this.renderSVG(svg);
+  }
+
+  svgRenderComplete() {
+    this.rendered = true;
     this.show();
+  }
+
+  cacheComplete() {
+    this.cached = true;
   }
 
   setRenderTarget(dataSource) {
     this.renderTarget = dataSource;
+  }
+
+  setChartId(category, dataId, tab, group, itemId) {
+    this.dataId = dataId;
+    this.chartId = `${category}_${tab}_${group}_${itemId}_${dataId}`;
+  }
+
+  renderSVG(svg) {
+    this.svg = svg;
+  }
+
+  renderFusionChart(elem) {
+    this.fusionChartElem = elem;
   }
 
   show() {

@@ -16,11 +16,18 @@ export function ChartContainerDirective() {
   function postLink(scope, element, attrs, controller) {
     controller.setCategory(attrs.category);
     controller.setTitle(attrs.title);
+    controller.setDataId(attrs.dataid);
 
     scope.$watch(() => {
       return element.attr('active');
     }, (newValue) => {
-      controller.setActive(newValue);
+      controller.setActive(newValue == 'true');
+    });
+
+    scope.$watch(() => {
+      return element.attr('tabFixed');
+    }, (newValue) => {
+      controller.setTabFixed(newValue === 'true');
     });
   }
 
@@ -45,11 +52,16 @@ class ChartContainerController {
     this.netperfTimeJSON = netperfTimeJSON;
     this.appStatus = appStatus;
     this.dataSourcesCache = [];
+    this.tabDataSourcesCache = {};
+    this.tabDataSources = {};
     this.isActive = false;
     this.activeTab = "";
+    this.tabFixed = false;
+    this.dataId = '';
 
     this.activate();
     this.watchId();
+    this.watchRenderFlag();
 
     const self = this;
   }
@@ -68,8 +80,16 @@ class ChartContainerController {
 
   watchId() {
     this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
-      if (newVal) {
-        this.loadDataSource(newVal, this.category);
+      if (newVal == this.dataId && !this.dataLoaded()) {
+        this.loadDataSource(this.category, newVal);
+      }
+    }, true);
+  }
+
+  watchRenderFlag() {
+    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal, oldVal) => {
+      if (newVal && this.appStatus.currentId == this.dataId) {
+        this.forceRender();
       }
     }, true);
   }
@@ -86,9 +106,6 @@ class ChartContainerController {
     } else {
       console.log(`unknown category: ${category}`);
     }
-  }
-
-  makeTab() {
   }
 
   makeDataSource(jsonServices, id) {
@@ -109,8 +126,8 @@ class ChartContainerController {
     });
   }
 
-  loadDataSource(id, category) {
-    this.makeDataSource(this.getJSONServices(category), id).then((dataSources) => {
+  loadDataSource(category, id) {
+    return this.makeDataSource(this.getJSONServices(category), id).then((dataSources) => {
       this.dataSources = [];
       this.tabs = Object.keys(dataSources);
 
@@ -119,19 +136,51 @@ class ChartContainerController {
         this.tabDataSourcesCache[tab] = dataSources[tab];
       });
 
+      this.tabDataSourcesCacheKeys = Object.keys(this.tabDataSourcesCache);
       this.setActiveTab(this.tabs[0]);
       this.render(this.isActive);
     });
   }
 
   render($inview) {
-    if ($inview && this.tabDataSources != this.tabDataSourcesCache) {
-      this.tabDataSources = this.tabDataSourcesCache;
+    if ($inview && this.dataUpdated()) {
+      this.tabDataSourceKeys = this.tabDataSourcesCacheKeys;
     }
   }
 
+  forceRender() {
+    console.log(`force render container: ${this.title}`);
+    if (!this.dataLoaded()) {
+      this.loadDataSource(this.category, this.dataId).then(() => {
+        this.render(true);
+      });
+    } else {
+      this.render(true);
+    }
+  }
+
+  getGroups(tab) {
+    return Object.keys(this.tabDataSourcesCache[tab]);
+  }
+
+  getItemIds(tab, group) {
+    return Object.keys(this.tabDataSourcesCache[tab][group]);
+  }
+
+  getDataSource(tab, group, itemId) {
+    return this.tabDataSourcesCache[tab][group][itemId];
+  }
+
+  dataUpdated() {
+    return this.tabDataSourceKeys != this.tabDataSourcesCacheKeys;
+  }
+
+  dataLoaded() {
+    return Object.keys(this.tabDataSourcesCache).length != 0;
+  }
+
   setActive(isActive) {
-    this.isActive = isActive == 'true';
+    this.isActive = isActive;
     this.render(this.isActive);
   }
 
@@ -145,5 +194,13 @@ class ChartContainerController {
 
   setActiveTab(tab) {
     this.activeTab = tab;
+  }
+
+  setTabFixed(fixed) {
+    this.tabFixed = fixed;
+  }
+
+  setDataId(dataId) {
+    this.dataId = dataId;
   }
 }

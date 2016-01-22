@@ -1,3 +1,3 @@
-<div class="detail-container">
-  <detail-table ng-repeat="table in detail.tables" title="{{table.title}}" headers="{{table.headers}}" records="{{table.records}}"></detail-table>
+<div class="detail-container" ng-class="{'detail-container-active': detail.isActive}" in-view="detail.render($inview, $inviewpart)" dataId = "{{detail.dataId}}" cached="{{detail.cached}}">
+  <detail-table ng-repeat="table in ::detail.tables" title="{{::table.title}}" headers="{{::table.headers}}" records="{{::table.records}}"></detail-table>
 </div>

@@ -27,4 +27,8 @@ class NavbarController {
   onDrawerButtonClicked() {
     this.appStatus.isFullScreenMode = !this.appStatus.isFullScreenMode;
   }
+
+  forceRender() {
+    this.appStatus.requiresFullRender = true;
+  }
 }

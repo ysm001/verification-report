@@ -1,0 +1,46 @@
+<!-- The actual modal template, just a bit o bootstrap -->
+<div class="modal" ng-class="{fade: !exporter.visible(), in: exporter.visible()}">
+  <div class="modal-backdrop" ng-class="{fade: !exporter.visible(), in: exporter.visible()}">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="mdl-button mdl-js-button mdl-button--icon close-button" ng-click="exporter.close('Cancel')" data-dismiss="modal" aria-hidden="true" ng-disabled="exporter.isRendering">
+            <i class="material-icons">close</i>
+          </button>
+          <h4 class="modal-title">{{exporter.modalTitle}}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="rendering-progress-text-wrapper ng-cloak">
+            <p class="rendering-progress-text" ng-class="{'rendering-progress-text-complete': !exporter.isRendering}">{{exporter.progressText}}</p>
+          </div>
+          <div
+               round-progress
+               class="rendering-progress"
+               max="exporter.renderTargetNum"
+               current="exporter.renderCompletedNum"
+               color="#009688"
+               bgcolor="#eaeaea"
+               radius="150"
+               stroke="30"
+               semi="false"
+               rounded="false"
+               clockwise="clockwise"
+               responsive="responsive"
+               duration="800"
+               animation="easeOutCubic"
+               animation-delay="0">
+          </div>
+        </div>
+        <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate upload-progress-bar" ng-class="{show: exporter.isRendering}" ></div>
+        <div class="modal-footer">
+          <div class="uploader-message" ng-class="{'uploader-message-error': exporter.hasErrorMessage(), 'uploader-message-success': exporter.hasSuccessMessage()}">
+            {{exporter.message}}
+          </div>
+<a target='_self' href="{{exporter.exportURL}}" download='log.zip' class="mdl-button mdl-js-button upload-button mdl-button--primary" ng-click="exporter.onDownloadButtonClicked()" ng-disabled="!exporter.isExporting">
+            Download
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

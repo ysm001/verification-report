@@ -26,8 +26,28 @@ export class VerificationService {
     }
 
     console.log('load: ' + category);
-    return this.$resource(this.apiHost + query).get((response) => {
+    return this.$resource(query).get((response) => {
       this.cache[query] = response;
+      return response;
+    }).$promise;
+  }
+
+  export(id) {
+    const query = this.getExportUrl(id);
+
+    return this.$resource(query).get((response) => {
+      return response;
+    }).$promise;
+  }
+
+  getExportUrl(id) {
+    return `${this.apiRemoteHost}/logs/${id}/export`;
+  }
+
+  remove(id) {
+    return this.$resource(`${this.apiRemoteHost}/logs/${id}`, {}, {
+      remove: {method: 'DELETE'}
+    }).remove((response) => {
       return response;
     }).$promise;
   }
@@ -39,6 +59,21 @@ export class VerificationService {
     formData.append('archive', logArchive.file);
     formData.append('oldVersion', oldVersion);
     formData.append('newVersion', newVersion);
+
+    return this.$http({
+      method: 'POST',
+      url: query,
+      data: formData,
+      transformRequest: null,
+      headers: {'Content-type': undefined}
+    });
+  }
+
+  uploadAnsibleFormatArchive(logArchive) {
+    const query = `${this.apiRemoteHost}/logs/upload`;
+    const formData = new FormData();
+
+    formData.append('archive', logArchive.file);
 
     return this.$http({
       method: 'POST',

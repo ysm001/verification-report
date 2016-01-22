@@ -8,7 +8,7 @@
     <div class="page-content">
       <div class="mdl-grid">
         <summary-table class="mdl-cell mdl-cell--3-col" ng-class="{'zero-width': main.appStatus.isFullScreenMode}"> </summary-table>
-        <chart-tab class="" ng-class="{'full-width': main.appStatus.isFullScreenMode}" in-view-container></chart-tab>
+        <chart-tab dataId="{{id}}" ng-repeat="id in main.appStatus.summaryIds" class="" ng-class="{'full-width': main.appStatus.isFullScreenMode}" ng-show="main.appStatus.currentId == id" in-view-container></chart-tab>
       </div>
     </div>
   </main>

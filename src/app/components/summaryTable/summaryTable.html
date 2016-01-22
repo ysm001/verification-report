@@ -1,15 +1,27 @@
 <aside class="table-container">
-  <table class="summary-table mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+  <table class="summary-table mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <thead>
+      <tr ng-click="summaryTable.onRecordClicked()">
+        <th class="mdl-data-table__cell--non-numeric remove-button-container" colspan="3">
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent remove-button"
+            ng-click="summaryTable.onRemoveButtonClicked()"
+            ng-disabled="!summaryTable.hasSelectedRecords()"
+            >
+            Remove Selected Logs
+          </button>
+        </th>
+      </tr>
+    </thead>
     <tbody>
-      <tr id="summary._id" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
-                                                                         ng-class="summaryTable.getClass(summary)" ng-click="summaryTable.onClick(summary)">
-        <td class="mdl-data-table__cell--non-numeric">{{summary.oldVersion}} vs {{summary.newVersion}}</td>
-        <td>
-          {{summary.jobName}}
-        </td>
-        <td>
-          {{summary.buildNumber}}
-        </td>
+      <div ng-repeat="summary in summaryTable.summaries" class="mdl-tooltip summary-detail" for="{{summary._id}}">
+        <div class="summary-detail-title">{{summary.jobName}}</div>
+        <div class="summary-detail-version">{{summary.oldVersion}} vs {{summary.newVersion}} on {{summary.machine}}</div>
+        <div class="summary-detail-created-at">{{summary.createdAt}}</div>
+      </div>
+      <tr id="{{summary._id}}" name="{{summary.jobName}}" created-at="{{summary.createdAt}}" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
+                                                                         ng-class="summaryTable.getClass(summary)" ng-click="summaryTable.onRecordClicked()">
+        <td class="mdl-data-table__cell--non-numeric td-jobname" ng-click="summaryTable.onClick(summary)">{{summary.jobName}}</td>
+        <td class="mdl-data-table__cell--non-numeric td-created-at" ng-click="summaryTable.onClick(summary)">{{summary.createdAt}}</td>
       </tr>
     </tbody>
   </table>
