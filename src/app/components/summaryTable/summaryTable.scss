@@ -48,6 +48,10 @@ summary-table {
     &:hover {
       cursor: default;
     }
+
+    tr {
+      outline: none;
+    }
   }
 
   th {
@@ -128,4 +132,21 @@ summary-table {
 
 .remove-button-container {
   padding: 0px;
+}
+
+.remove-target-table-container {
+  max-height: 200px;
+  overflow: scroll;
+}
+
+.remove-target-table {
+  width: 100%;
+
+  th {
+    background-color: #fafafa;
+  }
+}
+
+.removed-record {
+  text-decoration: line-through;
 }
