@@ -43,6 +43,17 @@ summary-table {
     outline: none;
   }
 
+  .td-created-at {
+    width: 162px;
+  }
+
+  .td-jobname {
+    width: 100%;
+    max-width: 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   thead {
     background: #fafafa;
     &:hover {
@@ -56,6 +67,9 @@ summary-table {
 
   th {
     color: #fafafa;
+    &:first-child {
+      min-width: 60px;
+    }
   }
 
   .result-label {
@@ -149,4 +163,26 @@ summary-table {
 
 .removed-record {
   text-decoration: line-through;
+}
+
+.dummy {
+  width: 0px;
+  height: 0px;
+}
+
+.summary-detail {
+  font-size: 18px;
+  line-height: normal;
+  max-width: 500px;
+
+  &-title {
+  }
+
+  &-version {
+    font-size: 12px;
+  }
+
+  &-created-at {
+    font-size: 12px;
+  }
 }
