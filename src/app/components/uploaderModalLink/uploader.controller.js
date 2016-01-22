@@ -11,6 +11,7 @@ export class UploaderController {
     this.status = 'idle';
     this.message = '';
     this.appStatus = appStatus;
+    this.isAnsibleFormat = true;
   }
 
   show() {
@@ -32,7 +33,7 @@ export class UploaderController {
   }
 
   validate() {
-    if (this.uploader.oldVersion == '' || this.uploader.newVersion == '') {
+    if (!this.isAnsibleFormat && (this.uploader.oldVersion == '' || this.uploader.newVersion == '')) {
       return 'Version field is empty.'
     }
 
@@ -40,7 +41,7 @@ export class UploaderController {
       return 'Log file is not selected.'
     }
 
-    return this.uploader.archive.validate();
+    return this.isAnsibleFormat ? null : this.uploader.archive.validate();
   }
 
   onUploadButtonClicked() {
@@ -52,9 +53,10 @@ export class UploaderController {
       return;
     }
 
+    const uploadMethod = this.isAnsibleFormat ? this.uploadAnsibleFormatArchive : this.upload;
     this.setStatus('uploading');
 
-    this.verification.upload(this.uploader.archive, this.uploader.oldVersion, this.uploader.newVersion).success((data, status, headers, config) => {;
+    uploadMethod.call(this).success((data, status, headers, config) => {;
       this.setStatus('idle');
 
       if (data.result) {
@@ -68,6 +70,18 @@ export class UploaderController {
 
       this.setErrorMessage(`${status} Error: ${data}`);
     });
+  }
+
+  upload() {
+    return this.verification.upload(this.uploader.archive, this.uploader.oldVersion, this.uploader.newVersion);
+  }
+
+  uploadAnsibleFormatArchive() {
+    return this.verification.uploadAnsibleFormatArchive(this.uploader.archive);
+  }
+
+  onAnsibleFormatCheckboxClicked() {
+    this.isAnsibleFormat = angular.element('#ansible-format-checkbox').prop('checked');
   }
 
   setStatus(status) {
