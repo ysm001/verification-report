@@ -3,13 +3,10 @@
     <tbody>
       <tr id="summary._id" ng-repeat="summary in summaryTable.summaries" class="summary-record" 
                                                                          ng-class="summaryTable.getClass(summary)" ng-click="summaryTable.onClick(summary)">
+        <td class="mdl-data-table__cell--non-numeric">{{summary.jobName}}</td>
         <td class="mdl-data-table__cell--non-numeric">{{summary.oldVersion}} vs {{summary.newVersion}}</td>
-        <td>
-          {{summary.jobName}}
-        </td>
-        <td>
-          {{summary.buildNumber}}
-        </td>
+        <td class="mdl-data-table__cell--non-numeric">{{summary.machine}}</td>
+        <td class="mdl-data-table__cell--non-numeric">{{summary.createdAt}}</td>
       </tr>
     </tbody>
   </table>

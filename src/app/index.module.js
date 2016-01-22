@@ -18,6 +18,7 @@ import { DetailTableDirective } from '../app/components/detailTable/detailTable.
 import { DetailDirective } from '../app/components/detail/detail.directive';
 import { UploaderModalLinkDirective } from '../app/components/uploaderModalLink/uploaderModalLink.directive';
 import { VersionInputFieldDirective } from '../app/components/uploaderModalLink/versionInputField/versionInputField.directive';
+import { ExporterDirective } from '../app/components/exporter/exporter.directive';
 import { UploaderController } from '../app/components/uploaderModalLink/uploader.controller';
 import { UploaderService } from '../app/components/uploaderModalLink/uploader.service';
 import { ArchiveValidatorService } from '../app/components/uploaderModalLink/drop-area/archive-validator.service.js';
@@ -39,7 +40,7 @@ import { AppStatusService } from '../app/components/appStatus/appStatus.service.
 import { ChartCacheService } from '../app/components/chartCache/chartCache.service.js';
 
 angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ngResource', 'ui.router', 'toastr',
-    'angular-inview', 'ng-fusioncharts', 'angular.filter', 'angularModalService'])
+    'angular-inview', 'ng-fusioncharts', 'angular.filter', 'angularModalService', 'angular-svg-round-progress'])
   .constant('malarkey', malarkey)
   .constant('moment', moment)
   .config(config)
@@ -78,4 +79,5 @@ angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSa
   .directive('detail', DetailDirective)
   .directive('dropArea', DropAreaDirective)
   .directive('versionInputField', VersionInputFieldDirective)
+  .directive('exporter', ExporterDirective)
   .controller('uploader', UploaderController);
