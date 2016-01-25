@@ -13,5 +13,8 @@
     "angular": true,
     "module": true,
     "inject": true
+  },
+  "rules": {
+    "angular/document-service": 0
   }
 }

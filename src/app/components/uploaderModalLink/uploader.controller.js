@@ -56,7 +56,7 @@ export class UploaderController {
     const uploadMethod = this.isAnsibleFormat ? this.uploadAnsibleFormatArchive : this.upload;
     this.setStatus('uploading');
 
-    uploadMethod.call(this).success((data, status, headers, config) => {;
+    uploadMethod.call(this).success((data) => {
       this.setStatus('idle');
 
       if (data.result) {
@@ -65,7 +65,7 @@ export class UploaderController {
       } else {
         this.setErrorMessage(data.error.message);
       }
-    }).error((data, status, headers, config) => {
+    }).error((data) => {
       this.setStatus('idle');
 
       this.setErrorMessage(`${status} Error: ${data}`);

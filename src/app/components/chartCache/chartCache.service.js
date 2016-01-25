@@ -10,10 +10,10 @@ export class ChartCacheService {
 
   set(id, svg, source) {
     return this.saveToServer(id, svg, source).success((result) => {
-      console.log(result);
+      this.$log.info(result);
       return result.result;
     }).error((err) => {
-      console.log(err);
+      this.$log.error(err);
     });
   }
 
@@ -22,7 +22,7 @@ export class ChartCacheService {
     const data = {
       id: id,
       svg: svg,
-      source: JSON.stringify(source)
+      source: angular.toJson(source)
     };
 
     return this.$http({
@@ -39,7 +39,7 @@ export class ChartCacheService {
     };
 
     return this.$resource(query).get(data).$promise.then((response) => {
-      const isValidCache = response.svg != null && response.source == JSON.stringify(source);
+      const isValidCache = response.svg != null && response.source == angular.toJson(source);
       return isValidCache ? response.svg : null;
     });
   }
@@ -49,6 +49,6 @@ export class ChartCacheService {
   }
 
   generateKey(dataSource) {
-    return JSON.stringify(dataSource);
+    return angular.toJson(dataSource);
   }
 }

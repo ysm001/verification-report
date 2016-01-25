@@ -10,7 +10,7 @@ export class LmbenchLineJSONService extends LmbenchJSONService {
     };
   }
 
-  getType(operation) {
+  getType() {
     return 'line';
   }
 

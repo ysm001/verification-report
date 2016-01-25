@@ -33,8 +33,8 @@ import { LmbenchJSONService } from '../app/components/chartContainer/services/lm
 import { LmbenchLineJSONService } from '../app/components/chartContainer/services/lmbench/lmbenchLineJSON.service';
 import { KernbenchTableJSONService } from '../app/components/detail/services/kernbenchTableJSON.service';
 import { FioTableJSONService } from '../app/components/detail/services/fioTableJSON.service';
-import { LmbenchTableJSONService } from '../app/components/detail/services/LmbenchTableJSON.service';
-import { NetperfTableJSONService } from '../app/components/detail/services/NetperfTableJSON.service';
+import { LmbenchTableJSONService } from '../app/components/detail/services/lmbenchTableJSON.service';
+import { NetperfTableJSONService } from '../app/components/detail/services/netperfTableJSON.service';
 import { ChartLoaderService } from '../app/components/chartLoader/chartLoader.service';
 import { AppStatusService } from '../app/components/appStatus/appStatus.service.js';
 import { ChartCacheService } from '../app/components/chartCache/chartCache.service.js';
@@ -80,4 +80,4 @@ angular.module('verificationSummary', ['ngAnimate','ngCookies', 'ngTouch', 'ngSa
   .directive('dropArea', DropAreaDirective)
   .directive('versionInputField', VersionInputFieldDirective)
   .directive('exporter', ExporterDirective)
-  .controller('uploader', UploaderController);
+  .controller('UploaderController', UploaderController);

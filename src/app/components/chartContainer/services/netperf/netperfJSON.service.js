@@ -7,7 +7,7 @@ export class NetperfJSONService extends ChartJSONService {
     super($log, $resource, $q, verification, 'netperf');
   }
 
-  getType(operation) {
+  getType() {
     return 'msstackedcolumn2d';
   }
 
@@ -62,7 +62,6 @@ export class NetperfJSONService extends ChartJSONService {
 
   makeCategories(operation, rawJson) {
     if (rawJson == null) return;
-    const versions = ['old', 'new'];
 
     return [{
       category: Object.keys(rawJson).map((k) => {return {label: k};})
@@ -70,8 +69,6 @@ export class NetperfJSONService extends ChartJSONService {
   }
 
   makeSeries(rawJson, key) {
-    const items = this.getItems();
-
     return this.getItems().map((item) => {
       const data = Object.keys(rawJson).map((k) => {
         return (key in rawJson[k]) ? {value: rawJson[k][key][item]} : {value: 0};

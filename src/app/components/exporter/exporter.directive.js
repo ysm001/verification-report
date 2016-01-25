@@ -16,11 +16,12 @@ export function ExporterDirective() {
 }
 
 class ExporterController {
-  constructor (ModalService, appStatus) {
+  constructor ($window, ModalService, appStatus) {
     'ngInject';
 
     this.ModalService = ModalService;
     this.appStatus = appStatus;
+    this.$window = window;
   }
 
   onClick() {
@@ -29,7 +30,7 @@ class ExporterController {
       controller: ExporterModalController,
       controllerAs: 'exporter'
     }).then((modal) => {
-      componentHandler.upgradeDom();
+      this.$window.componentHandler.upgradeDom();
       modal.controller.forceRender();
     });
   }
@@ -55,7 +56,7 @@ class ExporterModalController {
   }
 
   renderComplete() {
-    console.log('render complete');
+    this.$log.info('render complete');
     this.appStatus.requiresFullRender = false;
 
     this.$timeout(() => {
@@ -79,7 +80,7 @@ class ExporterModalController {
   }
 
   waitForRenderComplete(callback) {
-    console.log('wait for render complete...');
+    this.$log.info('wait for render complete...');
 
     const polling = this.$interval(() => {
       const charts = this.getRenderTarget();

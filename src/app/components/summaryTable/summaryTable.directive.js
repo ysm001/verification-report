@@ -1,4 +1,4 @@
-export function SummaryTableDirective() {
+export function SummaryTableDirective($window) {
   'ngInject';
 
   let directive = {
@@ -19,10 +19,9 @@ export function SummaryTableDirective() {
     }, (newValue) => {
       if (newValue) {
         const table = element.find('table');
-        console.log('upgrade');
         table.find('th')[0].remove();
         table.removeAttr('data-upgraded');
-        componentHandler.upgradeDom();
+        $window.componentHandler.upgradeDom();
         controller.setUpdated(false);
       }
     });
@@ -32,12 +31,13 @@ export function SummaryTableDirective() {
 }
 
 class SummaryTableController {
-  constructor ($scope, $log, $timeout, verification, appStatus, ModalService) {
+  constructor ($scope, $log, $timeout, $window, verification, appStatus, ModalService) {
     'ngInject';
 
     this.$scope = $scope;
     this.$log = $log;
     this.$timeout = $timeout;
+    this.$window = $window;
     this.summaries = [];
     this.appStatus = appStatus;
     this.verification = verification;
@@ -51,15 +51,16 @@ class SummaryTableController {
   }
 
   activate() {
-    return this.fetchAndUpdate().then((summaries) => {
+    return this.fetchAndUpdate().then(() => {
       this.$log.info('Activated Summaries View');
     });
   }
 
   watchUpdateFlag() {
-    this.$scope.$watch(() => {return this.appStatus.summaryUpdated}, (newVal, oldVal) => {
+    this.$scope.$watch(() => {return this.appStatus.summaryUpdated}, (newVal) => {
       if (newVal) {
         this.fetchAndUpdate();
+        this.resetSelectedRecords();
         this.appStatus.summaryUpdated = false;
       }
     }, true);
@@ -91,31 +92,38 @@ class SummaryTableController {
     return this.appStatus.currentId == element._id ? 'summary-record-active' : '';
   }
 
+  resetSelectedRecords() {
+    this.selectedRecords = [];
+  }
+
+  updateSelectedRecords() {
+    const selectedElements = angular.element('.summary-table tbody .is-selected');
+    this.selectedRecords = selectedElements.toArray().map((element) => {
+      return {
+        id: element.getAttribute('id'),
+        name: element.getAttribute('name'),
+        createdAt: element.getAttribute('created-at')
+      }
+    });
+  }
+
   onClick(element) {
     this.appStatus.currentId = element._id;
   }
 
   onRecordClicked() {
     this.$timeout(() => {
-      const selectedElements = angular.element('.summary-table tbody .is-selected');
-      this.selectedRecords = selectedElements.toArray().map((element) => {
-        return {
-          id: element.getAttribute('id'),
-          name: element.getAttribute('name'),
-          createdAt: element.getAttribute('created-at')
-        }
-      });
+      this.updateSelectedRecords();
     }, 0);
   }
 
   onRemoveButtonClicked() {
-    console.log(this.selectedRecords);
     this.ModalService.showModal({
       templateUrl: 'app/components/summaryTable/removeDialog/removeDialog.template.html',
       controller: RemoveDialogController,
       controllerAs: 'removeDialog'
     }).then((modal) => {
-      componentHandler.upgradeDom();
+      this.$window.componentHandler.upgradeDom();
       modal.controller.setTargets(this.selectedRecords);
       modal.controller.show();
     });
@@ -165,18 +173,20 @@ class RemoveDialogController {
     });
 
     Promise.all(promises).then(() => {
-      this.isRemoving = false;
-      this.message = 'Successfully deleted.';
-      this.messageType = 'success';
       this.$timeout(() => {
+        this.isRemoving = false;
+        this.message = 'Successfully deleted.';
+        this.messageType = 'success';
         this.isRemoved = true;
         this.appStatus.summaryUpdated = true;
       }, 0);
     }).catch((error) => {
-      this.appStatus.summaryUpdated = true;
-      this.message = error;
-      this.messageType = 'error';
-      this.isRemoving = false;
+      this.$timeout(() => {
+        this.appStatus.summaryUpdated = true;
+        this.message = error;
+        this.messageType = 'error';
+        this.isRemoving = false;
+      }, 0);
     });
   }
 

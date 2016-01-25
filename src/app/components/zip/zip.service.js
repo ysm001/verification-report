@@ -1,8 +1,9 @@
 export class ZipService {
-  constructor($log ,$q) {
+  constructor($log ,$q, $window) {
     'ngInject';
 
     this.$q = $q;
+    this.$window = $window;
   }
 
   extract(zipFile) {
@@ -19,10 +20,10 @@ export class ZipService {
     const reader = new FileReader();
     
     reader.onerror = dfd.reject.bind(dfd);
-    reader.onload = (e) => {
+    reader.onload = () => {
       if (!reader.result) dfd.reject(new Error("Unknown error"));
       
-      const zip = new JSZip(reader.result);
+      const zip = new this.$window.JSZip(reader.result);
       const zipObject = this.zipToObject(zip.files);
 
       return dfd.resolve(zipObject);

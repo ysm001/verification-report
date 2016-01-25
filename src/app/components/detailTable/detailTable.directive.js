@@ -14,14 +14,14 @@ export function DetailTableDirective() {
   };
 
   function postLink(scope, element, attrs, controller) {
-    controller.setTableData(attrs.title, JSON.parse(attrs.headers), JSON.parse(attrs.records));
+    controller.setTableData(attrs.title, angular.fromJson(attrs.headers), angular.fromJson(attrs.records));
   }
 
   return directive;
 }
 
 class DetailTableController {
-  constructor ($scope, $log, $timeout, $attrs) {
+  constructor ($scope, $log, $timeout) {
     'ngInject';
 
     this.$log = $log;

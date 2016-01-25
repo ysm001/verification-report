@@ -32,7 +32,7 @@ export class NetperfValidator extends SecondLevelLogValidator {
     this.validateCompareTargetDirStructure(subRoot[metaJson.old], subRoot[metaJson.new], metaJson);
   }
 
-  validateCompareTargetDirStructure(oldDir, newDir, metaJson) {
+  validateCompareTargetDirStructure() {
     return;
   }
 }

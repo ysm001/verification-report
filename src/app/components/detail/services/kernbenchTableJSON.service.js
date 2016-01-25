@@ -8,7 +8,6 @@ export class KernbenchTableJSONService extends TableJSONService {
   }
 
   makeHeaders(rawJson) {
-    const sample = rawJson[0];
     const header = rawJson.map((t) => { return {text: `${t.thread_num} Thread`} } );
     return [[''].concat(header)];
   }
@@ -26,7 +25,6 @@ export class KernbenchTableJSONService extends TableJSONService {
     const isRatioRow = key == 'ratio';
     const digit = isRatioRow ? 3 : 1;
     const postFix = isRatioRow ? '[%]' : '[s]';
-    const threshold = 10;
 
     const row = rawJson.map((t) => {
       const cls = isRatioRow ? this.getRatioClass(t[key]) : '';
