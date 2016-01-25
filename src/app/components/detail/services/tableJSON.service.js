@@ -30,11 +30,11 @@ export class TableJSONService {
     return jsons;
   }
 
-  makeHeaders(rawJson) {
+  makeHeaders() {
     return [];
   }
 
-  makeRecords(rawJson) {
+  makeRecords() {
     return [];
   }
 

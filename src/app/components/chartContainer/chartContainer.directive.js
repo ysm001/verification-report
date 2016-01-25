@@ -62,8 +62,6 @@ class ChartContainerController {
     this.activate();
     this.watchId();
     this.watchRenderFlag();
-
-    const self = this;
   }
 
   activate() {
@@ -79,7 +77,7 @@ class ChartContainerController {
   }
 
   watchId() {
-    this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
+    this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal) => {
       if (newVal == this.dataId && !this.dataLoaded()) {
         this.loadDataSource(this.category, newVal);
       }
@@ -87,7 +85,7 @@ class ChartContainerController {
   }
 
   watchRenderFlag() {
-    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal, oldVal) => {
+    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal) => {
       if (newVal && this.appStatus.currentId == this.dataId) {
         this.forceRender();
       }
@@ -104,7 +102,7 @@ class ChartContainerController {
     } else if (category == 'netperf') {
       return [this.netperfTimeJSON, this.netperfJSON, this.netperfEachJSON];
     } else {
-      console.log(`unknown category: ${category}`);
+      this.$log.error(`unknown category: ${category}`);
     }
   }
 
@@ -149,7 +147,7 @@ class ChartContainerController {
   }
 
   forceRender() {
-    console.log(`force render container: ${this.title}`);
+    this.$log.info(`force render container: ${this.title}`);
     if (!this.dataLoaded()) {
       this.loadDataSource(this.category, this.dataId).then(() => {
         this.render(true);

@@ -1,4 +1,4 @@
-export function VersionInputFieldDirective() {
+export function VersionInputFieldDirective($window) {
   'ngInject';
 
   let directive = {
@@ -11,8 +11,8 @@ export function VersionInputFieldDirective() {
     controllerAs: 'versionInputField',
     bindToController: true,
     link: {
-      post: ($element) => {
-        componentHandler.upgradeDom();
+      post: () => {
+        $window.componentHandler.upgradeDom();
       }
     }
   };

@@ -7,7 +7,7 @@ export class ChartJSONService {
     this.type = type;
   }
 
-  getJSON(id, type) {
+  getJSON(id) {
     return this.verification.getDetail(id, this.type);
   }
 
@@ -15,11 +15,11 @@ export class ChartJSONService {
     return this.$resource('/data/templates/style.json').get()
   }
 
-  getStyle(operation) {
+  getStyle() {
     return {};
   }
 
-  getType(operation) {
+  getType() {
     return 'mscolumn2d';
   }
 
@@ -89,11 +89,11 @@ export class ChartJSONService {
     return rawJson;
   }
 
-  makeDataset(operation, formattedJSON) {
+  makeDataset() {
     return [];
   }
 
-  makeCategories(operation, formattedJSON) {
+  makeCategories() {
     return [];
   }
 
@@ -116,7 +116,7 @@ export class ChartJSONService {
     {value: 90, color: "#ff4081"},
     {value: 100, color: "#34343e"},
     {value: 110, color: "#09a274"},
-    {value: 120, color: "#09a274"},
+    {value: 120, color: "#09a274"}
     ];
 
     return lines.map((line) => {
@@ -128,7 +128,7 @@ export class ChartJSONService {
           showValues: '0',
           displayvalue: String(line.value),
           valueOnRight: 1,
-          thickness: 1,
+          thickness: 1
         }]
       };
     });

@@ -31,7 +31,7 @@ export function DropAreaDirective() {
       cancelEvent(event);
     }
 
-    const onDragLeave = (event) => {
+    const onDragLeave = () => {
       controller.onLeave();
     }
 

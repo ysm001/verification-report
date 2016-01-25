@@ -1,4 +1,4 @@
-export function UploaderModalLinkDirective() {
+export function UploaderModalLinkDirective($window) {
   'ngInject';
 
   let directive = {
@@ -11,8 +11,8 @@ export function UploaderModalLinkDirective() {
     controllerAs: 'uploaderModalLink',
     bindToController: true,
     link: {
-      post: ($element) => {
-        componentHandler.upgradeDom();
+      post: () => {
+        $window.componentHandler.upgradeDom();
       }
     }
   };
@@ -31,7 +31,7 @@ class UploaderModalLinkController {
   onClick() {
     this.ModalService.showModal({
       templateUrl: 'app/components/uploaderModalLink/uploader.template.html',
-      controller: 'uploader',
+      controller: 'UploaderController',
       controllerAs: 'uploader'
     }).then(function(modal) {
       modal.controller.show();

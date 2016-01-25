@@ -97,7 +97,7 @@ class ChartController {
   }
 
   watchRenderFlag() {
-    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal, oldVal) => {
+    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal) => {
       if (newVal && this.appStatus.currentId == this.dataId) {
         this.forceRender();
       }
@@ -105,11 +105,11 @@ class ChartController {
   }
 
   forceRender() {
-    console.log(`force render chart: ${this.chartId}`);
+    this.$log.info(`force render chart: ${this.chartId}`);
     this.render(true);
   }
 
-  render(inview, inviewPart) {
+  render(inview) {
     if (!inview || this.rendering) return;
 
     this.rendering = true;

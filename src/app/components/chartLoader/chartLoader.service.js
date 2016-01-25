@@ -1,9 +1,10 @@
 import { PromiseQueue } from '../../../lib/promise-queue';
 
 export class ChartLoaderService {
-  constructor($q, chartCache) {
+  constructor($q, $log, chartCache) {
     'ngInject';
 
+    this.$log = $log;
     this.promiseQueue = new PromiseQueue($q);
     this.chartCache = chartCache;
     this.doneFuncs = {};
@@ -11,7 +12,7 @@ export class ChartLoaderService {
     this.promiseQueue.start();
   }
 
-  renderComplete(eventObj, eventArgs) {
+  renderComplete(eventObj) {
     const id = eventObj.sender.args.renderAt.id;
     const chart = this.doneFuncs[id].chart;
     const svg = eventObj.sender.getSVGString();
@@ -36,7 +37,7 @@ export class ChartLoaderService {
   load(chart, dataSource) {
     this.chartCache.get(chart.chartId, dataSource).then((cache) => {
       if (cache != null) {
-        console.log(`cache used: ${chart.chartId}`);
+        this.$log.info(`cache used: ${chart.chartId}`);
         chart.cacheComplete(true);
         chart.renderComplete(cache);
       } else {
@@ -59,7 +60,7 @@ export class ChartLoaderService {
     this.promiseQueue.add(loadFunc, true);
   }
 
-  render(chart, dataSource) {
+  render(chart) {
     const elem = `
     <fusioncharts
        id="{{::chart.id}}"

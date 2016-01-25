@@ -55,7 +55,7 @@ export class NetperfTimeJSONService extends ChartJSONService {
     return Math.max.apply(null, this.getValues(rawJson));
   }
 
-  getType(operation) {
+  getType() {
     return 'mscombidy2d';
   }
 

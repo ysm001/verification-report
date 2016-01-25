@@ -25,7 +25,7 @@ export class VerificationService {
       });
     }
 
-    console.log('load: ' + category);
+    this.$log.info('load: ' + category);
     return this.$resource(query).get((response) => {
       this.cache[query] = response;
       return response;
