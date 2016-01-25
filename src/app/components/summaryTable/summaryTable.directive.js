@@ -60,6 +60,7 @@ class SummaryTableController {
     this.$scope.$watch(() => {return this.appStatus.summaryUpdated}, (newVal, oldVal) => {
       if (newVal) {
         this.fetchAndUpdate();
+        this.resetSelectedRecords();
         this.appStatus.summaryUpdated = false;
       }
     }, true);
@@ -91,20 +92,28 @@ class SummaryTableController {
     return this.appStatus.currentId == element._id ? 'summary-record-active' : '';
   }
 
+  resetSelectedRecords() {
+    this.selectedRecords = [];
+  }
+
+  updateSelectedRecords() {
+    const selectedElements = angular.element('.summary-table tbody .is-selected');
+    this.selectedRecords = selectedElements.toArray().map((element) => {
+      return {
+        id: element.getAttribute('id'),
+        name: element.getAttribute('name'),
+        createdAt: element.getAttribute('created-at')
+      }
+    });
+  }
+
   onClick(element) {
     this.appStatus.currentId = element._id;
   }
 
   onRecordClicked() {
     this.$timeout(() => {
-      const selectedElements = angular.element('.summary-table tbody .is-selected');
-      this.selectedRecords = selectedElements.toArray().map((element) => {
-        return {
-          id: element.getAttribute('id'),
-          name: element.getAttribute('name'),
-          createdAt: element.getAttribute('created-at')
-        }
-      });
+      this.updateSelectedRecords();
     }, 0);
   }
 
@@ -165,18 +174,20 @@ class RemoveDialogController {
     });
 
     Promise.all(promises).then(() => {
-      this.isRemoving = false;
-      this.message = 'Successfully deleted.';
-      this.messageType = 'success';
       this.$timeout(() => {
+        this.isRemoving = false;
+        this.message = 'Successfully deleted.';
+        this.messageType = 'success';
         this.isRemoved = true;
         this.appStatus.summaryUpdated = true;
       }, 0);
     }).catch((error) => {
-      this.appStatus.summaryUpdated = true;
-      this.message = error;
-      this.messageType = 'error';
-      this.isRemoving = false;
+      this.$timeout(() => {
+        this.appStatus.summaryUpdated = true;
+        this.message = error;
+        this.messageType = 'error';
+        this.isRemoving = false;
+      }, 0);
     });
   }
 
