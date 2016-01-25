@@ -26,9 +26,6 @@ export function DetailDirective() {
         const container = element.find('.detail-container');
         const svg = createSVGFromElement(element, container.width(), container.height());
         controller.svgRenderComplete(svg);
-        // createCanvasFromElement(element, (canvas) => {
-        //   element.append(canvas);
-        // });
       }
     });
   }
@@ -76,32 +73,6 @@ export function DetailDirective() {
 
     resetInnerStyle(modified);
     return data;
-
-    // return new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
-  }
-
-  function createCanvasFromImg(img, width, height) {
-    const canvas = angular.element(`<canvas width="${width}px" height="${height}px" />`)[0];
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    return canvas;
-  }
-
-  function createCanvasFromElement(element, callback) {
-    const container = element.find('.detail-container');
-    const svg = createSVGFromElement(element, container.width(), container.height());
-    const img = new Image();
-    const DOMURL = self.URL || self.webkitURL || self;
-    const url = DOMURL.createObjectURL(svg);
-
-    img.onload = () => {
-      const canvas = createCanvasFromImg(img, container.width(), container.height());
-      DOMURL.revokeObjectURL(url);
-      callback(canvas);
-    };
-
-    img.src = url;
   }
 
   return directive;
@@ -148,7 +119,7 @@ class DetailController {
   }
 
   watchRenderFlag() {
-    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal, oldVal) => {
+    this.$scope.$watch(() => {return this.appStatus.requiresFullRender}, (newVal) => {
       if (!newVal || this.appStatus.currentId != this.dataId) {
         return;
       }
@@ -175,7 +146,7 @@ class DetailController {
     } else if (category == 'netperf') {
       return this.netperfTableJSON;
     } else {
-      console.log('unknow category');
+      this.$log.error('unknow category');
     }
   }
 
@@ -184,7 +155,7 @@ class DetailController {
   }
 
   watchId() {
-    this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal, oldVal) => {
+    this.$scope.$watch(() => {return this.appStatus.currentId}, (newVal) => {
       if (newVal && this.appStatus.currentId == this.dataId && !this.dataLoaded()) {
         this.loadDataSource(newVal, this.category, this.tab);
       }

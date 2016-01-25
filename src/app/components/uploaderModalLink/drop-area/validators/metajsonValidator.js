@@ -7,7 +7,7 @@ export class MetaJsonValidator extends Validator{
 
     this.existsKey(file, requiredKey, 'zip file');
 
-    const metaJson = JSON.parse(file[requiredKey].asText());
+    const metaJson = angular.fromJson(file[requiredKey].asText());
     this.existsKeys(metaJson, requiredKeys, 'meta.json');
 
     return metaJson;

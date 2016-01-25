@@ -29,7 +29,6 @@ export class NetperfTableJSONService extends TableJSONService {
     const isRatioRow = key == 'ratio';
     const digit = isRatioRow ? 3 : 1;
     const postFix = isRatioRow ? '[%]' : '[Mbps]';
-    const threshold = 10;
 
     const row = Object.keys(rawJson).map((k) => {
       const cls = isRatioRow ? this.getRatioClass(rawJson[k][key]) : '';

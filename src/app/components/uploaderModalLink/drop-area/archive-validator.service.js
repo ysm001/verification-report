@@ -11,6 +11,7 @@ export class ArchiveValidatorService {
     this.$rootScope = $rootScope;
     this.$q = $q;
     this.zip = zip;
+    this.$log = $log;
     this.metaJsonValidator = new MetaJsonValidator();
     this.fioValidator = new FioValidator();
     this.kernbenchValidator = new KernbenchValidator();
@@ -31,7 +32,7 @@ export class ArchiveValidatorService {
   }
 
   onError(e) {
-    console.log(e);
+    this.$log.error(e);
     this.$rootScope.$emit('onError', e);
   }
 }
